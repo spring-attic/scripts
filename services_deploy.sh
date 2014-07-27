@@ -23,10 +23,8 @@ PLATFORM_HOME=${PLATFORM_HOME:-$TMPHOME}
 echo Home: $PLATFORM_HOME
 
 CONFIG_HOME=${CONFIG_HOME:-$PLATFORM_HOME/configserver}
-# TODO: clone and build
 
 EUREKA_HOME=${EUREKA_HOME:-$PLATFORM_HOME/eureka}
-# TODO: clone and build
 
 function deploy() {
 
@@ -66,7 +64,7 @@ for f in $apps; do
             cf services | grep mongodb || cf create-service mongolab sandbox mongodb
             exit 0
         else
-            echo "MONGO_URI not set. Please set up to point to globally accessible mongo instance."
+            echo "MONGO_URI not set and no mongolab service available. Please set up MONGO_URI to point to globally accessible mongo instance."
             exit 1
         fi
     fi
