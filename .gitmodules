@@ -1,0 +1,18 @@
+[submodule "config-repo"]
+	path = config-repo
+	url = git@github.com:scratches/config-repo.git
+[submodule "config"]
+	path = config
+	url = git@github.com:spring-platform/spring-platform-config.git
+[submodule "netflix"]
+	path = netflix
+	url = git@github.com:spring-platform/spring-platform-netflix.git
+[submodule "configserver"]
+	path = configserver
+	url = git@github.com:spring-platform-samples/configserver.git
+[submodule "eureka"]
+	path = eureka
+	url = git@github.com:spring-platform-samples/eureka.git
+[submodule "customers-stores"]
+	path = customers-stores
+	url = git@github.com:spring-platform-samples/customers-stores.git
