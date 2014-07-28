@@ -33,15 +33,16 @@ function deploy() {
 
     cf push $APP -m 512m -p $APP_HOME/target/*.jar --no-start
     cf env $APP | grep SPRING_PROFILES_ACTIVE || cf set-env $APP SPRING_PROFILES_ACTIVE cloud
+    [ "$PREFIX" != "" ] && cf env $APP | grep PREFIX || cf set-env $APP PREFIX $PREFIX
     if [ "$1" == "configserver" ]; then
         cf env $APP | grep APPLICATION_DOMAIN || cf set-env $APP APPLICATION_DOMAIN $APPLICATION_DOMAIN
+    else
+        cf services | grep ^${PREFIX}configserver && cf bind-service $APP ${PREFIX}configserver
     fi
-
-    cf services | grep configserver && cf bind-service $APP configserver
     
     cf restart $APP
     # TODO push this to server
-    cf services | grep $APP || cf create-user-provided-service $APP -p '{"uri":"http://'$APP.$APPLICATION_DOMAIN'"}'
+    cf services | grep ^$APP || cf create-user-provided-service $APP -p '{"uri":"http://'$APP.$APPLICATION_DOMAIN'"}'
 
 }
 
@@ -58,10 +59,10 @@ for f in $apps; do
         h=$EUREKA_HOME
     elif [ $f == "mongodb" ]; then
         if ! [ "$MONGO_URI" == "" ]; then
-            cf create-user-provided-service $f -p '{"uri":"'$MONGO_URI'"}'
+            cf services | grep ^${PREFIX}mongodb || cf create-user-provided-service ${PREFIX} -p '{"uri":"'$MONGO_URI'"}'
             exit 0
-        else if cf marketplace | grep mongolab; then
-            cf services | grep mongodb || cf create-service mongolab sandbox mongodb
+        elif cf marketplace | grep mongolab; then
+            cf services | grep ^${PREFIX}mongodb || cf create-service mongolab sandbox ${PREFIX}mongodb
             exit 0
         else
             echo "MONGO_URI not set and no mongolab service available. Please set up MONGO_URI to point to globally accessible mongo instance."

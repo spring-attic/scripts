@@ -25,21 +25,10 @@ echo Home: $PLATFORM_HOME
 DEMO_HOME=${DEMO_HOME:-$PLATFORM_HOME/customers-stores}
 # TODO: clone and build
 
-function deploy_app() {
+function undeploy_app() {
 
     APP=$PREFIX$1
-    NAME=$1
-    [ "$1" == "stores" ] && NAME=store
-
-    cf push $APP -m 512m -p $DEMO_HOME/rest-microservices-$NAME/target/*.jar --no-start
-    cf env $APP | grep SPRING_PROFILES_ACTIVE || cf set-env $APP SPRING_PROFILES_ACTIVE cloud
-    [ "$PREFIX" != "" ] && cf env $APP | grep PREFIX || cf set-env $APP PREFIX $PREFIX
-    
-    cf bind-service $APP ${PREFIX}configserver
-    cf bind-service $APP ${PREFIX}eureka
-    [ "$1" == "stores" ] &&  cf bind-service $APP ${PREFIX}mongodb
-    
-    cf restart $APP
+    cf delete -f $APP
 
 }
 
@@ -48,5 +37,5 @@ if [ -z $1 ]; then
     apps='stores customers'
 fi
 for f in $apps; do
-    deploy_app $f
+    undeploy_app $f
 done

@@ -21,10 +21,10 @@ your default org, with names prefixed by your local userid, e.g.
 ```
 $ cf apps
 ...
-dsyer-configserver      started  1/1  512M  1G    dsyer-configserver.cfapps.io
-dsyer-eureka            started  1/1  512M  1G    dsyer-eureka.cfapps.io
-dsyer-customers         started  1/1  512M  1G    dsyer-customers.cfapps.io
-dsyer-stores            started  1/1  512M  1G    dsyer-stores.cfappps.io
+dsyerconfigserver      started  1/1  512M  1G    dsyerconfigserver.cfapps.io
+dsyereureka            started  1/1  512M  1G    dsyereureka.cfapps.io
+dsyercustomers         started  1/1  512M  1G    dsyercustomers.cfapps.io
+dsyerstores            started  1/1  512M  1G    dsyerstores.cfappps.io
 ...
 ```
 
@@ -35,31 +35,31 @@ provided services, and bound to the other apps:
 $ cf services
 ...
 name                 service        plan  bound apps   
-dsyer-configserver   user-provided        dsyer-customers, dsyer-eureka, dsyer-stores   
-dsyer-eureka         user-provided        dsyer-configserver, dsyer-customers, dsyer-stores   
+dsyerconfigserver   user-provided        dsyercustomers, dsyereureka, dsyerstores   
+dsyereureka         user-provided        dsyerconfigserver, dsyercustomers, dsyerstores   
 ...
 ```
 
 You can check that it is all working by pinging the `eureka` app
 endpoints and seeing the other apps registered. E.g. visit
-[http://dsyer-eureka.cfapps.io/v2/apps](http://dsyer-eureka.cfapps.io/v2/apps)
+[http://dsyereureka.cfapps.io/v2/apps](http://dsyereureka.cfapps.io/v2/apps)
 in a browser. Other useful links for diagnosis and investigating
 what's going on:
 
-* [http://dsyer-configserver.cfapps.io/customers/cloud](http://dsyer-configserver.cfapps.io/customers/cloud)
-* [http://dsyer-customers.cfapps.io/env](http://dsyer-customers.cfapps.io/env)
-* [http://dsyer-stores.cfapps.io/env](http://dsyer-stores.cfapps.io/env)
+* [http://dsyerconfigserver.cfapps.io/customers/cloud](http://dsyerconfigserver.cfapps.io/customers/cloud)
+* [http://dsyercustomers.cfapps.io/env](http://dsyercustomers.cfapps.io/env)
+* [http://dsyerstores.cfapps.io/env](http://dsyerstores.cfapps.io/env)
 
 The stores app comes pre-populated with a Mongo database full of
 Starbucks locations. The customers app is empty to start 9and uses an
 in-memory database) so you have to POST some data into it, e.g.
 
 ```
-$ curl -i -H "Content-Type: application/json" http://dsyer-customers.cfapps.io/customers -d @customers-stores/rest-microservices-customers/src/test/resources/customers.json
+$ curl -i -H "Content-Type: application/json" http://dsyercustomers.cfapps.io/customers -d @customers-stores/rest-microservices-customers/src/test/resources/customers.json
 ```
 
 Then when you visit the customers app at
-[http://dsyer-customers.cfapps.io/customers](http://dsyer-customers.cfapps.io/customers)
+[http://dsyercustomers.cfapps.io/customers](http://dsyercustomers.cfapps.io/customers)
 you shoudl see a customer (Ollie) and a link to nearby stores. If the
 stores app did not register with eureka, or if you stop the the stores
 app intentionally (`cf stop ...`), then the stores link will be
