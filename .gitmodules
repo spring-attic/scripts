@@ -16,3 +16,9 @@
 [submodule "customers-stores"]
 	path = customers-stores
 	url = git@github.com:spring-platform-samples/customers-stores.git
+[submodule "hystrix-dashboard"]
+	path = hystrix-dashboard
+	url = git@github.com:spring-platform-samples/hystrix-dashboard
+[submodule "turbine"]
+	path = turbine
+	url = git@github.com:spring-platform-samples/turbine
