@@ -22,3 +22,6 @@
 [submodule "turbine"]
 	path = turbine
 	url = git@github.com:spring-platform-samples/turbine
+[submodule "locks"]
+	path = locks
+	url = git@github.com:spring-platform-samples/locks.git

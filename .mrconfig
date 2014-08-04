@@ -1,0 +1,29 @@
+[]
+checkout = git clone 'git@github.com:spring-platform-samples/scripts.git' 'scripts'
+
+[config]
+checkout = git clone 'git@github.com:spring-platform/spring-platform-config.git' 'config'
+
+[config-repo]
+checkout = git clone 'git@github.com:scratches/config-repo.git' 'config-repo'
+
+[configserver]
+checkout = git clone 'git@github.com:spring-platform-samples/configserver.git' 'configserver'
+
+[customers-stores]
+checkout = git clone 'git@github.com:spring-platform-samples/customers-stores.git' 'customers-stores'
+
+[eureka]
+checkout = git clone 'git@github.com:spring-platform-samples/eureka.git' 'eureka'
+
+[hystrix-dashboard]
+checkout = git clone 'git@github.com:spring-platform-samples/hystrix-dashboard' 'hystrix-dashboard'
+
+[netflix]
+checkout = git clone 'git@github.com:spring-platform/spring-platform-netflix.git' 'netflix'
+
+[turbine]
+checkout = git clone 'git@github.com:spring-platform-samples/turbine' 'turbine'
+
+[locks]
+checkout = git clone 'git@github.com:spring-platform-samples/locks.git' 'locks'
