@@ -1,29 +1,40 @@
-[]
-checkout = git clone 'git@github.com:spring-platform-samples/scripts.git' 'scripts'
-
 [config]
-checkout = git clone 'git@github.com:spring-platform/spring-platform-config.git' 'config'
+clone = git clone 'git@github.com:spring-platform/spring-platform-config.git' 'config'
+checkout = git checkout master
 
 [config-repo]
-checkout = git clone 'git@github.com:scratches/config-repo.git' 'config-repo'
+clone = git clone 'git@github.com:scratches/config-repo.git' 'config-repo'
+checkout = git checkout master
 
 [configserver]
-checkout = git clone 'git@github.com:spring-platform-samples/configserver.git' 'configserver'
+clone = git clone 'git@github.com:spring-platform-samples/configserver.git' 'configserver'
+checkout = git checkout master
 
 [customers-stores]
-checkout = git clone 'git@github.com:spring-platform-samples/customers-stores.git' 'customers-stores'
+clone = git clone 'git@github.com:spring-platform-samples/customers-stores.git' 'customers-stores'
+checkout = git checkout master
 
 [eureka]
-checkout = git clone 'git@github.com:spring-platform-samples/eureka.git' 'eureka'
+clone = git clone 'git@github.com:spring-platform-samples/eureka.git' 'eureka'
+checkout = git checkout master
 
 [hystrix-dashboard]
-checkout = git clone 'git@github.com:spring-platform-samples/hystrix-dashboard' 'hystrix-dashboard'
+clone = git clone 'git@github.com:spring-platform-samples/hystrix-dashboard' 'hystrix-dashboard'
+checkout = git checkout master
 
 [netflix]
-checkout = git clone 'git@github.com:spring-platform/spring-platform-netflix.git' 'netflix'
+clone = git clone 'git@github.com:spring-platform/spring-platform-netflix.git' 'netflix'
+checkout = git checkout master
 
 [turbine]
-checkout = git clone 'git@github.com:spring-platform-samples/turbine' 'turbine'
+clone = git clone 'git@github.com:spring-platform-samples/turbine' 'turbine'
+checkout = git checkout master
 
 [locks]
-checkout = git clone 'git@github.com:spring-platform-samples/locks.git' 'locks'
+clone = git clone 'git@github.com:spring-platform-samples/locks.git' 'locks'
+checkout = git checkout master
+
+[]
+clone = git clone 'git@github.com:spring-platform-samples/scripts.git' 'scripts'
+checkout = git checkout full
+
