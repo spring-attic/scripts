@@ -25,3 +25,9 @@
 [submodule "locks"]
 	path = locks
 	url = git@github.com:spring-platform-samples/locks.git
+[submodule "starters"]
+	path = starters
+	url = git@github.com:spring-platform/spring-platform-starters.git
+[submodule "cli"]
+	path = cli
+	url = git@github.com:spring-platform/spring-platform-cli.git
