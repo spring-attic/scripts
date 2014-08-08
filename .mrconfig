@@ -26,6 +26,14 @@ checkout = git checkout master
 clone = git clone 'git@github.com:spring-platform/spring-platform-netflix.git' 'netflix'
 checkout = git checkout master
 
+[cli]
+clone = git clone 'git@github.com:spring-platform/spring-platform-cli.git' 'cli'
+checkout = git checkout master
+
+[starters]
+clone = git clone 'git@github.com:spring-platform/spring-platform-starters.git' 'starters'
+checkout = git checkout master
+
 [turbine]
 clone = git clone 'git@github.com:spring-platform-samples/turbine' 'turbine'
 checkout = git checkout master
