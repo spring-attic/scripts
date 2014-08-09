@@ -31,3 +31,6 @@
 [submodule "cli"]
 	path = cli
 	url = git@github.com:spring-platform/spring-platform-cli.git
+[submodule "rsa"]
+	path = rsa
+	url = git@github.com:dsyer/spring-security-rsa.git

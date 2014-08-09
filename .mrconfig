@@ -1,6 +1,22 @@
 [config]
 clone = git clone 'git@github.com:spring-platform/spring-platform-config.git' 'config'
 checkout = git checkout master
+deploy = mvn deploy "$@" -DaltDeploymentRepository=repo.spring.io::default::https://repo.spring.io/libs-snapshot-local
+
+[netflix]
+clone = git clone 'git@github.com:spring-platform/spring-platform-netflix.git' 'netflix'
+checkout = git checkout master
+deploy = mvn deploy "$@" -DaltDeploymentRepository=repo.spring.io::default::https://repo.spring.io/libs-snapshot-local
+
+[cli]
+clone = git clone 'git@github.com:spring-platform/spring-platform-cli.git' 'cli'
+checkout = git checkout master
+deploy = mvn deploy "$@" -DaltDeploymentRepository=repo.spring.io::default::https://repo.spring.io/libs-snapshot-local
+
+[starters]
+clone = git clone 'git@github.com:spring-platform/spring-platform-starters.git' 'starters'
+checkout = git checkout master
+deploy = mvn deploy "$@" -DaltDeploymentRepository=repo.spring.io::default::https://repo.spring.io/libs-snapshot-local
 
 [config-repo]
 clone = git clone 'git@github.com:scratches/config-repo.git' 'config-repo'
@@ -20,18 +36,6 @@ checkout = git checkout master
 
 [hystrix-dashboard]
 clone = git clone 'git@github.com:spring-platform-samples/hystrix-dashboard' 'hystrix-dashboard'
-checkout = git checkout master
-
-[netflix]
-clone = git clone 'git@github.com:spring-platform/spring-platform-netflix.git' 'netflix'
-checkout = git checkout master
-
-[cli]
-clone = git clone 'git@github.com:spring-platform/spring-platform-cli.git' 'cli'
-checkout = git checkout master
-
-[starters]
-clone = git clone 'git@github.com:spring-platform/spring-platform-starters.git' 'starters'
 checkout = git checkout master
 
 [turbine]
