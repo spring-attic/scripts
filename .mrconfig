@@ -2,21 +2,25 @@
 clone = git clone 'git@github.com:spring-platform/spring-platform-config.git' 'config'
 checkout = git checkout master
 deploy = mvn deploy "$@" -DaltDeploymentRepository=repo.spring.io::default::https://repo.spring.io/libs-snapshot-local
+install = mvn install "$@"
 
 [netflix]
 clone = git clone 'git@github.com:spring-platform/spring-platform-netflix.git' 'netflix'
 checkout = git checkout master
 deploy = mvn deploy "$@" -DaltDeploymentRepository=repo.spring.io::default::https://repo.spring.io/libs-snapshot-local
+install = mvn install "$@"
 
 [cli]
 clone = git clone 'git@github.com:spring-platform/spring-platform-cli.git' 'cli'
 checkout = git checkout master
 deploy = mvn deploy "$@" -DaltDeploymentRepository=repo.spring.io::default::https://repo.spring.io/libs-snapshot-local
+install = mvn install "$@" && [ -e ~/.gvm/springboot/dev ] && cp target/*.jar ~/.gvm/springboot/dev/lib
 
 [starters]
 clone = git clone 'git@github.com:spring-platform/spring-platform-starters.git' 'starters'
 checkout = git checkout master
 deploy = mvn deploy "$@" -DaltDeploymentRepository=repo.spring.io::default::https://repo.spring.io/libs-snapshot-local
+install = mvn install "$@"
 
 [config-repo]
 clone = git clone 'git@github.com:scratches/config-repo.git' 'config-repo'
@@ -26,12 +30,12 @@ checkout = git checkout master
 clone = git clone 'git@github.com:spring-platform-samples/configserver.git' 'configserver'
 checkout = git checkout master
 
-[customers-stores]
-clone = git clone 'git@github.com:spring-platform-samples/customers-stores.git' 'customers-stores'
-checkout = git checkout master
-
 [eureka]
 clone = git clone 'git@github.com:spring-platform-samples/eureka.git' 'eureka'
+checkout = git checkout master
+
+[customers-stores]
+clone = git clone 'git@github.com:spring-platform-samples/customers-stores.git' 'customers-stores'
 checkout = git checkout master
 
 [hystrix-dashboard]
