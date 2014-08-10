@@ -3,4 +3,4 @@
 set -e
 
 git submodule update --init
-mvn clean install
+mvn clean install "$@"

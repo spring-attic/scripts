@@ -2,7 +2,51 @@ The
 [spring-platform-samples](https://github.com/spring-platform-samples)
 can be run as a demo locally by just cloning the individual projects
 and running them. This project can be used to manage updating and
-deploying the sample apps to cloudfoundry. 
+deploying the sample apps to cloudfoundry.
+
+## Running Locally
+
+Pre-requisites: Mongodb, Maven (3) and Java (1.7). To run the
+Customers UI you also need the Spring Boot CLI. Clone the repository
+and initialize submodules:
+
+```
+$ git clone https://github.com/spring-platform-samples/scripts
+$ cd scripts
+$ ./build.sh
+```
+
+(You can add '-DskipTests' if you like, or just use 'mvn' directly,
+once the submodules are initialized.)
+
+Run the apps:
+
+```
+$ ./run.sh
+```
+
+You can kill the processes using `./kill.sh`, and both scripts know how to operate on individual apps or subsets, e.g. (the default):
+
+```
+$ ./run.sh configserver eureka customers stores
+```
+
+To run the UI with the maps, get the Spring Boot CLI, and install the
+platform CLI plugin, e.g.
+
+```
+$ gvm install springboot 1.1.5.RELEASE
+$ gvm use springboot 1.1.5.RELEASE
+$ cp cli/spring-platform-cli/target/*.jar ~/.gvm/springboot/1.1.5.RELEASE/lib
+```
+
+Then run the app
+
+```
+$ (cd customers-stores/customers-ui; spring run app.groovy)
+```
+
+## Running on Cloudfoundry
 
 Pre-requisites: the `cf` command line, Maven (3) and Java (1.7).
 Clone the repository and initialize submodules:
