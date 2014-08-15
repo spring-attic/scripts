@@ -122,3 +122,13 @@ It should all work on [Pivotal Web Services](https://run.pivotal.io),
 by default, or on any Cloudfoundry instance (e.g. PCF or a local
 single VM instance) if you set the `DOMAIN` environment variable to
 the DNS domain that the service is running in.
+
+To run on [bosh-lite](https://github.com/cloudfoundry/bosh-lite)
+
+Deploy mongodb using https://github.com/cloudfoundry-community/cf-services-contrib-release
+
+```
+export DOMAIN=10.244.0.34.xip.io
+export PLATFORM_HOME=/Users/sgibb/workspace/spring/spring-platform-samples #where all spring-platform-samples are checked out
+export MONGO_URI=mongodb://192.168.50.1/stores #mongo running on host #TODO install mongo as a service
+```

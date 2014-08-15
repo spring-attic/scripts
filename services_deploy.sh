@@ -13,8 +13,10 @@ cf api | grep ${TARGET} || cf api ${TARGET} --skip-ssl-validation
 cf apps | grep OK || cf login
 
 TMPHOME=$(cd `dirname "$0"` && pwd)
-if [ "$PREFIX" == "NONE" ]; then 
+if [ "$PREFIX" == "NONE" ]; then
+    echo setting PREFIX to empty
     PREFIX=
+    echo PREFIX = $PREFIX
 else 
     PREFIX=$USER
 fi
@@ -33,7 +35,9 @@ function deploy() {
 
     cf push $APP -m 512m -p $APP_HOME/target/*.jar --no-start
     cf env $APP | grep SPRING_PROFILES_ACTIVE || cf set-env $APP SPRING_PROFILES_ACTIVE cloud
-    [ "$PREFIX" != "" ] && cf env $APP | grep PREFIX || cf set-env $APP PREFIX $PREFIX
+    if [ "$PREIX" != "" ]; then
+        cf env $APP | grep PREFIX || cf set-env $APP PREFIX $PREFIX
+    fi
     if [ "$1" == "configserver" ]; then
         cf env $APP | grep APPLICATION_DOMAIN || cf set-env $APP APPLICATION_DOMAIN $APPLICATION_DOMAIN
     else
@@ -59,13 +63,17 @@ for f in $apps; do
         h=$EUREKA_HOME
     elif [ $f == "mongodb" ]; then
         if ! [ "$MONGO_URI" == "" ]; then
-            cf services | grep ^${PREFIX}mongodb || cf create-user-provided-service ${PREFIX} -p '{"uri":"'$MONGO_URI'"}'
+            cf services | grep ^${PREFIX}mongodb || cf create-user-provided-service ${PREFIX}mongodb -p '{"uri":"'$MONGO_URI'"}'
             exit 0
         elif cf marketplace | grep mongolab; then
             cf services | grep ^${PREFIX}mongodb || cf create-service mongolab sandbox ${PREFIX}mongodb
             exit 0
+        # for https://github.com/cloudfoundry-community/cf-services-contrib-release dev services
+        elif cf marketplace | grep mongodb; then
+            cf services | grep ^${PREFIX}mongodb || cf create-service mongodb default ${PREFIX}mongodb
+            exit 0
         else
-            echo "MONGO_URI not set and no mongolab service available. Please set up MONGO_URI to point to globally accessible mongo instance."
+            echo "MONGO_URI not set and no mongolab or mongodb service available. Please set up MONGO_URI to point to globally accessible mongo instance."
             exit 1
         fi
     fi

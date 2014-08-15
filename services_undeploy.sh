@@ -36,7 +36,7 @@ function delete_broker() {
 
 apps=$*
 if [ -z $1 ]; then
-    apps='configserver eureka mongodb'
+    apps='eureka configserver mongodb'
 fi
 
 for f in $apps; do
