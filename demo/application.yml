@@ -1,0 +1,14 @@
+info:
+  id: ${name:application}
+  version: 0
+logging:
+  file: /tmp/logs/${info.id}.log
+spring:
+  application:
+    name: ${info.id}
+  boot:
+    admin:
+      url: http://localhost:7777
+logging:
+  level:
+    #com.netflix.discovery: 'OFF'
