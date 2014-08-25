@@ -34,6 +34,7 @@ function deploy_app() {
     cf push $APP -m 512m -p $DEMO_HOME/rest-microservices-$NAME/target/*.jar --no-start
     cf env $APP | grep SPRING_PROFILES_ACTIVE || cf set-env $APP SPRING_PROFILES_ACTIVE cloud
     [ "$PREFIX" != "" ] && cf env $APP | grep PREFIX || cf set-env $APP PREFIX $PREFIX
+    [ "$APPLICATION_DOMAIN" != "cfapps.io" ] && cf set-env $APP APPLICATION_DOMAIN $APPLICATION_DOMAIN
     
     cf bind-service $APP ${PREFIX}configserver
     cf bind-service $APP ${PREFIX}eureka
