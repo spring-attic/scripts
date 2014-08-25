@@ -65,6 +65,9 @@ for f in $apps; do
         if ! [ "$MONGO_URI" == "" ]; then
             cf services | grep ^${PREFIX}mongodb || cf create-user-provided-service ${PREFIX}mongodb -p '{"uri":"'$MONGO_URI'"}'
             exit 0
+        elif cf marketplace | grep p-mongodb; then
+            cf services | grep ^${PREFIX}mongodb || cf create-service p-mongodb development ${PREFIX}mongodb
+            exit 0
         elif cf marketplace | grep mongolab; then
             cf services | grep ^${PREFIX}mongodb || cf create-service mongolab sandbox ${PREFIX}mongodb
             exit 0
