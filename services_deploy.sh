@@ -17,7 +17,7 @@ if [ "$PREFIX" == "NONE" ]; then
     echo setting PREFIX to empty
     PREFIX=
     echo PREFIX = $PREFIX
-else 
+elif [ "$PREFIX" == "" ]; then
     PREFIX=$USER
 fi
 

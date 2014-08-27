@@ -4,6 +4,12 @@ checkout = git checkout master
 deploy = mvn deploy "$@" -DaltDeploymentRepository=repo.spring.io::default::https://repo.spring.io/libs-snapshot-local
 install = mvn install "$@"
 
+[cloudfoundry]
+clone = git clone 'git@github.com:spring-platform/spring-platform-cloudfoundry.git' 'cloudfoundry'
+checkout = git checkout master
+deploy = mvn deploy "$@" -DaltDeploymentRepository=repo.spring.io::default::https://repo.spring.io/libs-snapshot-local
+install = mvn install "$@"
+
 [netflix]
 clone = git clone 'git@github.com:spring-platform/spring-platform-netflix.git' 'netflix'
 checkout = git checkout master

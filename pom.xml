@@ -21,6 +21,7 @@
 		<module>starters</module>
 		<module>cli</module>
 		<module>configserver</module>
+		<module>cloudfoundry</module>
 		<module>eureka</module>
 		<module>customers-stores</module>
 	</modules>

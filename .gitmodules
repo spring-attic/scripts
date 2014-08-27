@@ -34,3 +34,6 @@
 [submodule "rsa"]
 	path = rsa
 	url = git@github.com:dsyer/spring-security-rsa.git
+[submodule "cloudfoundry"]
+	path = cloudfoundry
+	url = git@github.com:spring-platform/spring-platform-cloudfoundry

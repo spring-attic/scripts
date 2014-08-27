@@ -1,14 +1,15 @@
 info:
   id: ${name:application}
-  version: 0
-logging:
-  file: /tmp/logs/${info.id}.log
 spring:
   application:
     name: ${info.id}
-  boot:
-    admin:
-      url: http://localhost:7777
 logging:
   level:
-    #com.netflix.discovery: 'OFF'
+    com.netflix.discovery: 'OFF'
+    org.springframework.security: DEBUG
+cloudfoundry:
+  sso:
+    tokenUri: http://localhost:8080/uaa/oauth/token
+    authorizationUri: http://localhost:8080/uaa/oauth/authorize
+    clientId: app
+    clientSecret: appclientsecret
