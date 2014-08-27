@@ -1,6 +1,6 @@
 @EnableCloudfoundrySso
-@RestController
+@EnableZuulProxy
+@EnableEurekaClient
+@Controller
 class Demo {
-    @RequestMapping("/")
-    def home() { [message: "Hello"] }
 }

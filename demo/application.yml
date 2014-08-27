@@ -7,9 +7,18 @@ logging:
   level:
     com.netflix.discovery: 'OFF'
     org.springframework.security: DEBUG
+zuul:
+  proxy:
+    route:
+      resource: /
 cloudfoundry:
   sso:
     tokenUri: http://localhost:8080/uaa/oauth/token
     authorizationUri: http://localhost:8080/uaa/oauth/authorize
-    clientId: app
-    clientSecret: appclientsecret
+    clientId: acme
+    clientSecret: acmesecret
+  resource:
+    tokenInfoUri: http://localhost:8080/uaa/check_token
+    clientId: acme
+    clientSecret: acmesecret
+    serviceId: ${PREFIX:}resource
