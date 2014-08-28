@@ -34,7 +34,7 @@ function undeploy_app() {
 
 apps=$*
 if [ -z $1 ]; then
-    apps='stores customers'
+    apps='stores customers customersui'
 fi
 for f in $apps; do
     undeploy_app $f

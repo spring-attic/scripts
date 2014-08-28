@@ -52,7 +52,7 @@ function deploy() {
 
 apps=$*
 if [ -z $1 ]; then
-    apps='configserver eureka mongodb'
+    apps='rabbitmq mongodb configserver eureka'
 fi
 
 for f in $apps; do
@@ -61,6 +61,14 @@ for f in $apps; do
         h=$CONFIG_HOME
     elif [ $f == "eureka" ]; then
         h=$EUREKA_HOME
+    elif [ $f == "rabbitmq" ]; then
+        if cf marketplace | grep cloudamqp; then
+            cf services | grep ^${PREFIX}rabbitmq || cf create-service cloudamqp tiger ${PREFIX}rabbitmq
+            exit 0
+        else
+            echo "no rabbitmq service available."
+            exit 1
+        fi
     elif [ $f == "mongodb" ]; then
         if ! [ "$MONGO_URI" == "" ]; then
             cf services | grep ^${PREFIX}mongodb || cf create-user-provided-service ${PREFIX}mongodb -p '{"uri":"'$MONGO_URI'"}'
