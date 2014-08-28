@@ -1,6 +1,6 @@
 [submodule "config-repo"]
 	path = config-repo
-	url = git@github.com:scratches/config-repo.git
+	url = git@github.com:spring-platform-samples/config-repo.git
 [submodule "config"]
 	path = config
 	url = git@github.com:spring-platform/spring-platform-config.git
