@@ -16,6 +16,12 @@ checkout = git checkout master
 deploy = mvn deploy "$@" -DaltDeploymentRepository=repo.spring.io::default::https://repo.spring.io/libs-snapshot-local
 install = mvn install "$@"
 
+[bus]
+clone = git clone 'git@github.com:spring-platform/spring-platform-bus.git' 'bus'
+checkout = git checkout master
+deploy = mvn deploy "$@" -DaltDeploymentRepository=repo.spring.io::default::https://repo.spring.io/libs-snapshot-local
+install = mvn install "$@"
+
 [cli]
 clone = git clone 'git@github.com:spring-platform/spring-platform-cli.git' 'cli'
 checkout = git checkout master

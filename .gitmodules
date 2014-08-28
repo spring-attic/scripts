@@ -37,3 +37,6 @@
 [submodule "cloudfoundry"]
 	path = cloudfoundry
 	url = git@github.com:spring-platform/spring-platform-cloudfoundry
+[submodule "bus"]
+	path = bus
+	url = git@github.com:spring-platform/spring-platform-bus.git
