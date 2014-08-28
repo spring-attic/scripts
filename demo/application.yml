@@ -19,6 +19,7 @@ cloudfoundry:
     clientSecret: acmesecret
   resource:
     tokenInfoUri: http://localhost:8080/uaa/check_token
+    id: openid
     clientId: acme
     clientSecret: acmesecret
     serviceId: ${PREFIX:}resource
