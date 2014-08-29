@@ -1,42 +1,42 @@
 [submodule "config-repo"]
 	path = config-repo
-	url = git@github.com:spring-platform-samples/config-repo.git
+	url = git@github.com:spring-cloud-samples/config-repo.git
 [submodule "config"]
 	path = config
-	url = git@github.com:spring-platform/spring-platform-config.git
+	url = git@github.com:spring-cloud/spring-platform-config.git
 [submodule "netflix"]
 	path = netflix
-	url = git@github.com:spring-platform/spring-platform-netflix.git
+	url = git@github.com:spring-cloud/spring-platform-netflix.git
 [submodule "configserver"]
 	path = configserver
-	url = git@github.com:spring-platform-samples/configserver.git
+	url = git@github.com:spring-cloud-samples/configserver.git
 [submodule "eureka"]
 	path = eureka
-	url = git@github.com:spring-platform-samples/eureka.git
+	url = git@github.com:spring-cloud-samples/eureka.git
 [submodule "customers-stores"]
 	path = customers-stores
-	url = git@github.com:spring-platform-samples/customers-stores.git
+	url = git@github.com:spring-cloud-samples/customers-stores.git
 [submodule "hystrix-dashboard"]
 	path = hystrix-dashboard
-	url = git@github.com:spring-platform-samples/hystrix-dashboard
+	url = git@github.com:spring-cloud-samples/hystrix-dashboard
 [submodule "turbine"]
 	path = turbine
-	url = git@github.com:spring-platform-samples/turbine
+	url = git@github.com:spring-cloud-samples/turbine
 [submodule "locks"]
 	path = locks
-	url = git@github.com:spring-platform-samples/locks.git
+	url = git@github.com:spring-cloud-samples/locks.git
 [submodule "starters"]
 	path = starters
-	url = git@github.com:spring-platform/spring-platform-starters.git
+	url = git@github.com:spring-cloud/spring-platform-starters.git
 [submodule "cli"]
 	path = cli
-	url = git@github.com:spring-platform/spring-platform-cli.git
+	url = git@github.com:spring-cloud/spring-platform-cli.git
 [submodule "rsa"]
 	path = rsa
 	url = git@github.com:dsyer/spring-security-rsa.git
 [submodule "cloudfoundry"]
 	path = cloudfoundry
-	url = git@github.com:spring-platform/spring-platform-cloudfoundry
+	url = git@github.com:spring-cloud/spring-platform-cloudfoundry
 [submodule "bus"]
 	path = bus
-	url = git@github.com:spring-platform/spring-platform-bus.git
+	url = git@github.com:spring-cloud/spring-platform-bus.git

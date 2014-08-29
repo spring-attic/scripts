@@ -1,68 +1,68 @@
 [config]
-clone = git clone 'git@github.com:spring-platform/spring-platform-config.git' 'config'
+clone = echo 'not cloning submodule'
 checkout = git checkout master
 deploy = mvn deploy "$@" -DaltDeploymentRepository=repo.spring.io::default::https://repo.spring.io/libs-snapshot-local
 install = mvn install "$@"
 
 [cloudfoundry]
-clone = git clone 'git@github.com:spring-platform/spring-platform-cloudfoundry.git' 'cloudfoundry'
+clone = echo 'not cloning submodule'
 checkout = git checkout master
 deploy = mvn deploy "$@" -DaltDeploymentRepository=repo.spring.io::default::https://repo.spring.io/libs-snapshot-local
 install = mvn install "$@"
 
 [netflix]
-clone = git clone 'git@github.com:spring-platform/spring-platform-netflix.git' 'netflix'
+clone = echo 'not cloning submodule'
 checkout = git checkout master
 deploy = mvn deploy "$@" -DaltDeploymentRepository=repo.spring.io::default::https://repo.spring.io/libs-snapshot-local
 install = mvn install "$@"
 
 [bus]
-clone = git clone 'git@github.com:spring-platform/spring-platform-bus.git' 'bus'
+clone = echo 'not cloning submodule'
 checkout = git checkout master
 deploy = mvn deploy "$@" -DaltDeploymentRepository=repo.spring.io::default::https://repo.spring.io/libs-snapshot-local
 install = mvn install "$@"
 
 [cli]
-clone = git clone 'git@github.com:spring-platform/spring-platform-cli.git' 'cli'
+clone = echo 'not cloning submodule'
 checkout = git checkout master
 deploy = mvn deploy "$@" -DaltDeploymentRepository=repo.spring.io::default::https://repo.spring.io/libs-snapshot-local
 install = mvn install "$@" && [ -e ~/.gvm/springboot/dev ] && cp target/*.jar ~/.gvm/springboot/dev/lib
 
 [starters]
-clone = git clone 'git@github.com:spring-platform/spring-platform-starters.git' 'starters'
+clone = echo 'not cloning submodule'
 checkout = git checkout master
 deploy = mvn deploy "$@" -DaltDeploymentRepository=repo.spring.io::default::https://repo.spring.io/libs-snapshot-local
 install = mvn install "$@"
 
 [config-repo]
-clone = git clone 'git@github.com:scratches/config-repo.git' 'config-repo'
+clone = echo 'not cloning submodule'
 checkout = git checkout master
 
 [configserver]
-clone = git clone 'git@github.com:spring-platform-samples/configserver.git' 'configserver'
+clone = echo 'not cloning submodule'
 checkout = git checkout master
 
 [eureka]
-clone = git clone 'git@github.com:spring-platform-samples/eureka.git' 'eureka'
+clone = echo 'not cloning submodule'
 checkout = git checkout master
 
 [customers-stores]
-clone = git clone 'git@github.com:spring-platform-samples/customers-stores.git' 'customers-stores'
+clone = echo 'not cloning submodule'
 checkout = git checkout master
 
 [hystrix-dashboard]
-clone = git clone 'git@github.com:spring-platform-samples/hystrix-dashboard' 'hystrix-dashboard'
+clone = echo 'not cloning submodule'
 checkout = git checkout master
 
 [turbine]
-clone = git clone 'git@github.com:spring-platform-samples/turbine' 'turbine'
+clone = echo 'not cloning submodule'
 checkout = git checkout master
 
 [locks]
-clone = git clone 'git@github.com:spring-platform-samples/locks.git' 'locks'
+clone = echo 'not cloning submodule'
 checkout = git checkout master
 
 []
-clone = git clone 'git@github.com:spring-platform-samples/scripts.git' 'scripts'
+clone = git clone 'git@github.com:spring-cloud-samples/scripts.git' 'scripts' && git submodule update --init
 checkout = git checkout full
 
