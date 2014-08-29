@@ -1,5 +1,5 @@
 The
-[spring-platform-samples](https://github.com/spring-platform-samples)
+[spring-cloud-samples](https://github.com/spring-cloud-samples)
 can be run as a demo locally by just cloning the individual projects
 and running them. This project can be used to manage updating and
 deploying the sample apps to cloudfoundry.
@@ -11,7 +11,7 @@ Customers UI you also need the Spring Boot CLI. Clone the repository
 and initialize submodules:
 
 ```
-$ git clone https://github.com/spring-platform-samples/scripts
+$ git clone https://github.com/spring-cloud-samples/scripts
 $ cd scripts
 $ ./build.sh
 ```
@@ -37,7 +37,7 @@ platform CLI plugin, e.g.
 ```
 $ gvm install springboot 1.1.5.RELEASE
 $ gvm use springboot 1.1.5.RELEASE
-$ cp cli/spring-platform-cli/target/*.jar ~/.gvm/springboot/1.1.5.RELEASE/lib
+$ cp cli/spring-cloud-cli/target/*.jar ~/.gvm/springboot/1.1.5.RELEASE/lib
 ```
 
 Then run the app
@@ -52,7 +52,7 @@ Pre-requisites: the `cf` command line, Maven (3) and Java (1.7).
 Clone the repository and initialize submodules:
 
 ```
-$ git clone https://github.com/spring-platform-samples/scripts
+$ git clone https://github.com/spring-cloud-samples/scripts
 $ cd scripts
 $ ./build.sh
 $ ./services_deploy.sh
@@ -129,6 +129,6 @@ Deploy mongodb using https://github.com/cloudfoundry-community/cf-services-contr
 
 ```
 export DOMAIN=10.244.0.34.xip.io
-export PLATFORM_HOME=/Users/sgibb/workspace/spring/spring-platform-samples #where all spring-platform-samples are checked out
+export PLATFORM_HOME=/Users/sgibb/workspace/spring/spring-cloud-samples #where all spring-cloud-samples are checked out
 export MONGO_URI=mongodb://192.168.50.1/stores #mongo running on host #TODO install mongo as a service
 ```
