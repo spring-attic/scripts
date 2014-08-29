@@ -63,6 +63,6 @@ clone = echo 'not cloning submodule'
 checkout = git checkout master
 
 []
-clone = git clone 'git@github.com:spring-cloud-samples/scripts.git' 'scripts' && git submodule update --init
+clone = git submodule update --init
 checkout = git checkout full
 
