@@ -31,7 +31,7 @@ function deploy_app() {
     NAME=$1
     [ "$1" == "stores" ] && NAME=store
 
-    cf push $APP -m 512m -p $DEMO_HOME/rest-microservices-$NAME/target/*.jar --no-start
+    cf push $APP -m 512m -b https://github.com/spring-io/java-buildpack -p $DEMO_HOME/rest-microservices-$NAME/target/*.jar --no-start
     cf env $APP | grep SPRING_PROFILES_ACTIVE || cf set-env $APP SPRING_PROFILES_ACTIVE cloud
     if [ "$PREIX" != "" ]; then
         cf env $APP | grep PREFIX || cf set-env $APP PREFIX $PREFIX
