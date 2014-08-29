@@ -23,3 +23,20 @@ cloudfoundry:
     clientId: acme
     clientSecret: acmesecret
     serviceId: ${PREFIX:}resource
+
+---
+spring:
+  profiles: test
+cloudfoundry:
+  sso:
+    tokenUri: https://login.run.pivotal.io/oauth/token
+    authorizationUri: https://login.run.pivotal.io/oauth/authorize
+    tokenInfoUri: https://uaa.run.pivotal.io/check_token
+    clientId: acme
+    clientSecret: acmesecret
+  resource:
+    tokenInfoUri: http://uaa.run.pivotal.io/check_token
+    id: openid
+    clientId: acme
+    clientSecret: acmesecret
+    serviceId: ${PREFIX:}resource
