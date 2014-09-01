@@ -11,7 +11,7 @@ zuul:
   proxy:
     route:
       resource: /
-cloudfoundry:
+oauth2:
   sso:
     tokenUri: http://localhost:8080/uaa/oauth/token
     authorizationUri: http://localhost:8080/uaa/oauth/authorize
@@ -26,17 +26,32 @@ cloudfoundry:
 
 ---
 spring:
+  profiles: github
+oauth2:
+  sso:
+    tokenUri: https://github.com/login/oauth/access_token
+    authorizationUri: https://github.com/login/oauth/authorize
+    clientId: bd1c0a783ccdd1c9b9e4
+    clientSecret: 1a9030fbca47a5b2c28e92f19050bb77824b5ad1
+    authenticationScheme: form
+  resource:
+    clientId: ${oauth2.sso.clientId}
+    userInfoUri: https://api.github.com/user
+    preferTokenInfo: false
+
+---
+spring:
   profiles: test
-cloudfoundry:
+oauth2:
   sso:
     tokenUri: https://login.run.pivotal.io/oauth/token
     authorizationUri: https://login.run.pivotal.io/oauth/authorize
     tokenInfoUri: https://uaa.run.pivotal.io/check_token
     clientId: acme
-    clientSecret: acmesecret
+    clientSecret: ${CLIENT_SECRET}
   resource:
     tokenInfoUri: http://uaa.run.pivotal.io/check_token
     id: openid
-    clientId: acme
-    clientSecret: acmesecret
+    clientId: ${oauth2.sso.clientId}
+    clientSecret: ${oauth2.sso.clientSecret}
     serviceId: ${PREFIX:}resource
