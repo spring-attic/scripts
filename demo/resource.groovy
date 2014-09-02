@@ -1,4 +1,4 @@
-@EnableCloudfoundryResource
+@EnableOAuth2Resource
 @EnableEurekaClient
 @RestController
 class Demo {

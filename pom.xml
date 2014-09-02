@@ -24,6 +24,7 @@
 		<module>cli</module>
 		<module>configserver</module>
 		<module>eureka</module>
+		<module>hystrix-dashboard</module>
 		<module>customers-stores</module>
 	</modules>
 	
