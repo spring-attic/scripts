@@ -6,7 +6,7 @@ deploying the sample apps to cloudfoundry.
 
 ## Running Locally
 
-Pre-requisites: Mongodb, Maven (3) and Java (1.7). To run the
+Pre-requisites: Maven (3) and Java (1.7). To run the
 Customers UI you also need the Spring Boot CLI. Clone the repository
 and initialize submodules:
 
@@ -18,6 +18,19 @@ $ ./build.sh
 
 (You can add '-DskipTests' if you like, or just use 'mvn' directly,
 once the submodules are initialized.)
+
+You also nee Mongodb and RabbitMQ. If you don't have those, and you do
+have Docker, you can run them in Docker (via [fig](http://www.fig.sh/)):
+
+```
+$ fig up
+...
+<mongo starts up>
+<rabbit starts up>
+```
+
+the containers for the server processes write their data locally in
+`./target/data`.
 
 Run the apps:
 
@@ -95,7 +108,7 @@ what's going on:
 * [http://dsyerstores.cfapps.io/env](http://dsyerstores.cfapps.io/env)
 
 The stores app comes pre-populated with a Mongo database full of
-Starbucks locations. The customers app is empty to start 9and uses an
+Starbucks locations. The customers app is empty to start (and uses an
 in-memory database) so you have to POST some data into it, e.g.
 
 ```

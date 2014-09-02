@@ -1,0 +1,14 @@
+rabbitmq:
+  image: dockerfile/rabbitmq
+  volumes:
+    - ./target/data/rabbit/mnesia:/data/log
+    - ./target/data/rabbit/log:/data/mnesia
+  ports:
+    - "5672:5672"
+    - "15672:15672"
+mongodb:
+  image: mongo
+  volumes:
+    - ./target/data/db:/data/db
+  ports:
+    - "27017:27017"
