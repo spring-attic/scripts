@@ -1,5 +1,4 @@
 #!/bin/bash
-
 set -e
 
 DOMAIN=${DOMAIN:-run.pivotal.io}
@@ -64,6 +63,9 @@ for f in $apps; do
     elif [ $f == "rabbitmq" ]; then
         if cf marketplace | grep cloudamqp; then
             cf services | grep ^${PREFIX}rabbitmq || cf create-service cloudamqp tiger ${PREFIX}rabbitmq
+            exit 0
+        elif cf marketplace | grep p-rabbitmq; then
+            cf services | grep ^${PREFIX}rabbitmq || cf create-service p-rabbitmq standard ${PREFIX}rabbitmq
             exit 0
         else
             echo "no rabbitmq service available."
