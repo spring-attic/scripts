@@ -32,7 +32,7 @@ function deploy_app() {
     [ "$1" == "stores" ] && NAME=store
     JARPATH=$DEMO_HOME/rest-microservices-$NAME/target/*.jar
     [ "$1" == "customersui" ] && JARPATH=$DEMO_HOME/customers-stores-ui/app.jar
-    [ "$1" == "hystrix-dashboard" ] && JARPATH=$PLATFORM_HOME/$NAME/target/*.jar
+    [ "$1" == "hystrix-dashboard" -o "$1" == "turbine" ] && JARPATH=$PLATFORM_HOME/$NAME/target/*.jar
 
     #TODO: using java8 because of temp requirement for spring-platform-bus
     cf push $APP -m 1028m -b https://github.com/spring-io/java-buildpack -p $JARPATH --no-start
@@ -53,7 +53,7 @@ function deploy_app() {
 
 apps=$*
 if [ -z $1 ]; then
-    apps='stores customers customersui hystrix-dashboard'
+    apps='stores customers customersui hystrix-dashboard turbine'
 fi
 for f in $apps; do
     deploy_app $f
