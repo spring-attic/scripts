@@ -31,9 +31,6 @@
 [submodule "cli"]
 	path = cli
 	url = git@github.com:spring-cloud/spring-cloud-cli.git
-[submodule "rsa"]
-	path = rsa
-	url = git@github.com:dsyer/spring-security-rsa.git
 [submodule "cloudfoundry"]
 	path = cloudfoundry
 	url = git@github.com:spring-cloud/spring-cloud-cloudfoundry
