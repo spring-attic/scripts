@@ -30,7 +30,8 @@ $ fig up
 ```
 
 the containers for the server processes write their data locally in
-`./target/data`.
+`./data`. Those files will be owned by root, so watch out when it
+comes to remove them.
 
 Run the apps:
 
