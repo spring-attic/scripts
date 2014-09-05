@@ -34,7 +34,7 @@ function undeploy_app() {
 
 apps=$*
 if [ -z $1 ]; then
-    apps='stores customers customersui hystrix-dashboard'
+    apps='stores customers customersui hystrix-dashboard turbine'
 fi
 for f in $apps; do
     undeploy_app $f
