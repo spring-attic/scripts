@@ -34,7 +34,7 @@ function deploy() {
 
     cf push $APP -m 512m -p $APP_HOME/target/*.jar --no-start
     cf env $APP | grep SPRING_PROFILES_ACTIVE || cf set-env $APP SPRING_PROFILES_ACTIVE cloud
-    if [ "$PREIX" != "" ]; then
+    if [ "$PREFIX" != "" ]; then
         cf env $APP | grep PREFIX || cf set-env $APP PREFIX $PREFIX
     fi
     if [ "$1" == "configserver" ]; then
