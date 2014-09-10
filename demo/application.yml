@@ -6,8 +6,9 @@ spring:
 logging:
   level:
     com.netflix.discovery: 'OFF'
-    org.springframework.security: DEBUG
-    org.springframework.web: DEBUG
+    com.netflix.zuul: 'OFF'
+#    org.springframework.security: DEBUG
+#    org.springframework.web: DEBUG
 zuul:
   proxy:
     route:
