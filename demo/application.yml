@@ -13,6 +13,11 @@ zuul:
   proxy:
     route:
       resource: /
+eureka:
+  instance:
+    leaseRenewalIntervalInSeconds: 10
+    dataCenterInfo:
+      availability-zone: us-east-1
 oauth2:
   client:
     tokenUri: http://localhost:8080/uaa/oauth/token
