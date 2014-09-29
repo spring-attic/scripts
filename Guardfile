@@ -5,6 +5,6 @@ options = {:mkdirs => true, :safe => :unsafe, :attributes => 'linkcss', :type =>
 
 guard 'shell' do
   watch(/^[A-Za-z].*\.adoc$/) {|m|
-    Asciidoctor.render_file('src/main/adoc/spring-cloud.adoc', options.merge(:to_dir => 'target/docs'))
+    Asciidoctor.render_file('src/main/asciidoc/spring-cloud.adoc', options.merge(:to_dir => 'target/generated-docs'))
   }
 end
