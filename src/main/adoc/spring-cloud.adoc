@@ -1,0 +1,14 @@
+= Spring Cloud
+:basedir: ../../..
+:toc:
+
+include::{basedir}/config/src/main/adoc/spring-cloud-config.adoc[]
+
+include::{basedir}/netflix/src/main/adoc/spring-cloud-netflix.adoc[]
+
+include::{basedir}/cluster/src/main/adoc/spring-cloud-cluster.adoc[]
+
+include::{basedir}/bus/src/main/adoc/spring-cloud-bus.adoc[]
+
+include::{basedir}/cloudfoundry/src/main/adoc/spring-cloud-cloudfoundry.adoc[]
+

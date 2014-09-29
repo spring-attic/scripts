@@ -1,0 +1,13 @@
+= Spring Cloud
+:toc:
+
+include::config/src/main/adoc/spring-cloud-config.adoc[]
+
+include::config/src/main/adoc/spring-cloud-netflix.adoc[]
+
+include::config/src/main/adoc/spring-cloud-cluster.adoc[]
+
+include::config/src/main/adoc/spring-cloud-bus.adoc[]
+
+include::config/src/main/adoc/spring-cloud-cloudfoundry.adoc[]
+

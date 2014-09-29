@@ -37,3 +37,6 @@
 [submodule "bus"]
 	path = bus
 	url = git@github.com:spring-cloud/spring-cloud-bus.git
+[submodule "cluster"]
+	path = cluster
+	url = git@github.com:spring-cloud/spring-cloud-cluster
