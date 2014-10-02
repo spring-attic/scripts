@@ -34,7 +34,7 @@ function deploy() {
 
     cf push $APP -m 512m -p $APP_HOME/target/*.jar --no-start
     cf env $APP | grep SPRING_PROFILES_ACTIVE || cf set-env $APP SPRING_PROFILES_ACTIVE cloud
-    if [ "$PREIX" != "" ]; then
+    if [ "$PREFIX" != "" ]; then
         cf env $APP | grep PREFIX || cf set-env $APP PREFIX $PREFIX
     fi
     if [ "$1" == "configserver" ]; then
@@ -63,10 +63,10 @@ for f in $apps; do
     elif [ $f == "rabbitmq" ]; then
         if cf marketplace | grep cloudamqp; then
             cf services | grep ^${PREFIX}rabbitmq || cf create-service cloudamqp tiger ${PREFIX}rabbitmq
-            exit 0
+            continue
         elif cf marketplace | grep p-rabbitmq; then
             cf services | grep ^${PREFIX}rabbitmq || cf create-service p-rabbitmq standard ${PREFIX}rabbitmq
-            exit 0
+            continue
         else
             echo "no rabbitmq service available."
             exit 1
@@ -74,17 +74,17 @@ for f in $apps; do
     elif [ $f == "mongodb" ]; then
         if ! [ "$MONGO_URI" == "" ]; then
             cf services | grep ^${PREFIX}mongodb || cf create-user-provided-service ${PREFIX}mongodb -p '{"uri":"'$MONGO_URI'"}'
-            exit 0
+            continue
         elif cf marketplace | grep p-mongodb; then
             cf services | grep ^${PREFIX}mongodb || cf create-service p-mongodb development ${PREFIX}mongodb
-            exit 0
+            continue
         elif cf marketplace | grep mongolab; then
             cf services | grep ^${PREFIX}mongodb || cf create-service mongolab sandbox ${PREFIX}mongodb
-            exit 0
+            continue
         # for https://github.com/cloudfoundry-community/cf-services-contrib-release dev services
         elif cf marketplace | grep mongodb; then
             cf services | grep ^${PREFIX}mongodb || cf create-service mongodb default ${PREFIX}mongodb
-            exit 0
+            continue
         else
             echo "MONGO_URI not set and no mongolab or mongodb service available. Please set up MONGO_URI to point to globally accessible mongo instance."
             exit 1

@@ -46,12 +46,29 @@ $ ./run.sh configserver eureka customers stores
 ```
 
 To run the UI with the maps, get the Spring Boot CLI, and install the
-platform CLI plugin, e.g.
+platform CLI plugin, e.g. with GVM:
 
 ```
 $ gvm install springboot 1.1.5.RELEASE
 $ gvm use springboot 1.1.5.RELEASE
-$ cp cli/spring-cloud-cli/target/*.jar ~/.gvm/springboot/1.1.5.RELEASE/lib
+```
+
+then get the install command plugin (backported from Boot 1.2.0):
+
+```
+$ wget http://dl.bintray.com/dsyer/generic/install-0.0.1.jar
+```
+
+install it in the Spring Boot CLI, e.g. with GVM (MacOS users that rely on brew might have to find the `/lib` directory by scanning `brew info springboot`):
+
+```
+$ cp install-0.0.1.jar ~/.gvm/springboot/1.1.5.RELEASE/lib
+```
+
+and finally install the Spring Cloud plugin:
+
+```
+$ spring install org.springframework.cloud:spring-cloud-cli:1.0.0.BUILD-SNAPSHOT
 ```
 
 Then run the app
