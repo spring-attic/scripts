@@ -35,5 +35,7 @@ include::{basedir}/cluster/src/main/asciidoc/spring-cloud-cluster.adoc[]
 
 include::{basedir}/bus/src/main/asciidoc/spring-cloud-bus.adoc[]
 
+include::{basedir}/cli/src/main/asciidoc/spring-cloud-cli.adoc[]
+
 include::{basedir}/cloudfoundry/src/main/asciidoc/spring-cloud-cloudfoundry.adoc[]
 
