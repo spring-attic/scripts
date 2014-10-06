@@ -43,3 +43,6 @@
 [submodule "security"]
         path = security
         url = git@github.com:spring-cloud/spring-cloud-security
+[submodule "build"]
+	path = build
+	url = git@github.com:spring-cloud/spring-cloud-build.git
