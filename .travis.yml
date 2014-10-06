@@ -1,0 +1,5 @@
+language: java
+before_install: git config user.name "$GIT_NAME" && git config user.email "$GIT_EMAIL" && git config credential.helper "store --file=.git/credentials" && echo "https://$GH_TOKEN:@github.com" > .git/credentials
+script: mvn process-resources -N && ./src/main/asciidoc/ghpages.sh
+
+

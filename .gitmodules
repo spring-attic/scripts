@@ -40,3 +40,6 @@
 [submodule "cluster"]
 	path = cluster
 	url = git@github.com:spring-cloud/spring-cloud-cluster
+[submodule "security"]
+        path = security
+        url = git@github.com:spring-cloud/spring-cloud-security
