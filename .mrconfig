@@ -1,3 +1,7 @@
+[build]
+clone = echo 'not cloning submodule'
+checkout = git checkout master
+
 [config]
 clone = echo 'not cloning submodule'
 checkout = git checkout master
@@ -61,6 +65,10 @@ clone = echo 'not cloning submodule'
 checkout = git checkout master
 
 [turbine]
+clone = echo 'not cloning submodule'
+checkout = git checkout master
+
+[security]
 clone = echo 'not cloning submodule'
 checkout = git checkout master
 
