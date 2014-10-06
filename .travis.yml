@@ -1,5 +1,12 @@
 language: java
-before_install: git config user.name "$GIT_NAME" && git config user.email "$GIT_EMAIL" && git config credential.helper "store --file=.git/credentials" && echo "https://$GH_TOKEN:@github.com" > .git/credentials
+before_install:
+- git config user.name "$GIT_NAME"
+- git config user.email "$GIT_EMAIL"
+- git config credential.helper "store --file=.git/credentials"
+- echo "https://$GH_TOKEN:@github.com" > .git/credentials
 script: mvn process-resources -N && ./src/main/asciidoc/ghpages.sh
-
-
+env:
+  global:
+    - GIT_NAME="Dave Syer"
+    - GIT_EMAIL=dsyer@pivotal.io
+    - secure: VqYUotNIlCobrxJPNP7vwAvvpZ1xS3iRejoMjO0W4jBE3AMmUOO3jWxhXKir3UddRexhRJRY4U6W6zEbOyNrWbgqwFiSmbB7kt7A7cEZRVuacHuIDb/TOSyD1lnwAklcQZ5EtoQtE2AcwMagqqNX3CGIDinN6ivBy85pjHhxNWQ=
