@@ -24,6 +24,13 @@
 		<module>cli</module>
 	</modules>
 	
+	<scm>
+		<url>https://github.com/spring-cloud-sample/scripts</url>
+		<connection>scm:git:git://github.com/spring-cloud-samples/scripts.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com/spring-cloud-samples/scripts.git</developerConnection>
+		<tag>HEAD</tag>
+	</scm>
+
 	<properties>
         <java.version>1.7</java.version>
 	</properties>
