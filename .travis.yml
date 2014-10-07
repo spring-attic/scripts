@@ -1,10 +1,16 @@
 language: java
+git:
+  submodules: false
 before_install:
 - git config user.name "$GIT_NAME"
 - git config user.email "$GIT_EMAIL"
 - git config credential.helper "store --file=.git/credentials"
 - echo "https://$GH_TOKEN:@github.com" > .git/credentials
-- sed -i -e 's,git@,https://,' -e 's,.com:,.com/,' .gitmodules
+- cp .gitmodules .gitmodules~
+- sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules
+- git submodule update --init --recursive
+- mv .gitmodules~ .gitmodules
+install: echo "Installed"
 script: mvn process-resources -N && ./src/main/asciidoc/ghpages.sh
 env:
   global:
