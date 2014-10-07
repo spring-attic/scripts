@@ -12,21 +12,16 @@
 	<artifactId>spring-cloud-samples</artifactId>
 	<version>1.0.0.BUILD-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<name>Spring Cloud samples</name>
+	<name>Spring Cloud Samples</name>
 
 	<modules>
 		<module>build</module>
 		<module>config</module>
 		<module>netflix</module>
 		<module>bus</module>
-		<module>cloudfoundry</module>
 		<module>security</module>
 		<module>starters</module>
 		<module>cli</module>
-		<module>configserver</module>
-		<module>eureka</module>
-		<module>hystrix-dashboard</module>
-		<module>customers-stores</module>
 	</modules>
 	
 	<properties>
