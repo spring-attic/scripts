@@ -1,0 +1,42 @@
+[build]
+clone = echo 'not cloning submodule'
+checkout = git checkout master
+
+[config]
+clone = echo 'not cloning submodule'
+checkout = git checkout master
+deploy = mvn deploy "$@" -DaltDeploymentRepository=repo.spring.io::default::https://repo.spring.io/libs-snapshot-local
+install = mvn install "$@"
+
+[netflix]
+clone = echo 'not cloning submodule'
+checkout = git checkout master
+deploy = mvn deploy "$@" -DaltDeploymentRepository=repo.spring.io::default::https://repo.spring.io/libs-snapshot-local
+install = mvn install "$@"
+
+[bus]
+clone = echo 'not cloning submodule'
+checkout = git checkout master
+deploy = mvn deploy "$@" -DaltDeploymentRepository=repo.spring.io::default::https://repo.spring.io/libs-snapshot-local
+install = mvn install "$@"
+
+[cli]
+clone = echo 'not cloning submodule'
+checkout = git checkout master
+deploy = mvn deploy "$@" -DaltDeploymentRepository=repo.spring.io::default::https://repo.spring.io/libs-snapshot-local
+install = mvn install "$@" && [ -e ~/.gvm/springboot/dev ] && cp target/*.jar ~/.gvm/springboot/dev/lib
+
+[starters]
+clone = echo 'not cloning submodule'
+checkout = git checkout master
+deploy = mvn deploy "$@" -DaltDeploymentRepository=repo.spring.io::default::https://repo.spring.io/libs-snapshot-local
+install = mvn install "$@"
+
+[security]
+clone = echo 'not cloning submodule'
+checkout = git checkout master
+
+[]
+clone = git submodule update --init
+checkout = git checkout full
+
