@@ -27,15 +27,15 @@ Spring Cloud focuses on providing good out of box experience for typical use cas
 * Leadership election and cluster state
 * Distributed messaging
 
-include::{basedir}/config/src/main/asciidoc/spring-cloud-config.adoc[]
+include::{basedir}/config/docs/src/main/asciidoc/spring-cloud-config.adoc[]
 
-include::{basedir}/netflix/src/main/asciidoc/spring-cloud-netflix.adoc[]
+include::{basedir}/netflix/docs/src/main/asciidoc/spring-cloud-netflix.adoc[]
 
 include::{basedir}/cluster/src/main/asciidoc/spring-cloud-cluster.adoc[]
 
 include::{basedir}/bus/src/main/asciidoc/spring-cloud-bus.adoc[]
 
-include::{basedir}/cli/src/main/asciidoc/spring-cloud-cli.adoc[]
+include::{basedir}/cli/docs/src/main/asciidoc/spring-cloud-cli.adoc[]
 
 include::{basedir}/cloudfoundry/src/main/asciidoc/spring-cloud-cloudfoundry.adoc[]
 

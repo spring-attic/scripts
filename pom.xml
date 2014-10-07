@@ -35,13 +35,94 @@
 
     <build>
       <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-resources-plugin</artifactId>
+          <executions>
+            <execution>
+              <id>copy-asciidoc</id>
+              <phase>generate-resources</phase>
+              <goals>
+                <goal>copy-resources</goal>
+              </goals>
+              <configuration>
+                <resources>
+                  <resource>
+                    <directory>bus/src/main/asciidoc</directory>
+                    <includes>
+                      <include>images/**</include>
+                    </includes>
+                    <excludes>
+                      <exclude>*.sh</exclude>
+                    </excludes>
+                  </resource>
+                  <resource>
+                    <directory>cli/docs/src/main/asciidoc</directory>
+                    <includes>
+                      <include>images/**</include>
+                    </includes>
+                    <excludes>
+                      <exclude>*.sh</exclude>
+                    </excludes>
+                  </resource>
+                  <resource>
+                    <directory>cloudfoundry/src/main/asciidoc</directory>
+                    <includes>
+                      <include>images/**</include>
+                    </includes>
+                    <excludes>
+                      <exclude>*.sh</exclude>
+                    </excludes>
+                  </resource>
+                  <resource>
+                    <directory>cluster/src/main/asciidoc</directory>
+                    <includes>
+                      <include>images/**</include>
+                    </includes>
+                    <excludes>
+                      <exclude>*.sh</exclude>
+                    </excludes>
+                  </resource>
+                  <resource>
+                    <directory>config/docs/src/main/asciidoc</directory>
+                    <includes>
+                      <include>images/**</include>
+                    </includes>
+                    <excludes>
+                      <exclude>*.sh</exclude>
+                    </excludes>
+                  </resource>
+                  <resource>
+                    <directory>netflix/docs/src/main/asciidoc</directory>
+                    <includes>
+                      <include>images/**</include>
+                    </includes>
+                    <excludes>
+                      <exclude>*.sh</exclude>
+                    </excludes>
+                  </resource>
+                  <resource>
+                    <directory>security/src/main/asciidoc</directory>
+                    <includes>
+                      <include>images/**</include>
+                    </includes>
+                    <excludes>
+                      <exclude>*.sh</exclude>
+                    </excludes>
+                  </resource>
+                </resources>
+                <outputDirectory>target/generated-docs</outputDirectory>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
 		<plugin>
 		  <groupId>org.asciidoctor</groupId>
 		  <artifactId>asciidoctor-maven-plugin</artifactId>
 		  <version>1.5.0</version>
 		  <executions>
 			<execution>
-			  <id>generate-</id>
+			  <id>generate-docs</id>
 			  <phase>process-resources</phase>
 			  <goals>
 				<goal>process-asciidoc</goal>

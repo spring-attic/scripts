@@ -4,6 +4,7 @@ before_install:
 - git config user.email "$GIT_EMAIL"
 - git config credential.helper "store --file=.git/credentials"
 - echo "https://$GH_TOKEN:@github.com" > .git/credentials
+- sed -i -e 's,git@,https://,' -e 's,.com:,.com/,' .gitmodules
 script: mvn process-resources -N && ./src/main/asciidoc/ghpages.sh
 env:
   global:
