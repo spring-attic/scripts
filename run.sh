@@ -16,8 +16,11 @@ function run_app() {
         echo "$1 already running"
         exit 1
     fi
+    if [ -f $DIR/.settings.xml ]; then 
+        SETTINGS='--settings .settings.xml'
+    fi
     TMPHOME=`pwd`
-    (cd $DIR; mvn spring-boot:run > "${TMPHOME}"/target/logs/$1.log &)
+    (cd $DIR; mvn $SETTINGS spring-boot:run > "${TMPHOME}"/target/logs/$1.log &)
     echo "Launching $1 (logs in target/logs/$1.log)"
 
 }

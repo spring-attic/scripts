@@ -19,7 +19,7 @@ $ ./build.sh
 (You can add '-DskipTests' if you like, or just use 'mvn' directly,
 once the submodules are initialized.)
 
-You also nee Mongodb and RabbitMQ. If you don't have those, and you do
+You also nee Mongodb and RabbitMQ and Redis. If you don't have those, and you do
 have Docker, you can run them in Docker (via [fig](http://www.fig.sh/)):
 
 ```
@@ -27,6 +27,7 @@ $ fig up
 ...
 <mongo starts up>
 <rabbit starts up>
+<redis starts up>
 ```
 
 the containers for the server processes write their data locally in
@@ -135,7 +136,7 @@ $ curl -i -H "Content-Type: application/json" http://dsyercustomers.cfapps.io/cu
 
 Then when you visit the customers app at
 [http://dsyercustomers.cfapps.io/customers](http://dsyercustomers.cfapps.io/customers)
-you shoudl see a customer (Ollie) and a link to nearby stores. If the
+you should see a customer (Ollie) and a link to nearby stores. If the
 stores app did not register with eureka, or if you stop the the stores
 app intentionally (`cf stop ...`), then the stores link will be
 missing in the customers app (simple example of a circuit breaker).
