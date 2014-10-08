@@ -15,7 +15,8 @@ centres, and managed platforms such as Cloud Foundry.
 
 == Features
 
-Spring Cloud focuses on providing good out of box experience for typical use cases and extensibility mechanism to cover others. 
+Spring Cloud focuses on providing good out of box experience for typical use cases 
+and extensibility mechanism to cover others. 
 
 * Distributed/versioned configuration
 * Service registration and discovery
@@ -37,5 +38,4 @@ include::{basedir}/bus/src/main/asciidoc/spring-cloud-bus.adoc[]
 
 include::{basedir}/cli/docs/src/main/asciidoc/spring-cloud-cli.adoc[]
 
-include::{basedir}/cloudfoundry/src/main/asciidoc/spring-cloud-cloudfoundry.adoc[]
-
+include::{basedir}/security/src/main/asciidoc/spring-cloud-security.adoc[]
