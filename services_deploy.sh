@@ -34,11 +34,13 @@ function deploy() {
 
     cf push $APP -m 512m -p $APP_HOME/target/*.jar --no-start
     cf env $APP | grep SPRING_PROFILES_ACTIVE || cf set-env $APP SPRING_PROFILES_ACTIVE cloud
+    cf env $APP | grep ENCRYPT_KEY || cf set-env $APP ENCRYPT_KEY deadbeef
     if [ "$PREFIX" != "" ]; then
         cf env $APP | grep PREFIX || cf set-env $APP PREFIX $PREFIX
     fi
     if [ "$1" == "configserver" ]; then
         cf env $APP | grep APPLICATION_DOMAIN || cf set-env $APP APPLICATION_DOMAIN $APPLICATION_DOMAIN
+        cf env $APP | grep KEYSTORE_PASSWORD || cf set-env $APP KEYSTORE_PASSWORD foobar
     else
         cf services | grep ^${PREFIX}configserver && cf bind-service $APP ${PREFIX}configserver
     fi
