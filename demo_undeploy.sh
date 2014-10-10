@@ -15,7 +15,7 @@ cf apps | grep OK || cf login
 TMPHOME=$(cd `dirname "$0"` && pwd)
 if [ "$PREFIX" == "NONE" ]; then 
     PREFIX=
-else 
+elif [ "$PREFIX" == "" ]; then 
     PREFIX=$USER
 fi
 

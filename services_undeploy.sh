@@ -10,7 +10,7 @@ if [ "$DOMAIN" == "run.pivotal.io" ]; then
 fi
 if [ "$PREFIX" == "NONE" ]; then 
     PREFIX=
-else 
+elif [ "$PREFIX" == "" ]; then
     PREFIX=$USER
 fi
 
