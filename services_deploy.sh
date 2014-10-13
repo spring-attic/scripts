@@ -47,7 +47,7 @@ function deploy() {
     
     cf restart $APP
     # TODO push this to server
-    cf services | grep ^$APP || cf create-user-provided-service $APP -p '{"uri":"http://'$APP.$APPLICATION_DOMAIN'"}'
+    cf services | grep ^$APP || cf create-user-provided-service $APP -p '{"uri":"http://user:password@'$APP.$APPLICATION_DOMAIN'"}'
 
 }
 
