@@ -63,7 +63,10 @@ for f in $apps; do
     elif [ $f == "eureka" ]; then
         h=$EUREKA_HOME
     elif [ $f == "rabbitmq" ]; then
-        if cf marketplace | grep cloudamqp; then
+        if ! [ "$RABBIT_URI" == "" ]; then
+            cf services | grep ^${PREFIX}rabbitmq || cf create-user-provided-service ${PREFIX}rabbitmq -p '{"uri":"'$RABBIT_URI'"}'
+            continue
+        elif cf marketplace | grep cloudamqp; then
             cf services | grep ^${PREFIX}rabbitmq || cf create-service cloudamqp tiger ${PREFIX}rabbitmq
             continue
         elif cf marketplace | grep p-rabbitmq; then

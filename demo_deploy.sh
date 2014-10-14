@@ -34,6 +34,11 @@ function deploy_app() {
     [ "$1" == "customersui" ] && JARPATH=$DEMO_HOME/customers-stores-ui/app.jar
     [ "$1" == "hystrix-dashboard" -o "$1" == "turbine" ] && JARPATH=$PLATFORM_HOME/$NAME/target/*.jar
 
+    if [ ! -f $JARPATH ]; then
+        echo "No jar for deployment of $1 at: $JARPATH"
+        exit 0
+    fi
+
     #TODO: using java8 because of temp requirement for spring-platform-bus
     cf push $APP -m 1028m -b https://github.com/spring-io/java-buildpack -p $JARPATH --no-start
     cf env $APP | grep SPRING_PROFILES_ACTIVE || cf set-env $APP SPRING_PROFILES_ACTIVE cloud
