@@ -46,7 +46,11 @@ function deploy_app() {
     if [ "$PREFIX" != "" ]; then
         cf env $APP | grep PREFIX || cf set-env $APP PREFIX $PREFIX
     fi
-    [ "$APPLICATION_DOMAIN" != "cfapps.io" ] && cf set-env $APP APPLICATION_DOMAIN $APPLICATION_DOMAIN
+    if [ "$APPLICATION_DOMAIN" != "cfapps.io" ]; then
+        cf set-env $APP APPLICATION_DOMAIN $APPLICATION_DOMAIN
+    else
+        cf set-env $APP DOMAIN $APPLICATION_DOMAIN        
+    fi
 
     cf bind-service $APP ${PREFIX}configserver
     cf bind-service $APP ${PREFIX}eureka
