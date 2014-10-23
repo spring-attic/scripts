@@ -50,8 +50,8 @@ To run the UI with the maps, get the Spring Boot CLI, and install the
 platform CLI plugin, e.g. with GVM:
 
 ```
-$ gvm install springboot 1.1.5.RELEASE
-$ gvm use springboot 1.1.5.RELEASE
+$ gvm install springboot 1.1.8.RELEASE
+$ gvm use springboot 1.1.8.RELEASE
 ```
 
 then get the install command plugin (backported from Boot 1.2.0):
@@ -63,7 +63,7 @@ $ wget http://dl.bintray.com/dsyer/generic/install-0.0.2.jar
 install it in the Spring Boot CLI, e.g. with GVM (MacOS users that rely on brew might have to find the `/lib` directory by scanning `brew info springboot`):
 
 ```
-$ cp install-0.0.2.jar ~/.gvm/springboot/1.1.5.RELEASE/lib
+$ cp install-0.0.2.jar ~/.gvm/springboot/1.1.8.RELEASE/lib
 ```
 
 and finally install the Spring Cloud plugin:
