@@ -13,6 +13,6 @@ rabbitmq:
 mongodb:
   image: mongo
   volumes:
-    - ./data/db:/data/db
+    - ./data:/data
   ports:
     - "27017:27017"
