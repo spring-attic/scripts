@@ -118,7 +118,7 @@ dsyereureka         user-provided        dsyerconfigserver, dsyercustomers, dsye
 
 You can check that it is all working by pinging the `eureka` app
 endpoints and seeing the other apps registered. E.g. visit
-[http://dsyereureka.cfapps.io/eureka/api/apps](http://dsyereureka.cfapps.io/eureka/api/apps)
+[http://dsyereureka.cfapps.io/eureka/apps](http://dsyereureka.cfapps.io/eureka/apps)
 in a browser. Other useful links for diagnosis and investigating
 what's going on:
 
