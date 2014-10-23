@@ -25,7 +25,7 @@ oauth2:
     clientId: acme
     clientSecret: acmesecret
   resource:
-    tokenInfoUri: http://localhost:8080/uaa/check_token
+    tokenInfoUri: http://localhost:8080/uaa/oauth/check_token
     id: openid
     serviceId: ${PREFIX:}resource
 
