@@ -1,4 +1,4 @@
-The
+2The
 [spring-cloud-samples](https://github.com/spring-cloud-samples)
 can be run as a demo locally by just cloning the individual projects
 and running them. This project can be used to manage updating and
@@ -118,7 +118,7 @@ dsyereureka         user-provided        dsyerconfigserver, dsyercustomers, dsye
 
 You can check that it is all working by pinging the `eureka` app
 endpoints and seeing the other apps registered. E.g. visit
-[http://dsyereureka.cfapps.io/v2/apps](http://dsyereureka.cfapps.io/v2/apps)
+[http://dsyereureka.cfapps.io/eureka/api/apps](http://dsyereureka.cfapps.io/eureka/api/apps)
 in a browser. Other useful links for diagnosis and investigating
 what's going on:
 
