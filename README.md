@@ -41,7 +41,8 @@ versions have not been tested and may have problems.
 
 Docker on a mac requires boot2docker.  Because docker is running in a virtual machine,
 The ip addresses of mongo, rabbit and redis are not 127.0.0.1.  You can use 
-virtualbox port forwarding to address this issue with the following commands:
+virtualbox port forwarding to address this issue with the following commands 
+(from [here](https://github.com/boot2docker/boot2docker/blob/master/doc/WORKAROUNDS.md)):
 
     VBoxManage modifyvm "boot2docker-vm" --natpf1 "tcp-port27017,tcp,,27017,,27017"
     VBoxManage modifyvm "boot2docker-vm" --natpf1 "tcp-port6379,tcp,,6379,,6379"
