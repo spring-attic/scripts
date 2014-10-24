@@ -44,6 +44,7 @@ The ip addresses of mongo, rabbit and redis are not 127.0.0.1.  You can use
 virtualbox port forwarding to address this issue with the following commands 
 (from [here](https://github.com/boot2docker/boot2docker/blob/master/doc/WORKAROUNDS.md)):
 
+    # vm must be powered off
     VBoxManage modifyvm "boot2docker-vm" --natpf1 "tcp-port27017,tcp,,27017,,27017"
     VBoxManage modifyvm "boot2docker-vm" --natpf1 "tcp-port6379,tcp,,6379,,6379"
     VBoxManage modifyvm "boot2docker-vm" --natpf1 "tcp-port15672,tcp,,15672,,15672"
