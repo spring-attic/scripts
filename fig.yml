@@ -5,14 +5,14 @@ redis:
 rabbitmq:
   image: dockerfile/rabbitmq
   volumes:
-    - ./data/rabbit/mnesia:/data/log
-    - ./data/rabbit/log:/data/mnesia
+    - ./data_rabbit/mnesia:/data/log
+    - ./data_rabbit/log:/data/mnesia
   ports:
     - "5672:5672"
     - "15672:15672"
 mongodb:
   image: mongo
   volumes:
-    - ./data:/data
+    - ./data_mongo:/data
   ports:
     - "27017:27017"
