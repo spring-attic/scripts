@@ -9,7 +9,8 @@ spring:
   profiles: discovery
   cloud:
     config:
-      useDiscovery: true
+      discovery:
+        enabled: true
 
 ---
 spring:
