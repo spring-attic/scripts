@@ -1,3 +1,4 @@
+// Run this app with --spring.application.name=resource
 @EnableOAuth2Resource
 @EnableEurekaClient
 @RestController
