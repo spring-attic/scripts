@@ -1,4 +1,4 @@
-2The
+The
 [spring-cloud-samples](https://github.com/spring-cloud-samples)
 can be run as a demo locally by just cloning the individual projects
 and running them. This project can be used to manage updating and

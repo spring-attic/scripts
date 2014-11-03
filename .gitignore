@@ -6,6 +6,7 @@
 target
 bin
 /data
+/data_rabbit
 .classpath
 .project
 .settings
