@@ -21,7 +21,11 @@
 		<module>security</module>
 		<module>starters</module>
 		<module>cli</module>
-	</modules>
+		<module>cloudfoundry</module>
+        <module>configserver</module>
+		<module>eureka</module>
+		<module>hystrix-dashboard</module>
+		<module>customers-stores</module>	</modules>
 	
 	<properties>
         <java.version>1.7</java.version>
