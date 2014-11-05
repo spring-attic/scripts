@@ -25,16 +25,24 @@ echo Home: $PLATFORM_HOME
 DEMO_HOME=${DEMO_HOME:-$PLATFORM_HOME/customers-stores}
 # TODO: clone and build
 
+function find_jar() {
+    if [ -d $1 ]; then
+        ls $1/*.jar | egrep -v 'javadoc|sources'
+    else
+        echo $1/app.jar
+    fi
+}
+
 function deploy_app() {
 
     APP=$PREFIX$1
     NAME=$1
     [ "$1" == "stores" ] && NAME=store
-    JARPATH=$DEMO_HOME/rest-microservices-$NAME/target/*.jar
+    JARPATH=$(find_jar "$DEMO_HOME/rest-microservices-$NAME/target")
     [ "$1" == "customersui" ] && JARPATH=$DEMO_HOME/customers-stores-ui/app.jar
-    [ "$1" == "hystrix-dashboard" -o "$1" == "turbine" ] && JARPATH=$PLATFORM_HOME/$NAME/target/*.jar
+    [ "$1" == "hystrix-dashboard" -o "$1" == "turbine" ] && JARPATH=$(find_jar "$PLATFORM_HOME/$NAME/target")
 
-    if [ ! -f $JARPATH ]; then
+    if ! [ -f "$JARPATH" ]; then
         echo "No jar for deployment of $1 at: $JARPATH"
         exit 0
     fi

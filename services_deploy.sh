@@ -1,4 +1,5 @@
 #!/bin/bash
+
 set -e
 
 DOMAIN=${DOMAIN:-run.pivotal.io}
@@ -27,12 +28,21 @@ CONFIG_HOME=${CONFIG_HOME:-$PLATFORM_HOME/configserver}
 
 EUREKA_HOME=${EUREKA_HOME:-$PLATFORM_HOME/eureka}
 
+function find_jar() {
+    if [ -d $1 ]; then
+        ls $1/*.jar | egrep -v 'javadoc|sources'
+    else
+        echo $1/app.jar
+    fi
+}
+
 function deploy() {
 
     APP=$PREFIX$1
     APP_HOME=$2
 
-    cf push $APP -m 512m -p $APP_HOME/target/*.jar --no-start
+    JARPATH=$(find_jar "$APP_HOME/target")
+    cf push $APP -m 512m -p "$JARPATH" --no-start
     cf env $APP | grep SPRING_PROFILES_ACTIVE || cf set-env $APP SPRING_PROFILES_ACTIVE cloud
     cf env $APP | grep ENCRYPT_KEY || cf set-env $APP ENCRYPT_KEY deadbeef
     if [ "$PREFIX" != "" ]; then
