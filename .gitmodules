@@ -52,3 +52,6 @@
 [submodule "sso"]
 	path = sso
 	url = git@github.com:spring-cloud-samples/sso
+[submodule "aws"]
+	path = aws
+	url = git@github.com:spring-cloud/spring-cloud-aws.git
