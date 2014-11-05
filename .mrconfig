@@ -76,6 +76,14 @@ checkout = git checkout master
 clone = echo 'not cloning submodule'
 checkout = git checkout master
 
+[authserver]
+clone = echo 'not cloning submodule'
+checkout = git checkout master
+
+[sso]
+clone = echo 'not cloning submodule'
+checkout = git checkout master
+
 []
 clone = git submodule update --init
 checkout = git checkout full

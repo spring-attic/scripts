@@ -46,3 +46,9 @@
 [submodule "build"]
 	path = build
 	url = git@github.com:spring-cloud/spring-cloud-build.git
+[submodule "authserver"]
+	path = authserver
+	url = git@github.com:spring-cloud-samples/authserver
+[submodule "sso"]
+	path = sso
+	url = git@github.com:spring-cloud-samples/sso
