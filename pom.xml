@@ -10,7 +10,7 @@
 
 	<groupId>org.springframework.cloud</groupId>
 	<artifactId>spring-cloud-samples</artifactId>
-	<version>1.0.0.BUILD-SNAPSHOT</version>
+	<version>1.0.0.M3</version>
 	<packaging>pom</packaging>
 	<name>Spring Cloud samples</name>
 
