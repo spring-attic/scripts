@@ -55,3 +55,6 @@
 [submodule "aws"]
 	path = aws
 	url = git@github.com:spring-cloud/spring-cloud-aws.git
+[submodule "commons"]
+	path = commons
+	url = git@github.com:spring-cloud/spring-cloud-commons

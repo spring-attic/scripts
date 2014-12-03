@@ -16,6 +16,7 @@
 
 	<modules>
 		<module>build</module>
+		<module>commons</module>
 		<module>config</module>
 		<module>netflix</module>
 		<module>cloudfoundry</module>

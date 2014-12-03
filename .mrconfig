@@ -2,6 +2,12 @@
 clone = echo 'not cloning submodule'
 checkout = git checkout master
 
+[commons]
+clone = echo 'not cloning submodule'
+checkout = git checkout master
+deploy = mvn deploy "$@" -DaltDeploymentRepository=repo.spring.io::default::https://repo.spring.io/libs-snapshot-local
+install = mvn install "$@"
+
 [config]
 clone = echo 'not cloning submodule'
 checkout = git checkout master
