@@ -11,12 +11,7 @@ logging:
 #    org.springframework.web: DEBUG
 zuul:
   routes:
-    resource:
-      path: /resource/**
-      stripPrefix: true      
-    configserver:
-      path: /config/**
-      stripPrefix: true
+    configserver: /config/**
 eureka:
   instance:
     leaseRenewalIntervalInSeconds: 10
