@@ -67,21 +67,25 @@ if [ -z $1 ]; then
 fi
 
 for f in $apps; do
-    h=.
     if [ $f == "configserver" ]; then
-        h=$CONFIG_HOME
+        if cf marketplace | grep p-config; then
+            cf services | grep ^${PREFIX}$f || cf create-service p-config standard ${PREFIX}$f
+        else 
+            deploy $f $CONFIG_HOME
+        fi
     elif [ $f == "eureka" ]; then
-        h=$EUREKA_HOME
+        if cf marketplace | grep p-eureka; then
+            cf services | grep ^${PREFIX}$f || cf create-service p-eureka standard ${PREFIX}$f
+        else 
+            deploy $f $EUREKA_HOME
+        fi
     elif [ $f == "rabbitmq" ]; then
         if ! [ "$RABBIT_URI" == "" ]; then
             cf services | grep ^${PREFIX}rabbitmq || cf create-user-provided-service ${PREFIX}rabbitmq -p '{"uri":"'$RABBIT_URI'"}'
-            continue
         elif cf marketplace | grep cloudamqp; then
             cf services | grep ^${PREFIX}rabbitmq || cf create-service cloudamqp tiger ${PREFIX}rabbitmq
-            continue
         elif cf marketplace | grep p-rabbitmq; then
             cf services | grep ^${PREFIX}rabbitmq || cf create-service p-rabbitmq standard ${PREFIX}rabbitmq
-            continue
         else
             echo "no rabbitmq service available."
             exit 1
@@ -89,22 +93,17 @@ for f in $apps; do
     elif [ $f == "mongodb" ]; then
         if ! [ "$MONGO_URI" == "" ]; then
             cf services | grep ^${PREFIX}mongodb || cf create-user-provided-service ${PREFIX}mongodb -p '{"uri":"'$MONGO_URI'"}'
-            continue
         elif cf marketplace | grep p-mongodb; then
             cf services | grep ^${PREFIX}mongodb || cf create-service p-mongodb development ${PREFIX}mongodb
-            continue
         elif cf marketplace | grep mongolab; then
             cf services | grep ^${PREFIX}mongodb || cf create-service mongolab sandbox ${PREFIX}mongodb
-            continue
         # for https://github.com/cloudfoundry-community/cf-services-contrib-release dev services
         elif cf marketplace | grep mongodb; then
             cf services | grep ^${PREFIX}mongodb || cf create-service mongodb default ${PREFIX}mongodb
-            continue
         else
             echo "MONGO_URI not set and no mongolab or mongodb service available. Please set up MONGO_URI to point to globally accessible mongo instance."
             exit 1
         fi
     fi
-    deploy $f $h
 done
 
