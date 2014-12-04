@@ -1,3 +1,4 @@
+@EnableZuulProxy
 @RestController
 class Demo {
     @RequestMapping("/")

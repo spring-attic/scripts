@@ -10,9 +10,13 @@ logging:
 #    org.springframework.security: DEBUG
 #    org.springframework.web: DEBUG
 zuul:
-  proxy:
-    route:
-      resource: /
+  routes:
+    resource:
+      path: /resource/**
+      stripPrefix: true      
+    configserver:
+      path: /config/**
+      stripPrefix: true
 eureka:
   instance:
     leaseRenewalIntervalInSeconds: 10

@@ -3,6 +3,9 @@ debug: true
 spring:
   application:
     name: ${SPRING_APPLICATION_NAME:demo}
+  cloud:
+    config:
+      uri: http://user:password@localhost:8888
 
 ---
 spring:
