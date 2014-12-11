@@ -95,9 +95,15 @@ Then run the app
 $ (cd customers-stores/customers-ui; spring run app.groovy)
 ```
 
-## Running on Cloudfoundry
+## Running on Cloud Foundry
 
-Pre-requisites: the `cf` command line, Maven (3) and Java (1.7).
+Pre-requisites: 
+
+* Maven (3)
+* Java (1.8)
+* the `cf` CLI
+* Cloud Foundry with Java buildpack version 2.5 or greater (for Java 1.8 support)
+
 Clone the repository and initialize submodules:
 
 ```
