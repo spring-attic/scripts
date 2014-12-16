@@ -1,3 +1,3 @@
-@EnableEurekaClient
+@EnableDiscoveryClient
 public class Application {
 }

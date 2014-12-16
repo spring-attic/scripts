@@ -2,7 +2,7 @@ package demo
 
 @Grab('httpclient')
 @Configuration
-@EnableEurekaClient
+@EnableDiscoveryClient
 @Log
 class App implements CommandLineRunner {
   @Autowired

@@ -1,4 +1,4 @@
-@EnableEurekaClient
+@EnableDiscoveryClient
 @EnableConfigServer
 @RestController
 class Demo {

@@ -1,6 +1,6 @@
 package demo
 
-@EnableEurekaClient
+@EnableDiscoveryClient
 @RestController
 class Application {
   @Autowired
