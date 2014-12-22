@@ -21,6 +21,7 @@
 		<module>netflix</module>
 		<module>cloudfoundry</module>
 		<module>security</module>
+		<module>aws</module>
 		<module>bus</module>
 		<module>starters</module>
 		<module>cli</module>
