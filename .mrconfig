@@ -68,6 +68,10 @@ checkout = git checkout master
 clone = echo 'not cloning submodule'
 checkout = git checkout master
 
+[feign]
+clone = echo 'not cloning submodule'
+checkout = git checkout master
+
 [customers-stores]
 clone = echo 'not cloning submodule'
 checkout = git checkout master
