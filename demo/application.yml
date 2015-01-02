@@ -12,6 +12,9 @@ logging:
 zuul:
   routes:
     configserver: /config/**
+foo:
+  ribbon:
+    listOfServers: http://example.com
 eureka:
   instance:
     leaseRenewalIntervalInSeconds: 10
