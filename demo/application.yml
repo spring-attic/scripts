@@ -3,6 +3,17 @@ info:
 spring:
   application:
     name: ${info.id}
+  oauth2:
+    client:
+      tokenUri: http://localhost:8080/uaa/oauth/token
+      authorizationUri: http://localhost:8080/uaa/oauth/authorize
+      clientId: acme
+      clientSecret: acmesecret
+    resource:
+      tokenInfoUri: http://localhost:8080/uaa/oauth/check_token
+#      id: openid
+      serviceId: ${PREFIX:}resource
+
 logging:
   level:
     com.netflix.discovery: 'OFF'
@@ -15,46 +26,35 @@ zuul:
 foo:
   ribbon:
     listOfServers: http://example.com
-eureka:
+Eureka:
   instance:
     leaseRenewalIntervalInSeconds: 10
     dataCenterInfo:
       availability-zone: us-east-1
-oauth2:
-  client:
-    tokenUri: http://localhost:8080/uaa/oauth/token
-    authorizationUri: http://localhost:8080/uaa/oauth/authorize
-    clientId: acme
-    clientSecret: acmesecret
-  resource:
-    tokenInfoUri: http://localhost:8080/uaa/oauth/check_token
-#    id: openid
-    serviceId: ${PREFIX:}resource
-
 ---
 spring:
   profiles: github
-oauth2:
-  client:
-    clientId: bd1c0a783ccdd1c9b9e4
-    clientSecret: 1a9030fbca47a5b2c28e92f19050bb77824b5ad1
-    tokenUri: https://github.com/login/oauth/access_token
-    authorizationUri: https://github.com/login/oauth/authorize
-    authenticationScheme: form
-  resource:
-    userInfoUri: https://api.github.com/user
-    preferTokenInfo: false
+  oauth2:
+    client:
+      clientId: bd1c0a783ccdd1c9b9e4
+      clientSecret: 1a9030fbca47a5b2c28e92f19050bb77824b5ad1
+      tokenUri: https://github.com/login/oauth/access_token
+      authorizationUri: https://github.com/login/oauth/authorize
+      authenticationScheme: form
+    resource:
+      userInfoUri: https://api.github.com/user
+      preferTokenInfo: false
 
 ---
 spring:
   profiles: test
-oauth2:
-  client:
-    tokenUri: https://login.run.pivotal.io/oauth/token
-    authorizationUri: https://login.run.pivotal.io/oauth/authorize
-    clientId: acme
-    clientSecret: ${CLIENT_SECRET}
-  resource:
-    tokenInfoUri: http://uaa.run.pivotal.io/check_token
-    id: openid
-    serviceId: ${PREFIX:}resource
+  oauth2:
+    client:
+      tokenUri: https://login.run.pivotal.io/oauth/token
+      authorizationUri: https://login.run.pivotal.io/oauth/authorize
+      clientId: acme
+      clientSecret: ${CLIENT_SECRET}
+    resource:
+      tokenInfoUri: http://uaa.run.pivotal.io/check_token
+      id: openid
+      serviceId: ${PREFIX:}resource
