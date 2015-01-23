@@ -100,6 +100,10 @@ checkout = git checkout master
 clone = echo 'not cloning submodule'
 checkout = git checkout master
 
+[tests]
+clone = echo 'not cloning submodule'
+checkout = git checkout master
+
 []
 clone = git submodule update --init
 checkout = git checkout full

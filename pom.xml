@@ -33,6 +33,7 @@
 		<module>customers-stores</module>
 		<module>authserver</module>
 		<module>sso</module>
+		<module>tests</module>
 	</modules>
 	
 	<properties>
