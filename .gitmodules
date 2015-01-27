@@ -58,9 +58,6 @@
 [submodule "commons"]
 	path = commons
 	url = git@github.com:spring-cloud/spring-cloud-commons
-[submodule "feign"]
-	path = feign
-	url = git@github.com:spring-cloud-samples/feign.git
 [submodule "tests"]
 	path = tests
 	url = git@github.com:spring-cloud-samples/tests.git
