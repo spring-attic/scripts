@@ -38,4 +38,3 @@ include::{basedir}/cli/docs/src/main/asciidoc/spring-cloud-cli.adoc[]
 
 include::{basedir}/security/src/main/asciidoc/spring-cloud-security.adoc[]
 
-include::{basedir}/cloudfoundry/src/main/asciidoc/spring-cloud-cloudfoundry.adoc[]

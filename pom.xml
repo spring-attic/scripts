@@ -19,7 +19,6 @@
 		<module>commons</module>
 		<module>config</module>
 		<module>netflix</module>
-		<module>cloudfoundry</module>
 		<module>security</module>
 		<module>aws</module>
 		<module>bus</module>

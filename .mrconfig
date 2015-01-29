@@ -14,19 +14,7 @@ checkout = git checkout master
 deploy = mvn deploy "$@" -DaltDeploymentRepository=repo.spring.io::default::https://repo.spring.io/libs-snapshot-local
 install = mvn install "$@"
 
-[cluster]
-clone = echo 'not cloning submodule'
-checkout = git checkout master
-deploy = mvn deploy "$@" -DaltDeploymentRepository=repo.spring.io::default::https://repo.spring.io/libs-snapshot-local
-install = mvn install "$@"
-
 [aws]
-clone = echo 'not cloning submodule'
-checkout = git checkout master
-deploy = mvn deploy "$@" -DaltDeploymentRepository=repo.spring.io::default::https://repo.spring.io/libs-snapshot-local
-install = mvn install "$@"
-
-[cloudfoundry]
 clone = echo 'not cloning submodule'
 checkout = git checkout master
 deploy = mvn deploy "$@" -DaltDeploymentRepository=repo.spring.io::default::https://repo.spring.io/libs-snapshot-local
@@ -81,10 +69,6 @@ clone = echo 'not cloning submodule'
 checkout = git checkout master
 
 [security]
-clone = echo 'not cloning submodule'
-checkout = git checkout master
-
-[locks]
 clone = echo 'not cloning submodule'
 checkout = git checkout master
 
