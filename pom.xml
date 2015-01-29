@@ -28,7 +28,6 @@
 		<module>configserver</module>
 		<module>eureka</module>
 		<module>hystrix-dashboard</module>
-		<module>feign</module>
 		<module>turbine</module>
 		<module>customers-stores</module>
 		<module>authserver</module>
