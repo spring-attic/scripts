@@ -12,27 +12,45 @@
 	<artifactId>spring-cloud-samples</artifactId>
 	<version>1.0.0.BUILD-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<name>Spring Cloud samples</name>
+	<name>Spring Cloud Samples Scripts</name>
 
-	<modules>
-		<module>build</module>
-		<module>commons</module>
-		<module>config</module>
-		<module>netflix</module>
-		<module>security</module>
-		<module>aws</module>
-		<module>bus</module>
-		<module>starters</module>
-		<module>cli</module>
-		<module>configserver</module>
-		<module>eureka</module>
-		<module>hystrix-dashboard</module>
-		<module>turbine</module>
-		<module>customers-stores</module>
-		<module>authserver</module>
-		<module>sso</module>
-		<module>tests</module>
-	</modules>
+    <profiles>
+      <profile>
+        <id>base</id>
+        <activation><activeByDefault>true</activeByDefault></activation>
+	    <modules>
+		  <module>build</module>
+		  <module>commons</module>
+		  <module>config</module>
+		  <module>netflix</module>
+		  <module>security</module>
+		  <module>aws</module>
+		  <module>bus</module>
+	    </modules>
+      </profile>
+      <profile>
+        <id>starters</id>
+        <activation><activeByDefault>true</activeByDefault></activation>
+        <modules>
+		  <module>starters</module>
+		  <module>cli</module>
+	    </modules>
+      </profile>
+      <profile>
+        <id>apps</id>
+        <activation><activeByDefault>true</activeByDefault></activation>
+        <modules>
+		  <module>tests</module>
+		  <module>configserver</module>
+		  <module>eureka</module>
+		  <module>hystrix-dashboard</module>
+		  <module>turbine</module>
+		  <module>customers-stores</module>
+		  <module>authserver</module>
+		  <module>sso</module>
+        </modules>
+      </profile>
+    </profiles>
 	
 	<properties>
         <java.version>1.7</java.version>
