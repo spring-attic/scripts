@@ -13,6 +13,8 @@ This document pulls together some ideas and sets relative priorities for Spring 
 * Automatic reverse proxy using Zuul
 * Spring configuration model for Zuul filters 
 * Spring configuration model for Ribbon load balancer
+* Feign declarative web service clients (with Ribbon integration)
+* RestTemplate integration with Ribbon
 * Hystrix for circuit breaker: client and dashboard (UI)
 * Turbine for circuit breaker aggregation, pull over HTTP and push over AMQP
 * AWS integration: relational databases, messaging and EC2 metadata
@@ -41,15 +43,19 @@ Microservices lend themselves to messaging and other asynchronous patterns, but 
 
 === Building on the Bus
 
+Rebranding? Spring Cloud Messaging? S C Integration?
+
 The role of Spring Cloud Bus can be expanded in various ways.
 
 * Some messages might need to be audited or brokered in some way, e.g. to ensure delivery to all members of a cluster, not just the ones that are available at the time the message is sent.
 
-* Telemetryand monitoring. Being able to trace business messages through a distributed system is a powerful enabler, and might require the same level of abstraction as the Bus, or even be able to share infrastructure and configuration.
+* Telemetry and monitoring. Being able to trace business messages through a distributed system is a powerful enabler, and might require the same level of abstraction as the Bus, or even be able to share infrastructure and configuration. Publishing metrics: OpenTSDB (see https://github.com/Ticketmaster), redis, zookeeper or http://influxdb.com.
 
-* Messages can already be addressed to individual service instances, but no use is made of that feature in Spring Cloud itself (users are left to use it if they feel they need to).
+* Messages can already be addressed to all the instances of a service, but no use is made of that feature in Spring Cloud itself (users are left to use it if they feel they need to).
 
 * Publishing more events, and publishing automatically (instead of waiting to be poked on an Actuator `Endpoint`).
+
+* Alternative implementations: Consul, Redis, kafka, AWS (SQS + SNS), Gemfire
 
 === Reactive Patterns
 
@@ -70,6 +76,11 @@ Integrating more with http://projectreactor.org[Project Reactor], e.g. publishin
 * Developer deploys a component locally and it joins a remote distributed system (to save from having to deploy the whole system for an integration test of one of its components).
 * Tooling for containers.
 
+=== Demonstrate Cloud Native
+
+* Multi-Zone and Multi-Region demos on CF and AWS using a Mutli-Region DB like Cassandra.
+
 === More Security Options
 
 Securing business services as well as the platform (Spring Cloud features) itself is bound to be an area of expansion. So far we only make it easy to add HTTP basic security to the Config Server and Eureka. More options, even if it's only documentation, are needed.
+
