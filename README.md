@@ -20,10 +20,10 @@ $ ./build.sh
 once the submodules are initialized.)
 
 You also nee Mongodb and RabbitMQ and Redis. If you don't have those, and you do
-have Docker, you can run them in Docker (via [fig](http://www.fig.sh/)):
+have Docker, you can run them in Docker (via [docker-compose](http://docs.docker.com/compose/)):
 
 ```
-$ fig up
+$ docker-compose up
 ...
 <mongo starts up>
 <rabbit starts up>
@@ -34,10 +34,11 @@ the containers for the server processes write their data locally in
 `./data_*`. Those files will be owned by root, so watch out when it
 comes to remove them.
 
-**NOTE**: Docker version 1.2 and Fig version 0.5.2 are confirmed to work.  The latest 
-versions have not been tested and may have problems.
+**NOTE**: Docker version 1.5 and Compose version 1.1.0 are confirmed
+to work.  The latest versions have not been tested and may have
+problems.
 
-### fig on a mac
+### Docker on a mac
 
 Docker on a mac requires boot2docker.  Because docker is running in a virtual machine,
 The ip addresses of mongo, rabbit and redis are not 127.0.0.1.  You can use 
@@ -50,9 +51,9 @@ virtualbox port forwarding to address this issue with the following commands
     VBoxManage modifyvm "boot2docker-vm" --natpf1 "tcp-port15672,tcp,,15672,,15672"
     VBoxManage modifyvm "boot2docker-vm" --natpf1 "tcp-port5672,tcp,,5672,,5672"
     
-### fig alternative on a mac
+### Docker alternative on a mac
 
-If you prefer not to use docker/fig you can install mongo, rabbit and redis:
+If you prefer not to use docker-compose you can install mongo, rabbit and redis:
 
     brew install mongodb rabbitmq redis
     
