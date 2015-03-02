@@ -69,7 +69,7 @@ Integrating more with http://projectreactor.org[Project Reactor], e.g. publishin
 
 * Maybe other discovery and service registry solutions (Gemfire, redis, etcd, Zookeeper, Spring Cloud Cluster).
 
-* The new generation of Netflix OSS, and its focus on RxNetty creates some challenges, but also a lot nicer programming models and easier integration. We will probably end up deprecating a large fraction of Spring Cloud 1.0.
+* The new generation of Netflix OSS, and its focus on RxNetty creates some challenges, but also a lot nicer programming models and easier integration. These changes will probably end up requiring a new major version of Spring Cloud Netflix.
 
 === Developer Workflow
 
