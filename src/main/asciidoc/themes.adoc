@@ -43,8 +43,6 @@ Microservices lend themselves to messaging and other asynchronous patterns, but 
 
 === Building on the Bus
 
-Rebranding? Spring Cloud Messaging? S C Integration?
-
 The role of Spring Cloud Bus can be expanded in various ways.
 
 * Some messages might need to be audited or brokered in some way, e.g. to ensure delivery to all members of a cluster, not just the ones that are available at the time the message is sent.
