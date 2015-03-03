@@ -16,10 +16,16 @@
 
     <profiles>
       <profile>
-        <id>base</id>
+        <id>build</id>
         <activation><activeByDefault>true</activeByDefault></activation>
 	    <modules>
 		  <module>build</module>
+	    </modules>
+      </profile>
+      <profile>
+        <id>base</id>
+        <activation><activeByDefault>true</activeByDefault></activation>
+	    <modules>
 		  <module>commons</module>
 		  <module>config</module>
 		  <module>netflix</module>
