@@ -65,7 +65,7 @@ Integrating more with http://projectreactor.org[Project Reactor], e.g. publishin
 
 * Consul: provide an alternative implementation of the discovery abstraction in Spring Cloud Commons. Consul uses a distributed datastore and cluster manager, so it has an emphasis on consistency (so availability is only an option, while is the main focus of Eureka).
 
-* Maybe other discovery and service registry solutions (Gemfire, redis, etcd, Zookeeper, Spring Cloud Cluster).
+* Maybe other discovery and service registry solutions (Gemfire, redis, etcd, Zookeeper, Spring Cloud Cluster, airbnb/synapse).
 
 * The new generation of Netflix OSS, and its focus on RxNetty creates some challenges, but also a lot nicer programming models and easier integration. These changes will probably end up requiring a new major version of Spring Cloud Netflix.
 
