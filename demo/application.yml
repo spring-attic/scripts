@@ -35,6 +35,14 @@ spring:
 #      id: openid
       serviceId: ${PREFIX:}resource
 
+endpoints:
+  health:
+    sensitive: false
+  restart:
+    enabled: true
+  shutdown:
+    enabled: true
+
 ---
 spring:
   profiles: github
