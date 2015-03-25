@@ -47,7 +47,7 @@ The role of Spring Cloud Bus can be expanded in various ways.
 
 * Some messages might need to be audited or brokered in some way, e.g. to ensure delivery to all members of a cluster, not just the ones that are available at the time the message is sent.
 
-* Telemetry and monitoring. Being able to trace business messages through a distributed system is a powerful enabler, and might require the same level of abstraction as the Bus, or even be able to share infrastructure and configuration. Publishing metrics: OpenTSDB (see https://github.com/Ticketmaster), redis, zookeeper or http://influxdb.com.
+* Telemetry and monitoring. Being able to trace business messages through a distributed system is a powerful enabler, and might require the same level of abstraction as the Bus, or even be able to share infrastructure and configuration. Publishing metrics: OpenTSDB (see https://github.com/Ticketmaster), redis, zookeeper, netflix atlas or http://influxdb.com.
 
 * Messages can already be addressed to all the instances of a service, but no use is made of that feature in Spring Cloud itself (users are left to use it if they feel they need to).
 
