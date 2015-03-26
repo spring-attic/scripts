@@ -69,6 +69,10 @@ Integrating more with http://projectreactor.org[Project Reactor], e.g. publishin
 
 * The new generation of Netflix OSS, and its focus on RxNetty creates some challenges, but also a lot nicer programming models and easier integration. These changes will probably end up requiring a new major version of Spring Cloud Netflix.
 
+=== Integration Testing
+
+* Have a full env that is spun up to run full tests against (Eureka, Config Server, Turbine, Hystrix Dashboard and clients of various kinds).
+
 === Developer Workflow
 
 * Developer deploys a component locally and it joins a remote distributed system (to save from having to deploy the whole system for an integration test of one of its components).
