@@ -17,7 +17,7 @@ $ ./build.sh
 ```
 
 (You can add '-DskipTests' if you like, or just use 'mvn' directly,
-once the submodules are initialized.)
+once the submodules are initialized. If you are starting from scratch, the "build" module needs to be installed first, followed by the "starters".)
 
 You also nee Mongodb and RabbitMQ and Redis. If you don't have those, and you do
 have Docker, you can run them in Docker (via [docker-compose](http://docs.docker.com/compose/)):
