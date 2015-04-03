@@ -88,4 +88,4 @@ Securing business services as well as the platform (Spring Cloud features) itsel
 
 === Multi-tenancy
 
-From a discusion with @joshlong about Hystrix, Config Server and Discovery in a multi-tennant system
+From a discusion with @joshlong about Hystrix, Config Server and Discovery in a multi-tennant system: see [spring-cloud-commons #20](https://github.com/spring-cloud/spring-cloud-commons/issues/20)
