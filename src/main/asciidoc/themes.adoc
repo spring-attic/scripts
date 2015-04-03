@@ -86,3 +86,6 @@ Integrating more with http://projectreactor.org[Project Reactor], e.g. publishin
 
 Securing business services as well as the platform (Spring Cloud features) itself is bound to be an area of expansion. So far we only make it easy to add HTTP basic security to the Config Server and Eureka. More options, even if it's only documentation, are needed.
 
+=== Multi-tenancy
+
+From a discusion with @joshlong about Hystrix, Config Server and Discovery in a multi-tennant system
