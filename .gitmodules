@@ -63,4 +63,4 @@
 	url = git@github.com:spring-cloud-samples/tests.git
 [submodule "lattice"]
 	path = lattice
-	url = git://github.com/spring-cloud/spring-cloud-lattice.git
+	url = git@github.com:spring-cloud/spring-cloud-lattice.git
