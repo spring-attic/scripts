@@ -3,16 +3,11 @@ redis:
   ports:
     - "6379:6379"
 rabbitmq:
-  image: dockerfile/rabbitmq
-  volumes:
-    - ./data_rabbit/mnesia:/data/log
-    - ./data_rabbit/log:/data/mnesia
+  image: rabbitmq
   ports:
     - "5672:5672"
     - "15672:15672"
 mongodb:
   image: mongo
-  volumes:
-    - ./data_mongo:/data
   ports:
     - "27017:27017"
