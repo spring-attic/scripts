@@ -22,9 +22,6 @@
 [submodule "turbine"]
 	path = turbine
 	url = git@github.com:spring-cloud-samples/turbine
-[submodule "locks"]
-	path = locks
-	url = git@github.com:spring-cloud-samples/locks.git
 [submodule "starters"]
 	path = starters
 	url = git@github.com:spring-cloud/spring-cloud-starters.git
@@ -37,9 +34,6 @@
 [submodule "bus"]
 	path = bus
 	url = git@github.com:spring-cloud/spring-cloud-bus.git
-[submodule "cluster"]
-	path = cluster
-	url = git@github.com:spring-cloud/spring-cloud-cluster
 [submodule "security"]
         path = security
         url = git@github.com:spring-cloud/spring-cloud-security
@@ -61,6 +55,3 @@
 [submodule "tests"]
 	path = tests
 	url = git@github.com:spring-cloud-samples/tests.git
-[submodule "lattice"]
-	path = lattice
-	url = git@github.com:spring-cloud/spring-cloud-lattice.git
