@@ -30,7 +30,6 @@
 		  <module>config</module>
 		  <module>netflix</module>
 		  <module>security</module>
-		  <module>aws</module>
 		  <module>bus</module>
 	    </modules>
       </profile>
