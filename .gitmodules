@@ -49,3 +49,6 @@
 [submodule "tests"]
 	path = tests
 	url = git@github.com:spring-cloud-samples/tests.git
+[submodule "aws"]
+	path = aws
+	url = git@github.com:spring-cloud/spring-cloud-aws.git
