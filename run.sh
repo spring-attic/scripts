@@ -4,6 +4,11 @@ set -e
 
 mkdir -p target/logs
 
+for p in 8081 9000 8888 8761 9900; do
+    netstat -tlnp | cut --b 21-41 | grep $p && used=$used","$p
+done
+[ "$used" != "" ] && echo Ports ${used#,} in use, please kill the 'process(es)' and try again && exit 1
+
 function run_app() {
 
     NAME=$1
