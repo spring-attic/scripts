@@ -47,7 +47,6 @@ function deploy_app() {
         exit 0
     fi
 
-    #TODO: using java8 because of temp requirement for spring-platform-bus
     cf push $APP -m 1028m -p $JARPATH --no-start
     cf env $APP | grep SPRING_PROFILES_ACTIVE || cf set-env $APP SPRING_PROFILES_ACTIVE cloud
     cf env $APP | grep ENCRYPT_KEY || cf set-env $APP ENCRYPT_KEY deadbeef
