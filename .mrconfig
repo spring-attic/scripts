@@ -102,6 +102,12 @@ checkout = git checkout master
 clone = echo 'not cloning submodule'
 checkout = git checkout master
 
+[zookeeper]
+clone = echo 'not cloning submodule'
+checkout = git checkout master
+deploy = mvn deploy "$@" -DaltDeploymentRepository=repo.spring.io::default::https://repo.spring.io/libs-snapshot-local
+install = mvn install "$@"
+
 []
 clone = git submodule update --init
 checkout = git checkout full
