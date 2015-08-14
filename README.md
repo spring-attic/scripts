@@ -16,7 +16,7 @@ $ cd scripts
 $ ./build.sh
 ```
 
-(You can add '-DskipTests' if you like, or just use 'mvn' directly,
+(You can add '-DskipTests' if you like, or just use './mvnw' directly,
 once the submodules are initialized. If you are starting from scratch, the "build" module needs to be installed first, followed by the "starters".)
 
 You also nee Mongodb and RabbitMQ and Redis. If you don't have those, and you do
