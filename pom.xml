@@ -27,11 +27,16 @@
         <activation><activeByDefault>true</activeByDefault></activation>
 	    <modules>
 		  <module>commons</module>
-		  <module>config</module>
-		  <module>netflix</module>
-		  <module>security</module>
 		  <module>aws</module>
 		  <module>bus</module>
+		  <module>config</module>
+		  <module>cloudfoundry</module>
+		  <module>cluster</module>
+		  <module>netflix</module>
+		  <module>security</module>
+		  <module>sleuth</module>
+		  <module>stream</module>
+		  <module>zookeeper</module>
 	    </modules>
       </profile>
       <profile>
