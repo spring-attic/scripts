@@ -90,6 +90,10 @@ checkout = git checkout master
 clone = echo 'not cloning submodule'
 checkout = git checkout master
 
+[stream]
+clone = echo 'not cloning submodule'
+checkout = git checkout master
+
 [authserver]
 clone = echo 'not cloning submodule'
 checkout = git checkout master
