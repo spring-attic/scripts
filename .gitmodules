@@ -73,3 +73,6 @@
 [submodule "stream"]
 	path = stream
 	url = git@github.com:spring-cloud/spring-cloud-stream.git
+[submodule "brewery"]
+	path = brewery
+	url = git@github.com:spring-cloud-samples/brewery
