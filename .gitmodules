@@ -73,3 +73,6 @@
 [submodule "brewery"]
 	path = brewery
 	url = git@github.com:spring-cloud-samples/brewery
+[submodule "consul"]
+	path = consul
+	url = git@github.com:spring-cloud/spring-cloud-consul
