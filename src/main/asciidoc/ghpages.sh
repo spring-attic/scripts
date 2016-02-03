@@ -1,6 +1,6 @@
 #!/bin/bash -x
 
-git remote add docs https://github.com/spring-projects/spring-cloud
+git remote add docs https://github.com/spring-cloud/spring-cloud-static
 
 if ! (git fetch docs && git checkout --track docs/gh-pages); then
     echo "No gh-pages, error"
