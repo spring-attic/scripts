@@ -30,6 +30,7 @@
 		  <module>aws</module>
 		  <module>bus</module>
 		  <module>config</module>
+		  <module>consul</module>
 		  <module>cloudfoundry</module>
 		  <module>cluster</module>
 		  <module>netflix</module>
