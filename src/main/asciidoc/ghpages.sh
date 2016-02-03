@@ -1,6 +1,6 @@
 #!/bin/bash -x
 
-git remote add docs https://github.com/spring-projects/spring-cloud
+git remote add docs https://github.com/spring-cloud/spring-cloud-static
 
 if ! (git fetch docs && git checkout --track docs/gh-pages); then
     echo "No gh-pages, error"
@@ -22,11 +22,13 @@ if [ "$dirty" != "0" ]; then git stash; fi
 ###################################################################
 git checkout gh-pages
 
+mkdir -p docs/1.0.x
+
 for f in target/generated-docs/*; do
     file=${f#target/generated-docs/*}
     if ! git ls-files -i -o --exclude-standard --directory | grep -q ^$file$; then
         # Not ignored...
-        cp -rf $f .
+        cp -rf $f docs/1.0.x
         git add -A $file
     fi
 done
@@ -37,7 +39,7 @@ git commit -a -m "Sync docs from master to gh-pages"
 # the gh-pages branch whenever you commit to master locally.
 # This is a little extreme. Use with care!
 ###################################################################
-git push docs gh-pages || exit 1
+# git push docs gh-pages || exit 1
 
 # Finally, switch back to the master branch and exit block
 git checkout master
