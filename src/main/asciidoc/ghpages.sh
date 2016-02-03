@@ -1,8 +1,8 @@
 #!/bin/bash -x
 
-git remote add docs https://github.com/spring-cloud/spring-cloud-static
+git remote | grep docs || git remote add docs https://github.com/spring-cloud/spring-cloud-static
 
-if ! (git fetch docs && git checkout --track docs/gh-pages); then
+if ! (git fetch docs && git checkout --track docs/gh-pages || git checkout gh-pages); then
     echo "No gh-pages, error"
     exit 1
 fi
@@ -29,20 +29,20 @@ for f in target/generated-docs/*; do
     if ! git ls-files -i -o --exclude-standard --directory | grep -q ^$file$; then
         # Not ignored...
         cp -rf $f docs/1.0.x
-        git add -A $file
+        git add -A docs/1.0.x/$file
     fi
 done
 
-git commit -a -m "Sync docs from master to gh-pages"
+git commit -a -m "Sync docs from 1.0.x to gh-pages"
 
 # Uncomment the following push if you want to auto push to
 # the gh-pages branch whenever you commit to master locally.
 # This is a little extreme. Use with care!
 ###################################################################
-# git push docs gh-pages || exit 1
+git push docs gh-pages || exit 1
 
 # Finally, switch back to the master branch and exit block
-git checkout master
+git checkout 1.0.x
 if [ "$dirty" != "0" ]; then git stash pop; fi
 
 exit 0
