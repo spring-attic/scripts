@@ -163,7 +163,7 @@
 		<plugin>
 		  <groupId>org.asciidoctor</groupId>
 		  <artifactId>asciidoctor-maven-plugin</artifactId>
-		  <version>1.5.0</version>
+		  <version>1.5.2</version>
 		  <executions>
 			<execution>
 			  <id>generate-docs</id>
@@ -178,6 +178,7 @@
 				<attributes>
 				  <docinfo>true</docinfo>
 				  <spring-cloud-version>${project.version}</spring-cloud-version>
+				  <allow-uri-read>true</allow-uri-read>
 				</attributes>
 			  </configuration>
 			</execution>
