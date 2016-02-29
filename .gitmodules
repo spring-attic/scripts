@@ -76,6 +76,3 @@
 [submodule "consul"]
 	path = consul
 	url = git@github.com:spring-cloud/spring-cloud-consul
-[submodule "task"]
-	path = task
-	url = git://github.com/spring-cloud/spring-cloud-task.git
