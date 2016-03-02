@@ -110,10 +110,6 @@ checkout = git checkout master
 clone = echo 'not cloning submodule'
 checkout = git checkout master
 
-[task]
-clone = echo 'not cloning submodule'
-checkout = git checkout master
-
 [tests]
 clone = echo 'not cloning submodule'
 checkout = git checkout master
