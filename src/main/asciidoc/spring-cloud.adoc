@@ -37,10 +37,6 @@ include::{basedir}/netflix/docs/src/main/asciidoc/spring-cloud-netflix.adoc[]
 = Spring Cloud Stream
 include::{basedir}/stream/spring-cloud-stream-docs/src/main/asciidoc/spring-cloud-stream-overview.adoc[]
 
-= Spring Cloud Task
-include::{basedir}/task/spring-cloud-task-docs/src/main/asciidoc/getting-started.adoc[leveloffset=+1]
-include::{basedir}/task/spring-cloud-task-docs/src/main/asciidoc/features.adoc[leveloffset=+1]
-
 include::{basedir}/bus/docs/src/main/asciidoc/spring-cloud-bus.adoc[]
 
 include::{basedir}/sleuth/docs/src/main/asciidoc/spring-cloud-sleuth.adoc[]
@@ -57,3 +53,6 @@ include::{basedir}/cloudfoundry/docs/src/main/asciidoc/spring-cloud-cloudfoundry
 
 include::{basedir}/cluster/docs/src/main/asciidoc/spring-cloud-cluster.adoc[]
 
+= Appendix: Compendium of Configuration Properties
+
+include::configprops.adoc[]

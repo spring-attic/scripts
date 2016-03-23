@@ -1,0 +1,965 @@
+|===
+|Name | Default | Description
+
+|encrypt.fail-on-error | true | Flag to say that a process should fail if there is an encryption or decryption
+ error.
+
+|encrypt.key |  | A symmetric key. As a stronger alternative consider using a keystore.
+
+|encrypt.key-store.alias |  | Alias for a key in the store.
+
+|encrypt.key-store.location |  | Location of the key store file, e.g. classpath:/keystore.jks.
+
+|encrypt.key-store.password |  | Password that locks the keystore.
+
+|encrypt.key-store.secret |  | Secret protecting the key (defaults to the same as the password).
+
+|encrypt.rsa.algorithm |  | The RSA algorithm to use (DEFAULT or OEAP). Once it is set do not change it (or
+ existing ciphers will not a decryptable).
+
+|encrypt.rsa.salt | deadbeef | Salt for the random secret used to encrypt cipher text. Once it is set do not
+ change it (or existing ciphers will not a decryptable).
+
+|encrypt.rsa.strong | false | Flag to indicate that "strong" AES encryption should be used internally. If
+ true then the GCM algorithm is applied to the AES encrypted bytes. Default is
+ false (in which case "standard" CBC is used instead). Once it is set do not
+ change it (or existing ciphers will not a decryptable).
+
+|endpoints.bus.enabled |  | 
+
+|endpoints.bus.id |  | 
+
+|endpoints.bus.sensitive |  | 
+
+|endpoints.consul.enabled |  | 
+
+|endpoints.consul.id |  | 
+
+|endpoints.consul.sensitive |  | 
+
+|endpoints.features.enabled |  | 
+
+|endpoints.features.id |  | 
+
+|endpoints.features.sensitive |  | 
+
+|endpoints.pause.enabled |  | 
+
+|endpoints.pause.id |  | 
+
+|endpoints.pause.sensitive |  | 
+
+|endpoints.refresh.enabled |  | 
+
+|endpoints.refresh.id |  | 
+
+|endpoints.refresh.sensitive |  | 
+
+|endpoints.restart.enabled |  | 
+
+|endpoints.restart.id |  | 
+
+|endpoints.restart.pause-endpoint.enabled |  | 
+
+|endpoints.restart.pause-endpoint.id |  | 
+
+|endpoints.restart.pause-endpoint.sensitive |  | 
+
+|endpoints.restart.resume-endpoint.enabled |  | 
+
+|endpoints.restart.resume-endpoint.id |  | 
+
+|endpoints.restart.resume-endpoint.sensitive |  | 
+
+|endpoints.restart.sensitive |  | 
+
+|endpoints.restart.timeout | 0 | 
+
+|endpoints.resume.enabled |  | 
+
+|endpoints.resume.id |  | 
+
+|endpoints.resume.sensitive |  | 
+
+|eureka.client.allow-redirects | false | Indicates whether server can redirect a client request to a backup server/cluster.
+ If set to false, the server will handle the request directly, If set to true, it
+ may send HTTP redirect to the client, with a new server location.
+
+|eureka.client.availability-zones |  | Gets the list of availability zones (used in AWS data centers) for the region in
+ which this instance resides.
+
+ The changes are effective at runtime at the next registry fetch cycle as specified
+ by registryFetchIntervalSeconds.
+
+|eureka.client.backup-registry-impl |  | Gets the name of the implementation which implements BackupRegistry to fetch the
+ registry information as a fall back option for only the first time when the eureka
+ client starts.
+
+ This may be needed for applications which needs additional resiliency for registry
+ information without which it cannot operate.
+
+|eureka.client.cache-refresh-executor-exponential-back-off-bound | 10 | Cache refresh executor exponential back off related property. It is a maximum
+ multiplier value for retry delay, in case where a sequence of timeouts occurred.
+
+|eureka.client.cache-refresh-executor-thread-pool-size | 2 | The thread pool size for the cacheRefreshExecutor to initialise with
+
+|eureka.client.client-data-accept |  | EurekaAccept name for client data accept
+
+|eureka.client.decoder-name |  | This is a transient config and once the latest codecs are stable, can be removed
+ (as there will only be one)
+
+|eureka.client.disable-delta | false | Indicates whether the eureka client should disable fetching of delta and should
+ rather resort to getting the full registry information.
+
+ Note that the delta fetches can reduce the traffic tremendously, because the rate
+ of change with the eureka server is normally much lower than the rate of fetches.
+
+ The changes are effective at runtime at the next registry fetch cycle as specified
+ by registryFetchIntervalSeconds
+
+|eureka.client.dollar-replacement | _- | Get a replacement string for Dollar sign <code>$</code> during
+ serializing/deserializing information in eureka server.
+
+|eureka.client.enabled | true | Flag to indicate that the Eureka client is enabled.
+
+|eureka.client.encoder-name |  | This is a transient config and once the latest codecs are stable, can be removed
+ (as there will only be one)
+
+|eureka.client.escape-char-replacement | __ | Get a replacement string for underscore sign <code>_</code> during
+ serializing/deserializing information in eureka server.
+
+|eureka.client.eureka-connection-idle-timeout-seconds | 30 | Indicates how much time (in seconds) that the HTTP connections to eureka server can
+ stay idle before it can be closed.
+
+ In the AWS environment, it is recommended that the values is 30 seconds or less,
+ since the firewall cleans up the connection information after a few mins leaving
+ the connection hanging in limbo
+
+|eureka.client.eureka-server-connect-timeout-seconds | 5 | Indicates how long to wait (in seconds) before a connection to eureka server needs
+ to timeout. Note that the connections in the client are pooled by
+ org.apache.http.client.HttpClient and this setting affects the actual connection
+ creation and also the wait time to get the connection from the pool.
+
+|eureka.client.eureka-server-dnsname |  | Gets the DNS name to be queried to get the list of eureka servers.This information
+ is not required if the contract returns the service urls by implementing
+ serviceUrls.
+
+ The DNS mechanism is used when useDnsForFetchingServiceUrls is set to true and the
+ eureka client expects the DNS to configured a certain way so that it can fetch
+ changing eureka servers dynamically.
+
+ The changes are effective at runtime.
+
+|eureka.client.eureka-server-port |  | Gets the port to be used to construct the service url to contact eureka server when
+ the list of eureka servers come from the DNS.This information is not required if
+ the contract returns the service urls eurekaServerServiceUrls(String).
+
+ The DNS mechanism is used when useDnsForFetchingServiceUrls is set to true and the
+ eureka client expects the DNS to configured a certain way so that it can fetch
+ changing eureka servers dynamically.
+
+ The changes are effective at runtime.
+
+|eureka.client.eureka-server-read-timeout-seconds | 8 | Indicates how long to wait (in seconds) before a read from eureka server needs to
+ timeout.
+
+|eureka.client.eureka-server-total-connections | 200 | Gets the total number of connections that is allowed from eureka client to all
+ eureka servers.
+
+|eureka.client.eureka-server-total-connections-per-host | 50 | Gets the total number of connections that is allowed from eureka client to a eureka
+ server host.
+
+|eureka.client.eureka-server-urlcontext |  | Gets the URL context to be used to construct the service url to contact eureka
+ server when the list of eureka servers come from the DNS. This information is not
+ required if the contract returns the service urls from eurekaServerServiceUrls.
+
+ The DNS mechanism is used when useDnsForFetchingServiceUrls is set to true and the
+ eureka client expects the DNS to configured a certain way so that it can fetch
+ changing eureka servers dynamically. The changes are effective at runtime.
+
+|eureka.client.eureka-service-url-poll-interval-seconds | 0 | Indicates how often(in seconds) to poll for changes to eureka server information.
+ Eureka servers could be added or removed and this setting controls how soon the
+ eureka clients should know about it.
+
+|eureka.client.fetch-registry | true | Indicates whether this client should fetch eureka registry information from eureka
+ server.
+
+|eureka.client.fetch-remote-regions-registry |  | Comma separated list of regions for which the eureka registry information will be
+ fetched. It is mandatory to define the availability zones for each of these regions
+ as returned by availabilityZones. Failing to do so, will result in failure of
+ discovery client startup.
+
+|eureka.client.filter-only-up-instances | true | Indicates whether to get the applications after filtering the applications for
+ instances with only InstanceStatus UP states.
+
+|eureka.client.g-zip-content | true | Indicates whether the content fetched from eureka server has to be compressed
+ whenever it is supported by the server. The registry information from the eureka
+ server is compressed for optimum network traffic.
+
+|eureka.client.heartbeat-executor-exponential-back-off-bound | 10 | Heartbeat executor exponential back off related property. It is a maximum
+ multiplier value for retry delay, in case where a sequence of timeouts occurred.
+
+|eureka.client.heartbeat-executor-thread-pool-size | 2 | The thread pool size for the heartbeatExecutor to initialise with
+
+|eureka.client.initial-instance-info-replication-interval-seconds | 40 | Indicates how long initially (in seconds) to replicate instance info to the eureka
+ server
+
+|eureka.client.instance-info-replication-interval-seconds | 30 | Indicates how often(in seconds) to replicate instance changes to be replicated to
+ the eureka server.
+
+|eureka.client.log-delta-diff | false | Indicates whether to log differences between the eureka server and the eureka
+ client in terms of registry information.
+
+ Eureka client tries to retrieve only delta changes from eureka server to minimize
+ network traffic. After receiving the deltas, eureka client reconciles the
+ information from the server to verify it has not missed out some information.
+ Reconciliation failures could happen when the client has had network issues
+ communicating to server.If the reconciliation fails, eureka client gets the full
+ registry information.
+
+ While getting the full registry information, the eureka client can log the
+ differences between the client and the server and this setting controls that.
+
+ The changes are effective at runtime at the next registry fetch cycle as specified
+ by registryFetchIntervalSecondsr
+
+|eureka.client.on-demand-update-status-change | true | If set to true, local status updates via ApplicationInfoManager will trigger
+ on-demand (but rate limited) register/updates to remote eureka servers
+
+|eureka.client.prefer-same-zone-eureka | true | Indicates whether or not this instance should try to use the eureka server in the
+ same zone for latency and/or other reason.
+
+ Ideally eureka clients are configured to talk to servers in the same zone
+
+ The changes are effective at runtime at the next registry fetch cycle as specified
+ by registryFetchIntervalSeconds
+
+|eureka.client.property-resolver |  | 
+
+|eureka.client.proxy-host |  | Gets the proxy host to eureka server if any.
+
+|eureka.client.proxy-password |  | Gets the proxy password if any.
+
+|eureka.client.proxy-port |  | Gets the proxy port to eureka server if any.
+
+|eureka.client.proxy-user-name |  | Gets the proxy user name if any.
+
+|eureka.client.region | us-east-1 | Gets the region (used in AWS datacenters) where this instance resides.
+
+|eureka.client.register-with-eureka | true | Indicates whether or not this instance should register its information with eureka
+ server for discovery by others.
+
+ In some cases, you do not want your instances to be discovered whereas you just
+ want do discover other instances.
+
+|eureka.client.registry-fetch-interval-seconds | 30 | Indicates how often(in seconds) to fetch the registry information from the eureka
+ server.
+
+|eureka.client.registry-refresh-single-vip-address |  | Indicates whether the client is only interested in the registry information for a
+ single VIP.
+
+|eureka.client.service-url |  | Map of availability zone to list of fully qualified URLs to communicate with eureka
+ server. Each value can be a single URL or a comma separated list of alternative
+ locations.
+
+ Typically the eureka server URLs carry protocol,host,port,context and version
+ information if any. Example:
+ http://ec2-256-156-243-129.compute-1.amazonaws.com:7001/eureka/
+
+ The changes are effective at runtime at the next service url refresh cycle as
+ specified by eurekaServiceUrlPollIntervalSeconds.
+
+|eureka.client.transport |  | 
+
+|eureka.client.use-dns-for-fetching-service-urls | false | Indicates whether the eureka client should use the DNS mechanism to fetch a list of
+ eureka servers to talk to. When the DNS name is updated to have additional servers,
+ that information is used immediately after the eureka client polls for that
+ information as specified in eurekaServiceUrlPollIntervalSeconds.
+
+ Alternatively, the service urls can be returned serviceUrls, but the users should
+ implement their own mechanism to return the updated list in case of changes.
+
+ The changes are effective at runtime.
+
+|eureka.dashboard.enabled | true | Flag to enable the Eureka dashboard. Default true.
+
+|eureka.dashboard.path | / | The path to the Eureka dashboard (relative to the servlet path). Defaults to "/".
+
+|eureka.instance.a-sgname |  | Gets the AWS autoscaling group name associated with this instance. This information
+ is specifically used in an AWS environment to automatically put an instance out of
+ service after the instance is launched and it has been disabled for traffic..
+
+|eureka.instance.app-group-name |  | Get the name of the application group to be registered with eureka.
+
+|eureka.instance.appname | unknown | Get the name of the application to be registered with eureka.
+
+|eureka.instance.data-center-info |  | Returns the data center this instance is deployed. This information is used to get
+ some AWS specific instance information if the instance is deployed in AWS.
+
+|eureka.instance.default-address-resolution-order | [] | 
+
+|eureka.instance.health-check-url |  | Gets the absolute health check page URL for this instance. The users can provide
+ the healthCheckUrlPath if the health check page resides in the same instance
+ talking to eureka, else in the cases where the instance is a proxy for some other
+ server, users can provide the full URL. If the full URL is provided it takes
+ precedence.
+
+ <p>
+ It is normally used for making educated decisions based on the health of the
+ instance - for example, it can be used to determine whether to proceed deployments
+ to an entire farm or stop the deployments without causing further damage. The full
+ URL should follow the format http://${eureka.hostname}:7001/ where the value
+ ${eureka.hostname} is replaced at runtime.
+
+|eureka.instance.health-check-url-path | /health | Gets the relative health check URL path for this instance. The health check page
+ URL is then constructed out of the hostname and the type of communication - secure
+ or unsecure as specified in securePort and nonSecurePort.
+
+ It is normally used for making educated decisions based on the health of the
+ instance - for example, it can be used to determine whether to proceed deployments
+ to an entire farm or stop the deployments without causing further damage.
+
+|eureka.instance.home-page-url |  | Gets the absolute home page URL for this instance. The users can provide the
+ homePageUrlPath if the home page resides in the same instance talking to eureka,
+ else in the cases where the instance is a proxy for some other server, users can
+ provide the full URL. If the full URL is provided it takes precedence.
+
+ It is normally used for informational purposes for other services to use it as a
+ landing page. The full URL should follow the format http://${eureka.hostname}:7001/
+ where the value ${eureka.hostname} is replaced at runtime.
+
+|eureka.instance.home-page-url-path | / | Gets the relative home page URL Path for this instance. The home page URL is then
+ constructed out of the hostName and the type of communication - secure or unsecure.
+
+ It is normally used for informational purposes for other services to use it as a
+ landing page.
+
+|eureka.instance.host-info |  | 
+
+|eureka.instance.hostname |  | The hostname if it can be determined at configuration time (otherwise it will be
+ guessed from OS primitives).
+
+|eureka.instance.inet-utils |  | 
+
+|eureka.instance.initial-status |  | Initial status to register with rmeote Eureka server.
+
+|eureka.instance.instance-enabled-onit | false | Indicates whether the instance should be enabled for taking traffic as soon as it
+ is registered with eureka. Sometimes the application might need to do some
+ pre-processing before it is ready to take traffic.
+
+|eureka.instance.instance-id |  | Get the unique Id (within the scope of the appName) of this instance to be
+ registered with eureka.
+
+|eureka.instance.ip-address |  | Get the IPAdress of the instance. This information is for academic purposes only as
+ the communication from other instances primarily happen using the information
+ supplied in {@link #getHostName(boolean)}.
+
+|eureka.instance.lease-expiration-duration-in-seconds | 90 | Indicates the time in seconds that the eureka server waits since it received the
+ last heartbeat before it can remove this instance from its view and there by
+ disallowing traffic to this instance.
+
+ Setting this value too long could mean that the traffic could be routed to the
+ instance even though the instance is not alive. Setting this value too small could
+ mean, the instance may be taken out of traffic because of temporary network
+ glitches.This value to be set to atleast higher than the value specified in
+ leaseRenewalIntervalInSeconds.
+
+|eureka.instance.lease-renewal-interval-in-seconds | 30 | Indicates how often (in seconds) the eureka client needs to send heartbeats to
+ eureka server to indicate that it is still alive. If the heartbeats are not
+ received for the period specified in leaseExpirationDurationInSeconds, eureka
+ server will remove the instance from its view, there by disallowing traffic to this
+ instance.
+
+ Note that the instance could still not take traffic if it implements
+ HealthCheckCallback and then decides to make itself unavailable.
+
+|eureka.instance.metadata-map |  | Gets the metadata name/value pairs associated with this instance. This information
+ is sent to eureka server and can be used by other instances.
+
+|eureka.instance.namespace | eureka | Get the namespace used to find properties. Ignored in Spring Cloud.
+
+|eureka.instance.non-secure-port | 80 | Get the non-secure port on which the instance should receive traffic.
+
+|eureka.instance.non-secure-port-enabled | true | Indicates whether the non-secure port should be enabled for traffic or not.
+
+|eureka.instance.prefer-ip-address | false | Flag to say that, when guessing a hostname, the IP address of the server should be
+ used in prference to the hostname reported by the OS.
+
+|eureka.instance.secure-health-check-url |  | Gets the absolute secure health check page URL for this instance. The users can
+ provide the secureHealthCheckUrl if the health check page resides in the same
+ instance talking to eureka, else in the cases where the instance is a proxy for
+ some other server, users can provide the full URL. If the full URL is provided it
+ takes precedence.
+
+ <p>
+ It is normally used for making educated decisions based on the health of the
+ instance - for example, it can be used to determine whether to proceed deployments
+ to an entire farm or stop the deployments without causing further damage. The full
+ URL should follow the format http://${eureka.hostname}:7001/ where the value
+ ${eureka.hostname} is replaced at runtime.
+
+|eureka.instance.secure-port | 443 | Get the Secure port on which the instance should receive traffic.
+
+|eureka.instance.secure-port-enabled | false | Indicates whether the secure port should be enabled for traffic or not.
+
+|eureka.instance.secure-virtual-host-name |  | Gets the secure virtual host name defined for this instance.
+
+ This is typically the way other instance would find this instance by using the
+ secure virtual host name.Think of this as similar to the fully qualified domain
+ name, that the users of your services will need to find this instance.
+
+|eureka.instance.status-page-url |  | Gets the absolute status page URL path for this instance. The users can provide the
+ statusPageUrlPath if the status page resides in the same instance talking to
+ eureka, else in the cases where the instance is a proxy for some other server,
+ users can provide the full URL. If the full URL is provided it takes precedence.
+
+ It is normally used for informational purposes for other services to find about the
+ status of this instance. Users can provide a simple HTML indicating what is the
+ current status of the instance.
+
+|eureka.instance.status-page-url-path | /info | Gets the relative status page URL path for this instance. The status page URL is
+ then constructed out of the hostName and the type of communication - secure or
+ unsecure as specified in securePort and nonSecurePort.
+
+ It is normally used for informational purposes for other services to find about the
+ status of this instance. Users can provide a simple HTML indicating what is the
+ current status of the instance.
+
+|eureka.instance.virtual-host-name |  | Gets the virtual host name defined for this instance.
+
+ This is typically the way other instance would find this instance by using the
+ virtual host name.Think of this as similar to the fully qualified domain name, that
+ the users of your services will need to find this instance.
+
+|eureka.server.a-sgcache-expiry-timeout-ms | 0 | 
+
+|eureka.server.a-sgquery-timeout-ms | 300 | 
+
+|eureka.server.a-sgupdate-interval-ms | 0 | 
+
+|eureka.server.a-wsaccess-id |  | 
+
+|eureka.server.a-wssecret-key |  | 
+
+|eureka.server.batch-replication | false | 
+
+|eureka.server.binding-strategy |  | 
+
+|eureka.server.delta-retention-timer-interval-in-ms | 0 | 
+
+|eureka.server.disable-delta | false | 
+
+|eureka.server.disable-delta-for-remote-regions | false | 
+
+|eureka.server.disable-transparent-fallback-to-other-region | false | 
+
+|eureka.server.e-ipbind-rebind-retries | 3 | 
+
+|eureka.server.e-ipbinding-retry-interval-ms | 0 | 
+
+|eureka.server.e-ipbinding-retry-interval-ms-when-unbound | 0 | 
+
+|eureka.server.enable-replicated-request-compression | false | 
+
+|eureka.server.enable-self-preservation | true | 
+
+|eureka.server.eviction-interval-timer-in-ms | 0 | 
+
+|eureka.server.g-zip-content-from-remote-region | true | 
+
+|eureka.server.json-codec-name |  | 
+
+|eureka.server.list-auto-scaling-groups-role-name | ListAutoScalingGroups | 
+
+|eureka.server.log-identity-headers | true | 
+
+|eureka.server.max-elements-in-peer-replication-pool | 10000 | 
+
+|eureka.server.max-elements-in-status-replication-pool | 10000 | 
+
+|eureka.server.max-idle-thread-age-in-minutes-for-peer-replication | 15 | 
+
+|eureka.server.max-idle-thread-in-minutes-age-for-status-replication | 10 | 
+
+|eureka.server.max-threads-for-peer-replication | 20 | 
+
+|eureka.server.max-threads-for-status-replication | 1 | 
+
+|eureka.server.max-time-for-replication | 30000 | 
+
+|eureka.server.min-threads-for-peer-replication | 5 | 
+
+|eureka.server.min-threads-for-status-replication | 1 | 
+
+|eureka.server.number-of-replication-retries | 5 | 
+
+|eureka.server.peer-eureka-nodes-update-interval-ms | 0 | 
+
+|eureka.server.peer-eureka-status-refresh-time-interval-ms | 0 | 
+
+|eureka.server.peer-node-connect-timeout-ms | 200 | 
+
+|eureka.server.peer-node-connection-idle-timeout-seconds | 30 | 
+
+|eureka.server.peer-node-read-timeout-ms | 200 | 
+
+|eureka.server.peer-node-total-connections | 1000 | 
+
+|eureka.server.peer-node-total-connections-per-host | 500 | 
+
+|eureka.server.prime-aws-replica-connections | true | 
+
+|eureka.server.property-resolver |  | 
+
+|eureka.server.rate-limiter-burst-size | 10 | 
+
+|eureka.server.rate-limiter-enabled | false | 
+
+|eureka.server.rate-limiter-full-fetch-average-rate | 100 | 
+
+|eureka.server.rate-limiter-privileged-clients |  | 
+
+|eureka.server.rate-limiter-registry-fetch-average-rate | 500 | 
+
+|eureka.server.rate-limiter-throttle-standard-clients | false | 
+
+|eureka.server.registry-sync-retries | 0 | 
+
+|eureka.server.registry-sync-retry-wait-ms | 0 | 
+
+|eureka.server.remote-region-app-whitelist |  | 
+
+|eureka.server.remote-region-connect-timeout-ms | 1000 | 
+
+|eureka.server.remote-region-connection-idle-timeout-seconds | 30 | 
+
+|eureka.server.remote-region-fetch-thread-pool-size | 20 | 
+
+|eureka.server.remote-region-read-timeout-ms | 1000 | 
+
+|eureka.server.remote-region-registry-fetch-interval | 30 | 
+
+|eureka.server.remote-region-total-connections | 1000 | 
+
+|eureka.server.remote-region-total-connections-per-host | 500 | 
+
+|eureka.server.remote-region-trust-store |  | 
+
+|eureka.server.remote-region-trust-store-password | changeit | 
+
+|eureka.server.remote-region-urls |  | 
+
+|eureka.server.remote-region-urls-with-name |  | 
+
+|eureka.server.renewal-percent-threshold | 0.85 | 
+
+|eureka.server.renewal-threshold-update-interval-ms | 0 | 
+
+|eureka.server.response-cache-auto-expiration-in-seconds | 180 | 
+
+|eureka.server.response-cache-update-interval-ms | 0 | 
+
+|eureka.server.retention-time-in-msin-delta-queue | 0 | 
+
+|eureka.server.route53-bind-rebind-retries | 3 | 
+
+|eureka.server.route53-binding-retry-interval-ms | 0 | 
+
+|eureka.server.route53-domain-ttl | 30 | 
+
+|eureka.server.sync-when-timestamp-differs | true | 
+
+|eureka.server.use-read-only-response-cache | true | 
+
+|eureka.server.wait-time-in-ms-when-sync-empty | 0 | 
+
+|eureka.server.xml-codec-name |  | 
+
+|feign.compression.request.mime-types | [text/xml, application/xml, application/json] | The list of supported mime types.
+
+|feign.compression.request.min-request-size | 2048 | The minimum threshold content size.
+
+|health.config.enabled | false | Flag to indicate that the config server health indicator should be installed.
+
+|health.hystrix.enabled | false | Flag to inidicate that the hystrix health indicator should be installed.
+
+|netflix.atlas.batch-size | 10000 | 
+
+|netflix.atlas.enabled | true | 
+
+|netflix.atlas.uri |  | 
+
+|proxy.auth.load-balanced | false | 
+
+|proxy.auth.routes |  | Authentication strategy per route.
+
+|spring.cloud.bus.ack.destination-service |  | Service that wants to listen to acks. By default null (meaning all services).
+
+|spring.cloud.bus.ack.enabled | true | Flag to switch off acks (default on).
+
+|spring.cloud.bus.destination | springCloudBus | Name of Spring Cloud Stream destination for messages.
+
+|spring.cloud.bus.enabled | true | Flag to indicate that the bus is enabled.
+
+|spring.cloud.bus.env.enabled | true | Flag to switch off environment change events (default on).
+
+|spring.cloud.bus.refresh.enabled | true | Flag to switch off refresh events (default on).
+
+|spring.cloud.bus.trace.enabled | false | Flag to switch on tracing of acks (default off).
+
+|spring.cloud.cloudfoundry.discovery.email |  | Email address of user to authenticate.
+
+|spring.cloud.cloudfoundry.discovery.enabled | true | Flag to indicate that discovery is enabled.
+
+|spring.cloud.cloudfoundry.discovery.password |  | Password for user to authenticate and obtain token.
+
+|spring.cloud.cloudfoundry.discovery.url | https://api.run.pivotal.io | URL of Cloud Foundry API (Cloud Controller).
+
+|spring.cloud.config.allow-override | true | Flag to indicate that {@link #isSystemPropertiesOverride()
+ systemPropertiesOverride} can be used. Set to false to prevent users from changing
+ the default accidentally. Default true.
+
+|spring.cloud.config.discovery.enabled | false | Flag to indicate that config server discovery is enabled (config server URL will be
+ looked up via discovery).
+
+|spring.cloud.config.discovery.service-id | CONFIGSERVER | Service id to locate config server.
+
+|spring.cloud.config.enabled | true | Flag to say that remote configuration is enabled. Default true;
+
+|spring.cloud.config.fail-fast | false | Flag to indicate that failure to connect to the server is fatal (default false).
+
+|spring.cloud.config.label |  | The label name to use to pull remote configuration properties. The default is set
+ on the server (generally "master" for a git based server).
+
+|spring.cloud.config.name |  | Name of application used to fetch remote properties.
+
+|spring.cloud.config.override-none | false | Flag to indicate that when {@link #setAllowOverride(boolean) allowOverride} is
+ true, external properties should take lowest priority, and not override any
+ existing property sources (including local config files). Default false.
+
+|spring.cloud.config.override-system-properties | true | Flag to indicate that the external properties should override system properties.
+ Default true.
+
+|spring.cloud.config.password |  | The password to use (HTTP Basic) when contacting the remote server.
+
+|spring.cloud.config.profile | default | The default profile to use when fetching remote configuration (comma-separated).
+ Default is "default".
+
+|spring.cloud.config.retry.initial-interval | 1000 | Initial retry interval in milliseconds.
+
+|spring.cloud.config.retry.max-attempts | 6 | Maximum number of attempts.
+
+|spring.cloud.config.retry.max-interval | 2000 | Maximum interval for backoff.
+
+|spring.cloud.config.retry.multiplier | 1.1 | Multiplier for next interval.
+
+|spring.cloud.config.uri | http://localhost:8888 | The URI of the remote server (default http://localhost:8888).
+
+|spring.cloud.config.username |  | The username to use (HTTP Basic) when contacting the remote server.
+
+|spring.cloud.consul.config.acl-token |  | 
+
+|spring.cloud.consul.config.data-key | data | If format is Format.PROPERTIES or Format.YAML
+ then the following field is used as key to look up consul for configuration.
+
+|spring.cloud.consul.config.default-context | application | 
+
+|spring.cloud.consul.config.enabled | true | 
+
+|spring.cloud.consul.config.fail-fast | true | Throw exceptions during config lookup if true, otherwise, log warnings.
+
+|spring.cloud.consul.config.format |  | 
+
+|spring.cloud.consul.config.prefix | config | 
+
+|spring.cloud.consul.config.profile-separator | , | 
+
+|spring.cloud.consul.config.watch.delay | 10 | 
+
+|spring.cloud.consul.config.watch.enabled | true | 
+
+|spring.cloud.consul.config.watch.wait-time | 2 | 
+
+|spring.cloud.consul.discovery.acl-token |  | 
+
+|spring.cloud.consul.discovery.catalog-services-watch-delay | 10 | 
+
+|spring.cloud.consul.discovery.catalog-services-watch-timeout | 2 | 
+
+|spring.cloud.consul.discovery.enabled | true | Is service discovery enabled?
+
+|spring.cloud.consul.discovery.health-check-interval | 10s | How often to perform the health check (e.g. 10s)
+
+|spring.cloud.consul.discovery.health-check-path | /health | Alternate server path to invoke for health checking
+
+|spring.cloud.consul.discovery.health-check-timeout |  | Timeout for health check (e.g. 10s)
+
+|spring.cloud.consul.discovery.health-check-url |  | Custom health check url to override default
+
+|spring.cloud.consul.discovery.heartbeat.enabled | false | 
+
+|spring.cloud.consul.discovery.heartbeat.heartbeat-interval |  | 
+
+|spring.cloud.consul.discovery.heartbeat.interval-ratio |  | 
+
+|spring.cloud.consul.discovery.heartbeat.ttl-unit | s | 
+
+|spring.cloud.consul.discovery.heartbeat.ttl-value | 30 | 
+
+|spring.cloud.consul.discovery.host-info |  | 
+
+|spring.cloud.consul.discovery.hostname |  | Hostname to use when accessing server
+
+|spring.cloud.consul.discovery.instance-id |  | Unique service instance id
+
+|spring.cloud.consul.discovery.ip-address |  | IP address to use when accessing service (must also set preferIpAddress
+                        to use)
+
+|spring.cloud.consul.discovery.lifecycle.enabled | true | 
+
+|spring.cloud.consul.discovery.management-suffix | management | Suffix to use when registering management service
+
+|spring.cloud.consul.discovery.management-tags |  | Tags to use when registering management service
+
+|spring.cloud.consul.discovery.port |  | Port to register the service under (defaults to listening port)
+
+|spring.cloud.consul.discovery.prefer-agent-address | false | Source of how we will determine the address to use
+
+|spring.cloud.consul.discovery.prefer-ip-address | false | Use ip address rather than hostname during registration
+
+|spring.cloud.consul.discovery.query-passing | false | Add the 'passing` parameter to /v1/health/service/serviceName.
+ This pushes health check passing to the server.
+
+|spring.cloud.consul.discovery.register | true | Register as a service in consul.
+
+|spring.cloud.consul.discovery.register-health-check | true | Register health check in consul. Useful during development of a service.
+
+|spring.cloud.consul.discovery.scheme | http | Whether to register an http or https service
+
+|spring.cloud.consul.discovery.server-list-query-tags |  | Map of serviceId's -> tag to query for in server list.
+ This allows filtering services by a single tag.
+
+|spring.cloud.consul.discovery.service-name |  | Service name
+
+|spring.cloud.consul.discovery.tags |  | Tags to use when registering service
+
+|spring.cloud.consul.enabled | true | Is spring cloud consul enabled
+
+|spring.cloud.consul.host | localhost | Consul agent hostname. Defaults to 'localhost'.
+
+|spring.cloud.consul.port | 8500 | Consul agent port. Defaults to '8500'.
+
+|spring.cloud.consul.retry.initial-interval | 1000 | Initial retry interval in milliseconds.
+
+|spring.cloud.consul.retry.max-attempts | 6 | Maximum number of attempts.
+
+|spring.cloud.consul.retry.max-interval | 2000 | Maximum interval for backoff.
+
+|spring.cloud.consul.retry.multiplier | 1.1 | Multiplier for next interval.
+
+|spring.cloud.hypermedia.refresh.fixed-delay | 5000 | 
+
+|spring.cloud.hypermedia.refresh.initial-delay | 10000 | 
+
+|spring.cloud.inetutils.default-hostname | localhost | The default hostname. Used in case of errors.
+
+|spring.cloud.inetutils.default-ip-address | 127.0.0.1 | The default ipaddress. Used in case of errors.
+
+|spring.cloud.inetutils.ignored-interfaces |  | List of Java regex expressions for network interfaces that will be ignored.
+
+|spring.cloud.inetutils.timeout-seconds | 1 | Timeout in seconds for calculating hostname.
+
+|spring.cloud.stream.binders |  | 
+
+|spring.cloud.stream.bindings |  | 
+
+|spring.cloud.stream.consumer-defaults |  | 
+
+|spring.cloud.stream.default-binder |  | 
+
+|spring.cloud.stream.dynamic-destinations | [] | 
+
+|spring.cloud.stream.ignore-unknown-properties | true | 
+
+|spring.cloud.stream.instance-count | 1 | 
+
+|spring.cloud.stream.instance-index | 0 | 
+
+|spring.cloud.stream.producer-defaults |  | 
+
+|spring.cloud.stream.rabbit.binder.addresses | [] | 
+
+|spring.cloud.stream.rabbit.binder.admin-adresses | [] | 
+
+|spring.cloud.stream.rabbit.binder.compression-level | 0 | 
+
+|spring.cloud.stream.rabbit.binder.nodes | [] | 
+
+|spring.cloud.stream.rabbit.binder.password |  | 
+
+|spring.cloud.stream.rabbit.binder.ssl-properties-location |  | 
+
+|spring.cloud.stream.rabbit.binder.use-ssl | false | 
+
+|spring.cloud.stream.rabbit.binder.username |  | 
+
+|spring.cloud.stream.rabbit.binder.vhost |  | 
+
+|spring.cloud.stream.rabbit.bindings |  | 
+
+|spring.cloud.zookeeper.default-health-endpoint |  | Default health endpoint that will be checked to verify that a dependency is alive
+
+|spring.cloud.zookeeper.dependencies |  | Mapping of alias to ZookeeperDependency. From Ribbon perspective the alias
+ is actually serviceID since Ribbon can't accept nested structures in serviceID
+
+|spring.cloud.zookeeper.dependency-configurations |  | 
+
+|spring.cloud.zookeeper.dependency-names |  | 
+
+|spring.cloud.zookeeper.discovery.enabled | true | 
+
+|spring.cloud.zookeeper.discovery.instance-host |  | 
+
+|spring.cloud.zookeeper.discovery.metadata |  | Gets the metadata name/value pairs associated with this instance. This information
+ is sent to zookeeper and can be used by other instances.
+
+|spring.cloud.zookeeper.discovery.root | /services | 
+
+|spring.cloud.zookeeper.discovery.uri-spec | {scheme}://{address}:{port} | 
+
+|spring.cloud.zookeeper.prefix |  | Common prefix that will be applied to all Zookeeper dependencies' paths
+
+|spring.integration.poller.fixed-delay | 1000 | Fixed delay for default poller.
+
+|spring.integration.poller.max-messages-per-poll | 1 | Maximum messages per poll for the default poller.
+
+|spring.sleuth.keys.async.class-name-key | class | Simple name of the class with a method annotated with {@code @Async}
+ from which the asynchronous process started
+
+ @see org.springframework.scheduling.annotation.Async
+
+|spring.sleuth.keys.async.method-name-key | method | Name of the method annotated with {@code @Async}
+
+ @see org.springframework.scheduling.annotation.Async
+
+|spring.sleuth.keys.async.prefix |  | Prefix for header names if they are added as tags.
+
+|spring.sleuth.keys.async.thread-name-key | thread | Name of the thread that executed the async method
+
+ @see org.springframework.scheduling.annotation.Async
+
+|spring.sleuth.keys.http.headers |  | Additional headers that should be added as tags if they exist. If the header
+ value is multi-valued, the tag value will be a comma-separated, single-quoted
+ list.
+
+|spring.sleuth.keys.http.host | http.host | The domain portion of the URL or host header. Example:
+ "mybucket.s3.amazonaws.com". Used to filter by host as opposed to ip address.
+
+|spring.sleuth.keys.http.method | http.method | The HTTP method, or verb, such as "GET" or "POST". Used to filter against an
+ http route.
+
+|spring.sleuth.keys.http.path | http.path | The absolute http path, without any query parameters. Example:
+ "/objects/abcd-ff". Used to filter against an http route, portably with zipkin
+ v1. In zipkin v1, only equals filters are supported. Dropping query parameters
+ makes the number of distinct URIs less. For example, one can query for the same
+ resource, regardless of signing parameters encoded in the query line. This does
+ not reduce cardinality to a HTTP single route. For example, it is common to
+ express a route as an http URI template like "/resource/{resource_id}". In
+ systems where only equals queries are available, searching for
+ {@code http.uri=/resource} won't match if the actual request was
+ "/resource/abcd-ff". Historical note: This was commonly expressed as "http.uri"
+ in zipkin, eventhough it was most often just a path.
+
+|spring.sleuth.keys.http.prefix | http. | Prefix for header names if they are added as tags.
+
+|spring.sleuth.keys.http.request-size | http.request.size | The size of the non-empty HTTP request body, in bytes. Ex. "16384"
+
+ <p>Large uploads can exceed limits or contribute directly to latency.
+
+|spring.sleuth.keys.http.response-size | http.response.size | The size of the non-empty HTTP response body, in bytes. Ex. "16384"
+
+ <p>Large downloads can exceed limits or contribute directly to latency.
+
+|spring.sleuth.keys.http.status-code | http.status_code | The HTTP response code, when not in 2xx range. Ex. "503" Used to filter for
+ error status. 2xx range are not logged as success codes are less interesting
+ for latency troubleshooting. Omitting saves at least 20 bytes per span.
+
+|spring.sleuth.keys.http.url | http.url | The entire URL, including the scheme, host and query parameters if available.
+ Ex.
+ "https://mybucket.s3.amazonaws.com/objects/abcd-ff?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Algorithm=AWS4-HMAC-SHA256..."
+ Combined with {@link #method}, you can understand the fully-qualified
+ request line. This is optional as it may include private data or be of
+ considerable length.
+
+|spring.sleuth.keys.hystrix.command-group | commandGroup | Name of the command group. Hystrix uses the command group key to group
+ together commands such as for reporting, alerting, dashboards,
+ or team/library ownership.
+
+ @see com.netflix.hystrix.HystrixCommandGroupKey
+
+|spring.sleuth.keys.hystrix.command-key | commandKey | Name of the command key. Describes the name for the given command.
+ A key to represent a {@link com.netflix.hystrix.HystrixCommand} for
+ monitoring, circuit-breakers, metrics publishing, caching and other such uses.
+
+ @see com.netflix.hystrix.HystrixCommandKey
+
+|spring.sleuth.keys.hystrix.prefix |  | Prefix for header names if they are added as tags.
+
+|spring.sleuth.keys.hystrix.thread-pool-key | threadPoolKey | Name of the thread pool key. The thread-pool key represents a {@link com.netflix.hystrix.HystrixThreadPool}
+ for monitoring, metrics publishing, caching, and other such uses. A {@link com.netflix.hystrix.HystrixCommand}
+ is associated with a single {@link com.netflix.hystrix.HystrixThreadPool} as
+ retrieved by the {@link com.netflix.hystrix.HystrixThreadPoolKey} injected into it,
+ or it defaults to one created using the {@link com.netflix.hystrix.HystrixCommandGroupKey}
+ it is created with.
+
+ @see com.netflix.hystrix.HystrixThreadPoolKey
+
+|spring.sleuth.keys.message.headers |  | Additional headers that should be added as tags if they exist. If the header
+ value is not a String it will be converted to a String using its toString()
+ method.
+
+|spring.sleuth.keys.message.payload.size | message/payload-size | An estimate of the size of the payload if available.
+
+|spring.sleuth.keys.message.payload.type | message/payload-type | The type of the payload.
+
+|spring.sleuth.keys.message.prefix | message/ | Prefix for header names if they are added as tags.
+
+|spring.sleuth.metric.span.accepted-name | counter.span.accepted | 
+
+|spring.sleuth.metric.span.dropped-name | counter.span.dropped | 
+
+|spring.sleuth.sampler.percentage | 0.1 | Percentage of requests that should be sampled. E.g. 1.0 - 100% requests should be
+ sampled. The precision is whole-numbers only (i.e. there's no support for 0.1% of
+ the traces).
+
+|zuul.add-proxy-headers | true | 
+
+|zuul.host.max-per-route-connections | 20 | 
+
+|zuul.host.max-total-connections | 200 | 
+
+|zuul.ignore-local-service | true | 
+
+|zuul.ignored-headers |  | 
+
+|zuul.ignored-patterns |  | 
+
+|zuul.ignored-services |  | 
+
+|zuul.prefix |  | 
+
+|zuul.remove-semicolon-content | true | 
+
+|zuul.retryable |  | 
+
+|zuul.routes |  | 
+
+|zuul.security_headers |  | 
+
+|zuul.servlet-path | /zuul | 
+
+|zuul.strip-prefix | true | 
+
+|zuul.trace-request-body | true | 
+
+|===
