@@ -154,6 +154,15 @@
                       <exclude>*.sh</exclude>
                     </excludes>
                   </resource>
+                  <resource>
+                    <directory>stream/src/main/asciidoc</directory>
+                    <includes>
+                      <include>images/**</include>
+                    </includes>
+                    <excludes>
+                      <exclude>*.sh</exclude>
+                    </excludes>
+                  </resource>
                 </resources>
                 <outputDirectory>target/generated-docs</outputDirectory>
               </configuration>
