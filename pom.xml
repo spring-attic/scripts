@@ -155,7 +155,7 @@
                     </excludes>
                   </resource>
                   <resource>
-                    <directory>stream/src/main/asciidoc</directory>
+                    <directory>stream/spring-cloud-stream-docs/src/main/asciidoc</directory>
                     <includes>
                       <include>images/**</include>
                     </includes>
