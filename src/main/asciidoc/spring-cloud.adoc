@@ -13,7 +13,7 @@ implement those patterns. They will work well in any distributed
 environment, including the developer's own laptop, bare metal data
 centres, and managed platforms such as Cloud Foundry.
 
-Version: ${spring-cloud-version}
+Version: {spring-cloud-version}
 
 == Features
 
