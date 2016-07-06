@@ -62,6 +62,12 @@ checkout = git checkout master
 deploy = mvn deploy "$@" -DaltDeploymentRepository=repo.spring.io::default::https://repo.spring.io/libs-snapshot-local
 install = mvn install "$@"
 
+[task]
+clone = echo 'not cloning submodule'
+checkout = git checkout master
+deploy = mvn deploy "$@" -DaltDeploymentRepository=repo.spring.io::default::https://repo.spring.io/libs-snapshot-local
+install = mvn install "$@"
+
 [brewery]
 clone = echo 'not cloning submodule'
 checkout = git checkout master
