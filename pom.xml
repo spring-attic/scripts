@@ -5,12 +5,12 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.3.4.RELEASE</version>
+		<version>1.3.5.RELEASE</version>
 	</parent>
 
 	<groupId>org.springframework.cloud</groupId>
 	<artifactId>spring-cloud-samples</artifactId>
-	<version>Brixton.BUILD-SNAPSHOT</version>
+	<version>Brixton.SR3</version>
 	<packaging>pom</packaging>
 	<name>Spring Cloud Samples Scripts</name>
 
