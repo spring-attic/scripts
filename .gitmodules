@@ -79,3 +79,6 @@
 [submodule "task"]
 	path = task
 	url = git@github.com:spring-cloud/spring-cloud-task
+[submodule "contract"]
+	path = contract
+	url = git@github.com:spring-cloud/spring-cloud-contract
