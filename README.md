@@ -41,8 +41,8 @@ problems.
 ### Docker on a mac
 
 Docker on a mac requires boot2docker.  Because docker is running in a virtual machine,
-The ip addresses of mongo, rabbit and redis are not 127.0.0.1.  You can use 
-virtualbox port forwarding to address this issue with the following commands 
+The ip addresses of mongo, rabbit and redis are not 127.0.0.1.  You can use
+virtualbox port forwarding to address this issue with the following commands
 (from [here](https://github.com/boot2docker/boot2docker/blob/master/doc/WORKAROUNDS.md)):
 
     # vm must be powered off
@@ -50,19 +50,19 @@ virtualbox port forwarding to address this issue with the following commands
     VBoxManage modifyvm "boot2docker-vm" --natpf1 "tcp-port6379,tcp,,6379,,6379"
     VBoxManage modifyvm "boot2docker-vm" --natpf1 "tcp-port15672,tcp,,15672,,15672"
     VBoxManage modifyvm "boot2docker-vm" --natpf1 "tcp-port5672,tcp,,5672,,5672"
-    
+
 ### Docker alternative on a mac
 
 If you prefer not to use docker-compose you can install mongo, rabbit and redis:
 
     brew install mongodb rabbitmq redis
-    
+
 To run the apps (each in a different terminal)
 
     $ rabbitmq-server
     $ mongod --config /usr/local/etc/mongod.conf
     $ redis-server /usr/local/etc/redis.conf
-    
+
 
 Run the apps:
 
@@ -98,7 +98,7 @@ $ (cd customers-stores/customers-ui; spring run app.groovy)
 
 ## Running on Cloud Foundry
 
-Pre-requisites: 
+Pre-requisites:
 
 * Maven (3)
 * Java (1.8)
@@ -188,3 +188,9 @@ export DOMAIN=10.244.0.34.xip.io
 export PLATFORM_HOME=/Users/sgibb/workspace/spring/spring-cloud-samples #where all spring-cloud-samples are checked out
 export MONGO_URI=mongodb://192.168.50.1/stores #mongo running on host #TODO install mongo as a service
 ```
+
+## Build documentation
+
+You can easily create the documentation for a particular release train using the `release_train.sh` script. You can run it in an interactive mode - then you'll get
+prompted for all entries, or you can provide the values of the name of the release train together with the names and versions of modules. You can run
+`./release_train -h` for more information.
