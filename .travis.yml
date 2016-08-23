@@ -2,18 +2,8 @@ language: java
 git:
   submodules: false
 before_install:
-- git config user.name "$GIT_NAME"
-- git config user.email "$GIT_EMAIL"
-- git config credential.helper "store --file=.git/credentials"
-- echo "https://$GH_TOKEN:@github.com" > .git/credentials
 - cp .gitmodules .gitmodules~
 - sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules
 - git submodule update --init --recursive
 - mv .gitmodules~ .gitmodules
-install: echo "Installed"
-script: mvn process-resources -N && ./src/main/asciidoc/ghpages.sh
-env:
-  global:
-    - GIT_NAME="Dave Syer"
-    - GIT_EMAIL=dsyer@pivotal.io
-    - secure: VqYUotNIlCobrxJPNP7vwAvvpZ1xS3iRejoMjO0W4jBE3AMmUOO3jWxhXKir3UddRexhRJRY4U6W6zEbOyNrWbgqwFiSmbB7kt7A7cEZRVuacHuIDb/TOSyD1lnwAklcQZ5EtoQtE2AcwMagqqNX3CGIDinN6ivBy85pjHhxNWQ=
+script: ./mvnw clean install

@@ -18,6 +18,7 @@
 @Grab('org.springframework.cloud:spring-cloud-starter-cloudfoundry:1.0.0.BUILD-SNAPSHOT')
 @Grab('org.springframework.cloud:spring-cloud-cloudfoundry-discovery:1.0.0.BUILD-SNAPSHOT')
 @Grab('org.springframework.cloud:spring-cloud-cluster-autoconfigure:1.0.0.BUILD-SNAPSHOT')
+@Grab('org.springframework.cloud:spring-cloud-starter-contract:1.0.0.BUILD-SNAPSHOT')
 
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver
 import org.springframework.core.io.Resource
@@ -61,4 +62,3 @@ class ConfigValue {
     "|${name} | ${value} | ${description?:''}"
   }
 }
-
