@@ -17,8 +17,8 @@ Version: {spring-cloud-version}
 
 == Features
 
-Spring Cloud focuses on providing good out of box experience for typical use cases 
-and extensibility mechanism to cover others. 
+Spring Cloud focuses on providing good out of box experience for typical use cases
+and extensibility mechanism to cover others.
 
 * Distributed/versioned configuration
 * Service registration and discovery
@@ -54,6 +54,8 @@ include::{basedir}/security/docs/src/main/asciidoc/spring-cloud-security.adoc[]
 include::{basedir}/cloudfoundry/docs/src/main/asciidoc/spring-cloud-cloudfoundry.adoc[]
 
 include::{basedir}/cluster/docs/src/main/asciidoc/spring-cloud-cluster.adoc[]
+
+include::{basedir}/contract/docs/src/main/asciidoc/spring-cloud-contract.adoc[]
 
 = Appendix: Compendium of Configuration Properties
 

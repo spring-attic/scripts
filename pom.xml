@@ -73,7 +73,7 @@
 
 	<properties>
         <java.version>1.7</java.version>
-        <release.train.version>Brixton.BUILD-SNAPSHOT</release.train.version>
+        <release.train.version>Camden.BUILD-SNAPSHOT</release.train.version>
 	</properties>
 
     <build>

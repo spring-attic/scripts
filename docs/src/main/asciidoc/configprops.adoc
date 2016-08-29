@@ -37,25 +37,27 @@
 
 |endpoints.consul.sensitive |  | 
 
+|endpoints.env.post.enabled | true | Enable changing the Environment through a POST to /env.
+
 |endpoints.features.enabled |  | 
 
 |endpoints.features.id |  | 
 
 |endpoints.features.sensitive |  | 
 
-|endpoints.pause.enabled |  | 
+|endpoints.pause.enabled | true | Enable the /pause endpoint (to send Lifecycle.stop()).
 
 |endpoints.pause.id |  | 
 
 |endpoints.pause.sensitive |  | 
 
-|endpoints.refresh.enabled |  | 
+|endpoints.refresh.enabled | true | Enable the /refresh endpoint to refresh configuration and re-initialize refresh scoped beans.
 
 |endpoints.refresh.id |  | 
 
 |endpoints.refresh.sensitive |  | 
 
-|endpoints.restart.enabled |  | 
+|endpoints.restart.enabled | true | Enable the /restart endpoint to restart the application context.
 
 |endpoints.restart.id |  | 
 
@@ -75,11 +77,13 @@
 
 |endpoints.restart.timeout | 0 | 
 
-|endpoints.resume.enabled |  | 
+|endpoints.resume.enabled | true | Enable the /resume endpoint (to send Lifecycle.start()).
 
 |endpoints.resume.id |  | 
 
 |endpoints.resume.sensitive |  | 
+
+|endpoints.zookeeper.enabled | true | Enable the /zookeeper endpoint to inspect the state of zookeeper.
 
 |eureka.client.allow-redirects | false | Indicates whether server can redirect a client request to a backup server/cluster.
  If set to false, the server will handle the request directly, If set to true, it
@@ -140,7 +144,7 @@
  org.apache.http.client.HttpClient and this setting affects the actual connection
  creation and also the wait time to get the connection from the pool.
 
-|eureka.client.eureka-server-dnsname |  | Gets the DNS name to be queried to get the list of eureka servers.This information
+|eureka.client.eureka-server-d-n-s-name |  | Gets the DNS name to be queried to get the list of eureka servers.This information
  is not required if the contract returns the service urls by implementing
  serviceUrls.
 
@@ -169,7 +173,7 @@
 |eureka.client.eureka-server-total-connections-per-host | 50 | Gets the total number of connections that is allowed from eureka client to a eureka
  server host.
 
-|eureka.client.eureka-server-urlcontext |  | Gets the URL context to be used to construct the service url to contact eureka
+|eureka.client.eureka-server-u-r-l-context |  | Gets the URL context to be used to construct the service url to contact eureka
  server when the list of eureka servers come from the DNS. This information is not
  required if the contract returns the service urls from eurekaServerServiceUrls.
 
@@ -285,7 +289,7 @@
 
 |eureka.dashboard.path | / | The path to the Eureka dashboard (relative to the servlet path). Defaults to "/".
 
-|eureka.instance.a-sgname |  | Gets the AWS autoscaling group name associated with this instance. This information
+|eureka.instance.a-s-g-name |  | Gets the AWS autoscaling group name associated with this instance. This information
  is specifically used in an AWS environment to automatically put an instance out of
  service after the instance is launched and it has been disabled for traffic..
 
@@ -431,15 +435,15 @@
  virtual host name.Think of this as similar to the fully qualified domain name, that
  the users of your services will need to find this instance.
 
-|eureka.server.a-sgcache-expiry-timeout-ms | 0 | 
+|eureka.server.a-s-g-cache-expiry-timeout-ms | 0 | 
 
-|eureka.server.a-sgquery-timeout-ms | 300 | 
+|eureka.server.a-s-g-query-timeout-ms | 300 | 
 
-|eureka.server.a-sgupdate-interval-ms | 0 | 
+|eureka.server.a-s-g-update-interval-ms | 0 | 
 
-|eureka.server.a-wsaccess-id |  | 
+|eureka.server.a-w-s-access-id |  | 
 
-|eureka.server.a-wssecret-key |  | 
+|eureka.server.a-w-s-secret-key |  | 
 
 |eureka.server.batch-replication | false | 
 
@@ -453,11 +457,11 @@
 
 |eureka.server.disable-transparent-fallback-to-other-region | false | 
 
-|eureka.server.e-ipbind-rebind-retries | 3 | 
+|eureka.server.e-i-p-bind-rebind-retries | 3 | 
 
-|eureka.server.e-ipbinding-retry-interval-ms | 0 | 
+|eureka.server.e-i-p-binding-retry-interval-ms | 0 | 
 
-|eureka.server.e-ipbinding-retry-interval-ms-when-unbound | 0 | 
+|eureka.server.e-i-p-binding-retry-interval-ms-when-unbound | 0 | 
 
 |eureka.server.enable-replicated-request-compression | false | 
 
@@ -559,13 +563,13 @@
 
 |eureka.server.response-cache-update-interval-ms | 0 | 
 
-|eureka.server.retention-time-in-msin-delta-queue | 0 | 
+|eureka.server.retention-time-in-m-s-in-delta-queue | 0 | 
 
 |eureka.server.route53-bind-rebind-retries | 3 | 
 
 |eureka.server.route53-binding-retry-interval-ms | 0 | 
 
-|eureka.server.route53-domain-ttl | 30 | 
+|eureka.server.route53-domain-t-t-l | 30 | 
 
 |eureka.server.sync-when-timestamp-differs | true | 
 
@@ -581,7 +585,13 @@
 
 |health.config.enabled | false | Flag to indicate that the config server health indicator should be installed.
 
-|health.hystrix.enabled | false | Flag to inidicate that the hystrix health indicator should be installed.
+|hystrix.metrics.enabled | true | Enable Hystrix metrics polling. Defaults to true.
+
+|hystrix.metrics.polling-interval-ms | 2000 | Interval between subsequent polling of metrics. Defaults to 2000 ms.
+
+|management.health.refresh.enabled | true | Enable the health endpoint for the refresh scope.
+
+|management.health.zookeeper.enabled | true | Enable the health endpoint for zookeeper.
 
 |netflix.atlas.batch-size | 10000 | 
 
@@ -589,9 +599,10 @@
 
 |netflix.atlas.uri |  | 
 
-|proxy.auth.load-balanced | false | 
+|netflix.metrics.servo.cache-warning-threshold | 1000 | When the `ServoMonitorCache` reaches this size, a warning is logged.
+ This will be useful if you are using string concatenation in RestTemplate urls.
 
-|proxy.auth.routes |  | Authentication strategy per route.
+|netflix.metrics.servo.registry-class | com.netflix.servo.BasicMonitorRegistry | Fully qualified class name for monitor registry used by Servo.
 
 |spring.cloud.bus.ack.destination-service |  | Service that wants to listen to acks. By default null (meaning all services).
 
@@ -607,22 +618,31 @@
 
 |spring.cloud.bus.trace.enabled | false | Flag to switch on tracing of acks (default off).
 
-|spring.cloud.cloudfoundry.discovery.email |  | Email address of user to authenticate.
-
 |spring.cloud.cloudfoundry.discovery.enabled | true | Flag to indicate that discovery is enabled.
+
+|spring.cloud.cloudfoundry.discovery.heartbeat-frequency | 5000 | Frequency in milliseconds of poll for heart beat. The client will poll on this
+ frequency and broadcast a list of service ids.
+
+|spring.cloud.cloudfoundry.discovery.org |  | Organization name to authenticate with (default to user's default).
 
 |spring.cloud.cloudfoundry.discovery.password |  | Password for user to authenticate and obtain token.
 
+|spring.cloud.cloudfoundry.discovery.space |  | Space name to authenticate with (default to user's default).
+
 |spring.cloud.cloudfoundry.discovery.url | https://api.run.pivotal.io | URL of Cloud Foundry API (Cloud Controller).
+
+|spring.cloud.cloudfoundry.discovery.username |  | Username to authenticate (usually an email address).
 
 |spring.cloud.config.allow-override | true | Flag to indicate that {@link #isSystemPropertiesOverride()
  systemPropertiesOverride} can be used. Set to false to prevent users from changing
  the default accidentally. Default true.
 
+|spring.cloud.config.authorization |  | Authorization token used by the client to connect to the server.
+
 |spring.cloud.config.discovery.enabled | false | Flag to indicate that config server discovery is enabled (config server URL will be
  looked up via discovery).
 
-|spring.cloud.config.discovery.service-id | CONFIGSERVER | Service id to locate config server.
+|spring.cloud.config.discovery.service-id | configserver | Service id to locate config server.
 
 |spring.cloud.config.enabled | true | Flag to say that remote configuration is enabled. Default true;
 
@@ -653,6 +673,8 @@
 
 |spring.cloud.config.retry.multiplier | 1.1 | Multiplier for next interval.
 
+|spring.cloud.config.token |  | Security Token passed thru to underlying environment repository.
+
 |spring.cloud.config.uri | http://localhost:8888 | The URI of the remote server (default http://localhost:8888).
 
 |spring.cloud.config.username |  | The username to use (HTTP Basic) when contacting the remote server.
@@ -674,17 +696,19 @@
 
 |spring.cloud.consul.config.profile-separator | , | 
 
-|spring.cloud.consul.config.watch.delay | 10 | 
+|spring.cloud.consul.config.watch.delay | 1000 | The value of the fixed delay for the watch in millis. Defaults to 1000.
 
-|spring.cloud.consul.config.watch.enabled | true | 
+|spring.cloud.consul.config.watch.enabled | true | If the watch is enabled. Defaults to true.
 
-|spring.cloud.consul.config.watch.wait-time | 2 | 
+|spring.cloud.consul.config.watch.wait-time | 60 | The number of seconds to wait (or block) for watch query. Defaults to 60.
 
 |spring.cloud.consul.discovery.acl-token |  | 
 
 |spring.cloud.consul.discovery.catalog-services-watch-delay | 10 | 
 
 |spring.cloud.consul.discovery.catalog-services-watch-timeout | 2 | 
+
+|spring.cloud.consul.discovery.default-query-tag |  | Tag to query for in service list if one is not listed in serverListQueryTags.
 
 |spring.cloud.consul.discovery.enabled | true | Is service discovery enabled?
 
@@ -713,9 +737,11 @@
 |spring.cloud.consul.discovery.instance-id |  | Unique service instance id
 
 |spring.cloud.consul.discovery.ip-address |  | IP address to use when accessing service (must also set preferIpAddress
-                        to use)
+			to use)
 
 |spring.cloud.consul.discovery.lifecycle.enabled | true | 
+
+|spring.cloud.consul.discovery.management-port |  | Port to register the management service under (defaults to management port)
 
 |spring.cloud.consul.discovery.management-suffix | management | Suffix to use when registering management service
 
@@ -773,6 +799,8 @@
 
 |spring.cloud.stream.bindings |  | 
 
+|spring.cloud.stream.consul.binder.event-timeout | 5 | 
+
 |spring.cloud.stream.consumer-defaults |  | 
 
 |spring.cloud.stream.default-binder |  | 
@@ -787,25 +815,21 @@
 
 |spring.cloud.stream.producer-defaults |  | 
 
-|spring.cloud.stream.rabbit.binder.addresses | [] | 
-
 |spring.cloud.stream.rabbit.binder.admin-adresses | [] | 
 
 |spring.cloud.stream.rabbit.binder.compression-level | 0 | 
 
 |spring.cloud.stream.rabbit.binder.nodes | [] | 
 
-|spring.cloud.stream.rabbit.binder.password |  | 
-
-|spring.cloud.stream.rabbit.binder.ssl-properties-location |  | 
-
-|spring.cloud.stream.rabbit.binder.use-ssl | false | 
-
-|spring.cloud.stream.rabbit.binder.username |  | 
-
-|spring.cloud.stream.rabbit.binder.vhost |  | 
-
 |spring.cloud.stream.rabbit.bindings |  | 
+
+|spring.cloud.zookeeper.base-sleep-time-ms | 50 | Initial amount of time to wait between retries
+
+|spring.cloud.zookeeper.block-until-connected-unit |  | The unit of time related to blocking on connection to Zookeeper
+
+|spring.cloud.zookeeper.block-until-connected-wait | 10 | Wait time to block on connection to Zookeeper
+
+|spring.cloud.zookeeper.connect-string | localhost:2181 | Connection string to the Zookeeper cluster
 
 |spring.cloud.zookeeper.default-health-endpoint |  | Default health endpoint that will be checked to verify that a dependency is alive
 
@@ -818,20 +842,35 @@
 
 |spring.cloud.zookeeper.discovery.enabled | true | 
 
-|spring.cloud.zookeeper.discovery.instance-host |  | 
+|spring.cloud.zookeeper.discovery.instance-host |  | Predefined host with which a service can register itself in Zookeeper. Corresponds
+ to the {code address} from the URI spec.
+
+|spring.cloud.zookeeper.discovery.instance-port |  | Port to register the service under (defaults to listening port)
 
 |spring.cloud.zookeeper.discovery.metadata |  | Gets the metadata name/value pairs associated with this instance. This information
  is sent to zookeeper and can be used by other instances.
 
-|spring.cloud.zookeeper.discovery.root | /services | 
+|spring.cloud.zookeeper.discovery.register | true | Register as a service in zookeeper.
 
-|spring.cloud.zookeeper.discovery.uri-spec | {scheme}://{address}:{port} | 
+|spring.cloud.zookeeper.discovery.root | /services | Root Zookeeper folder in which all instances are registered
+
+|spring.cloud.zookeeper.discovery.uri-spec | {scheme}://{address}:{port} | The URI specification to resolve during service registration in Zookeeper
+
+|spring.cloud.zookeeper.enabled | true | Is Zookeeper enabled
+
+|spring.cloud.zookeeper.max-retries | 10 | Max number of times to retry
+
+|spring.cloud.zookeeper.max-sleep-ms | 500 | Max time in ms to sleep on each retry
 
 |spring.cloud.zookeeper.prefix |  | Common prefix that will be applied to all Zookeeper dependencies' paths
 
 |spring.integration.poller.fixed-delay | 1000 | Fixed delay for default poller.
 
 |spring.integration.poller.max-messages-per-poll | 1 | Maximum messages per poll for the default poller.
+
+|spring.sleuth.integration.enabled | true | Enable Spring Integration sleuth instrumentation.
+
+|spring.sleuth.integration.patterns | * | An array of simple patterns against which channel names will be matched. Default is * (all channels). See org.springframework.util.PatternMatchUtils.simpleMatch(String, String).
 
 |spring.sleuth.keys.async.class-name-key | class | Simple name of the class with a method annotated with {@code @Async}
  from which the asynchronous process started
@@ -924,6 +963,12 @@
 
 |spring.sleuth.keys.message.prefix | message/ | Prefix for header names if they are added as tags.
 
+|spring.sleuth.keys.mvc.controller-class | mvc.controller.class | The lower case, hyphen delimited name of the class that processes the request.
+ Ex. class named "BookController" will result in "book-controller" tag value.
+
+|spring.sleuth.keys.mvc.controller-method | mvc.controller.method | The lower case, hyphen delimited name of the class that processes the request.
+ Ex. method named "listOfBooks" will result in "list-of-books" tag value.
+
 |spring.sleuth.metric.span.accepted-name | counter.span.accepted | 
 
 |spring.sleuth.metric.span.dropped-name | counter.span.dropped | 
@@ -932,34 +977,55 @@
  sampled. The precision is whole-numbers only (i.e. there's no support for 0.1% of
  the traces).
 
-|zuul.add-proxy-headers | true | 
+|zuul.add-host-header | false | Flag to determine whether the proxy forwards the Host header.
 
-|zuul.host.max-per-route-connections | 20 | 
+|zuul.add-proxy-headers | true | Flag to determine whether the proxy adds X-Forwarded-* headers.
 
-|zuul.host.max-total-connections | 200 | 
+|zuul.host.max-per-route-connections | 20 | The maximum number of connections that can be used by a single route.
+
+|zuul.host.max-total-connections | 200 | The maximum number of total connections the proxy can hold open to backends.
 
 |zuul.ignore-local-service | true | 
 
-|zuul.ignored-headers |  | 
+|zuul.ignored-headers |  | Names of HTTP headers to ignore completely (i.e. leave them out of downstream
+ requests and drop them from downstream responses).
 
 |zuul.ignored-patterns |  | 
 
-|zuul.ignored-services |  | 
+|zuul.ignored-services |  | Set of service names not to consider for proxying automatically. By default all
+ services in the discovery client will be proxied.
 
-|zuul.prefix |  | 
+|zuul.prefix |  | A common prefix for all routes.
 
-|zuul.remove-semicolon-content | true | 
+|zuul.remove-semicolon-content | true | Flag to say that path elements past the first semicolon can be dropped.
 
-|zuul.retryable |  | 
+|zuul.retryable |  | Flag for whether retry is supported by default (assuming the routes themselves
+ support it).
 
-|zuul.routes |  | 
+|zuul.ribbon-isolation-strategy |  | 
 
-|zuul.security_headers |  | 
+|zuul.routes |  | Map of route names to properties.
 
-|zuul.servlet-path | /zuul | 
+|zuul.security_headers |  | Headers that are generally expected to be added by Spring Security, and hence often
+ duplicated if the proxy and the backend are secured with Spring. By default they
+ are added to the ignored headers if Spring Security is present.
 
-|zuul.strip-prefix | true | 
+|zuul.semaphore.max-semaphores | 100 | The maximum number of total semaphores for Hystrix.
 
-|zuul.trace-request-body | true | 
+|zuul.sensitive-headers |  | List of sensitive headers that are not passed to downstream requests. Defaults to a
+ "safe" set of headers that commonly contain user credentials. It's OK to remove
+ those from the list if the downstream service is part of the same system as the
+ proxy, so they are sharing authentication data. If using a physical URL outside
+ your own domain, then generally it would be a bad idea to leak user credentials.
+
+|zuul.servlet-path | /zuul | Path to install Zuul as a servlet (not part of Spring MVC). The servlet is more
+ memory efficient for requests with large bodies, e.g. file uploads.
+
+|zuul.ssl-hostname-validation-enabled | true | Flag to say whether the hostname for ssl connections should be verified or not. Default is true.
+ This should only be used in test setups!
+
+|zuul.strip-prefix | true | Flag saying whether to strip the prefix from the path before forwarding.
+
+|zuul.trace-request-body | true | Flag to say that request bodies can be traced.
 
 |===
