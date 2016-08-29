@@ -1,5 +1,6 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
@@ -14,87 +15,98 @@
 	<packaging>pom</packaging>
 	<name>Spring Cloud Samples Scripts</name>
 
-    <profiles>
-      <profile>
-        <id>build</id>
-        <activation><activeByDefault>true</activeByDefault></activation>
-	    <modules>
-		  <module>build</module>
-	    </modules>
-      </profile>
-        <profile>
-          <id>docs</id>
-          <activation><activeByDefault>true</activeByDefault></activation>
-  	    <modules>
-  		  <module>docs</module>
-  	    </modules>
-        </profile>
-      <profile>
-        <id>base</id>
-        <activation><activeByDefault>true</activeByDefault></activation>
-	    <modules>
-		  <module>commons</module>
-		  <module>aws</module>
-		  <module>bus</module>
-		  <module>config</module>
-		  <module>consul</module>
-		  <module>cloudfoundry</module>
-		  <module>cluster</module>
-		  <module>netflix</module>
-		  <module>security</module>
-		  <module>sleuth</module>
-		  <module>stream</module>
-		  <module>zookeeper</module>
-	    </modules>
-      </profile>
-      <profile>
-        <id>starters</id>
-        <activation><activeByDefault>true</activeByDefault></activation>
-        <modules>
-		  <module>starters</module>
-		  <module>cli</module>
-	    </modules>
-      </profile>
-      <profile>
-        <id>apps</id>
-        <activation><activeByDefault>true</activeByDefault></activation>
-        <modules>
-		  <module>tests</module>
-		  <module>configserver</module>
-		  <module>eureka</module>
-		  <module>hystrix-dashboard</module>
-		  <module>turbine</module>
-		  <module>customers-stores</module>
-		  <module>authserver</module>
-		  <module>sso</module>
-        </modules>
-      </profile>
-    </profiles>
+	<profiles>
+		<profile>
+			<id>build</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>build</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>docs</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>docs</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>base</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>commons</module>
+				<module>aws</module>
+				<module>bus</module>
+				<module>config</module>
+				<module>consul</module>
+				<module>contract</module>
+				<module>cloudfoundry</module>
+				<module>cluster</module>
+				<module>netflix</module>
+				<module>security</module>
+				<module>sleuth</module>
+				<module>stream</module>
+				<module>zookeeper</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>starters</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>starters</module>
+				<module>cli</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>apps</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>tests</module>
+				<module>configserver</module>
+				<module>eureka</module>
+				<module>hystrix-dashboard</module>
+				<module>turbine</module>
+				<module>customers-stores</module>
+				<module>authserver</module>
+				<module>sso</module>
+			</modules>
+		</profile>
+	</profiles>
 
 	<properties>
-        <java.version>1.7</java.version>
-        <release.train.version>Camden.BUILD-SNAPSHOT</release.train.version>
+		<java.version>1.7</java.version>
+		<release.train.version>Camden.BUILD-SNAPSHOT</release.train.version>
 	</properties>
 
-    <build>
-      <plugins>
-	    <plugin>
-		  <!--skip deploy (this is just a test module) -->
-		  <artifactId>maven-deploy-plugin</artifactId>
-		  <configuration>
-		    <skip>true</skip>
-		  </configuration>
-	    </plugin>
-      </plugins>
-    </build>
+	<build>
+		<plugins>
+			<plugin>
+				<!--skip deploy (this is just a test module) -->
+				<artifactId>maven-deploy-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 
 	<repositories>
 		<repository>
 			<id>spring-libs-snapshot</id>
 			<url>https://repo.spring.io/libs-snapshot</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
 		</repository>
 	</repositories>
 

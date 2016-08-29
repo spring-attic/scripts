@@ -125,7 +125,7 @@
 	                    </excludes>
 	                  </resource>
 	                  <resource>
-	                    <directory>${main.basedir}/stream/spring-cloud-stream-docs/src/main/asciidoc</directory>
+	                    <directory>${main.basedir}/stream/spring-cloud-stream-core-docs/src/main/asciidoc</directory>
 	                    <includes>
 	                      <include>images/**</include>
 	                    </includes>
@@ -142,6 +142,15 @@
 	                      <exclude>*.sh</exclude>
 	                    </excludes>
 	                  </resource>
+	                  <resource>
+	                    <directory>${main.basedir}/contract/docs/src/main/asciidoc</directory>
+	                    <includes>
+	                      <include>images/**</include>
+	                    </includes>
+	                    <excludes>
+	                      <exclude>*.sh</exclude>
+	                    </excludes>
+	                  </resource>
 	                </resources>
 	                <outputDirectory>target/generated-docs</outputDirectory>
 	              </configuration>
@@ -151,7 +160,7 @@
 					<plugin>
 					  <groupId>org.asciidoctor</groupId>
 					  <artifactId>asciidoctor-maven-plugin</artifactId>
-					  <version>1.5.2</version>
+					  <version>1.5.3</version>
 					  <executions>
 						<execution>
 						  <id>generate-docs</id>
@@ -161,12 +170,12 @@
 						  </goals>
 						  <configuration>
 							<sourceDocumentName>spring-cloud.adoc</sourceDocumentName>
-			        <backend>html</backend>
+							<backend>html</backend>
 							<doctype>book</doctype>
 							<attributes>
-							  <docinfo>true</docinfo>
-							  <spring-cloud-version>${project.version}</spring-cloud-version>
-							  <allow-uri-read>true</allow-uri-read>
+								<docinfo>true</docinfo>
+								<spring-cloud-version>${release.train.version}</spring-cloud-version>
+								<allow-uri-read>true</allow-uri-read>
 								<basedir>${main.basedir}</basedir>
 							</attributes>
 						  </configuration>
