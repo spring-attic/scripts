@@ -11,7 +11,7 @@
 
 	<groupId>org.springframework.cloud</groupId>
 	<artifactId>spring-cloud-samples</artifactId>
-	<version>${release.train.version}</version>
+	<version>Camden.BUILD-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Spring Cloud Samples Scripts</name>
 
@@ -51,7 +51,7 @@
 				<module>netflix</module>
 				<module>security</module>
 				<module>sleuth</module>
-				<module>stream</module>
+				<!--module>stream</module-->
 				<module>zookeeper</module>
 			</modules>
 		</profile>
