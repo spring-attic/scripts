@@ -47,7 +47,6 @@
 				<module>consul</module>
 				<module>contract</module>
 				<module>cloudfoundry</module>
-				<module>cluster</module>
 				<module>netflix</module>
 				<module>security</module>
 				<module>sleuth</module>
