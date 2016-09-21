@@ -215,5 +215,5 @@ echo "Building the docs with release train version [${RELEASE_TRAIN}]"
 if [[ "${GH_PAGES}" == "yes" ]] ; then
   echo "Downloading gh-pages.sh from spring-cloud-build's master"
   curl https://raw.githubusercontent.com/spring-cloud/spring-cloud-build/master/docs/src/main/asciidoc/ghpages.sh -o target/gh-pages.sh && chmod +x target/gh-pages.sh
-  ./target/ghpages.sh --version ${RELEASE_TRAIN} --releasetrain --clone
+  ./target/gh-pages.sh --version ${RELEASE_TRAIN} --releasetrain --clone
 fi
