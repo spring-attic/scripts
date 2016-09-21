@@ -13,14 +13,14 @@ SPRING_CLOUD_RELEASE_REPO=${SPRING_CLOUD_RELEASE_REPO:-git@github.com:spring-clo
 MAVEN_PATH=${MAVEN_PATH:-}
 RELEASE_TRAIN_PROJECTS=${RELEASE_TRAIN_PROJECTS:-aws bus cloudfoundry commons config netflix security cluster consul sleuth stream task zookeeper}
 
+if [ -e "${ROOT_FOLDER}/mvnw" ]; then
+    MAVEN_EXEC="$ROOT_FOLDER/mvnw"
+else
+    MAVEN_EXEC="${MAVEN_PATH}mvn"
+fi
+
 # Retrieves from spring-cloud-dependencies module the version of a
 function retrieve_version_from_maven() {
-  if [ -e "${ROOT_FOLDER}/mvnw" ]; then
-      MAVEN_EXEC="$ROOT_FOLDER/mvnw"
-  else
-      MAVEN_EXEC="${MAVEN_PATH}mvn"
-  fi
-  echo "Path to Maven is [${MAVEN_EXEC}]"
   RETRIEVED_VERSION=$("${MAVEN_EXEC}" -q \
         -Dexec.executable="echo" \
         -Dexec.args="\${spring-cloud-${1}.version}" \
@@ -117,6 +117,8 @@ if [[ "${VERSION}" != "" && -z "${INPUT_PROJECTS}" && -z "${RETRIEVE_VERSIONS}" 
 if [[ -z "${VERSION}" && "${INPUT_PROJECTS}" != "" ]] ; then echo -e "WARNING: Projects were passed but version wasn't... quitting\n\n" && print_usage && exit 1;fi
 if [[ "${RETRIEVE_VERSIONS}" != "" && "${INPUT_PROJECTS}" != "" ]] ; then echo -e "WARNING: Can't have both projects and retreived projects passed... quitting\n\n" && print_usage && exit 1;fi
 if [[ -z "${VERSION}" ]] ; then echo "No version passed - starting in interactive mode..." && INTERACTIVE="yes";fi
+
+echo "Path to Maven is [${MAVEN_EXEC}]"
 
 if [[ "${INTERACTIVE}" == "yes" ]] ; then
   echo "Welcome to the release train docs generation. You will be asked to provide"
