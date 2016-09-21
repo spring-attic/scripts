@@ -143,6 +143,7 @@ elif [[ "${VERSION}" != "" && -z "${RETRIEVE_VERSIONS}" ]] ; then
     PROJECTS[${TEMP_2[0]}]=${TEMP_2[1]}
   done
 else
+  RELEASE_TRAIN=${VERSION}
   echo "Will attempt to retrieve versions from [git@github.com:spring-cloud/spring-cloud-release.git]"
   mkdir -p ${ROOT_FOLDER}/target
   clonedStatic=${ROOT_FOLDER}/target/spring-cloud-release
