@@ -15,11 +15,17 @@ RELEASE_TRAIN_PROJECTS=${RELEASE_TRAIN_PROJECTS:-aws bus cloudfoundry commons co
 
 # Retrieves from spring-cloud-dependencies module the version of a
 function retrieve_version_from_maven() {
-  RETRIEVED_VERSION=$("${MAVEN_PATH}"mvn -q \
+  if [ -e "${ROOT_FOLDER}/mvnw" ]; then
+      MAVEN_EXEC="$ROOT_FOLDER/mvnw"
+  else
+      MAVEN_EXEC="${MAVEN_PATH}mvn"
+  fi
+  echo "Path to Maven is [${MAVEN_EXEC}]"
+  RETRIEVED_VERSION=$("${MAVEN_EXEC}" -q \
         -Dexec.executable="echo" \
         -Dexec.args="\${spring-cloud-${1}.version}" \
         org.codehaus.mojo:exec-maven-plugin:1.3.1:exec \
-        -pl spring-cloud-dependencies )
+        -o -pl spring-cloud-dependencies )
     echo "Extracted version for project [$1] from Maven build is [${RETRIEVED_VERSION}]"
 }
 
