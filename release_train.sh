@@ -205,5 +205,7 @@ echo "Building the docs with release train version [${RELEASE_TRAIN}]"
 ./mvnw clean install -Pdocs,build -Drelease.train.version=${RELEASE_TRAIN} -pl docs
 
 if [[ "${GH_PAGES}" == "yes" ]] ; then
-  ./docs/src/main/asciidoc/ghpages.sh --version ${RELEASE_TRAIN} --releasetrain --clone
+  echo "Downloading gh-pages.sh from spring-cloud-build's master"
+  curl https://raw.githubusercontent.com/spring-cloud/spring-cloud-build/master/docs/src/main/asciidoc/ghpages.sh -o target/gh-pages.sh && chmod +x target/gh-pages.sh
+  ./target/ghpages.sh --version ${RELEASE_TRAIN} --releasetrain --clone
 fi
