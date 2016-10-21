@@ -5,8 +5,7 @@
 Spring Cloud provides tools for developers to quickly build some of
 the common patterns in distributed systems (e.g. configuration
 management, service discovery, circuit breakers, intelligent routing,
-micro-proxy, control bus, one-time tokens, global locks, leadership
-election, distributed sessions, cluster state). Coordination of
+micro-proxy, control bus). Coordination of
 distributed systems leads to boiler plate patterns, and using Spring
 Cloud developers can quickly stand up services and applications that
 implement those patterns. They will work well in any distributed
@@ -26,8 +25,6 @@ and extensibility mechanism to cover others.
 * Service-to-service calls
 * Load balancing
 * Circuit Breakers
-* Global locks
-* Leadership election and cluster state
 * Distributed messaging
 
 include::{basedir}/commons/docs/src/main/asciidoc/spring-cloud-commons.adoc[]
@@ -37,7 +34,7 @@ include::{basedir}/config/docs/src/main/asciidoc/spring-cloud-config.adoc[]
 include::{basedir}/netflix/docs/src/main/asciidoc/spring-cloud-netflix.adoc[]
 
 = Spring Cloud Stream
-include::{basedir}/stream/spring-cloud-stream-core-docs/src/main/asciidoc/spring-cloud-stream-overview.adoc[]
+include::{basedir}/stream/spring-cloud-stream-docs/src/main/asciidoc/index.adoc[]
 
 include::{basedir}/bus/docs/src/main/asciidoc/spring-cloud-bus.adoc[]
 
@@ -52,8 +49,6 @@ include::{basedir}/cli/docs/src/main/asciidoc/spring-cloud-cli.adoc[]
 include::{basedir}/security/docs/src/main/asciidoc/spring-cloud-security.adoc[]
 
 include::{basedir}/cloudfoundry/docs/src/main/asciidoc/spring-cloud-cloudfoundry.adoc[]
-
-include::{basedir}/cluster/docs/src/main/asciidoc/spring-cloud-cluster.adoc[]
 
 include::{basedir}/contract/docs/src/main/asciidoc/spring-cloud-contract.adoc[]
 
