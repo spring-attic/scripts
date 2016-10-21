@@ -69,7 +69,7 @@
 	url = git@github.com:spring-cloud-incubator/spring-cloud-sleuth
 [submodule "stream"]
 	path = stream
-	url = git@github.com:spring-cloud/spring-cloud-stream.git
+	url = git@github.com:spring-cloud/spring-cloud-stream-starters.git
 [submodule "brewery"]
 	path = brewery
 	url = git@github.com:spring-cloud-samples/brewery
@@ -82,3 +82,6 @@
 [submodule "contract"]
 	path = contract
 	url = git@github.com:spring-cloud/spring-cloud-contract
+[submodule "stream-core"]
+	path = stream-core
+	url = git@github.com:spring-cloud/spring-cloud-stream.git
