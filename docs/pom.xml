@@ -125,7 +125,25 @@
 	                    </excludes>
 	                  </resource>
 	                  <resource>
-	                    <directory>${main.basedir}/stream/spring-cloud-stream-core-docs/src/main/asciidoc</directory>
+	                    <directory>${main.basedir}/stream/spring-cloud-stream-docs/core/spring-cloud-stream-core-docs/src/main/asciidoc</directory>
+	                    <includes>
+	                      <include>images/**</include>
+	                    </includes>
+	                    <excludes>
+	                      <exclude>*.sh</exclude>
+	                    </excludes>
+	                  </resource>
+	                  <resource>
+	                    <directory>${main.basedir}/stream/spring-cloud-stream-docs/rabbit/spring-cloud-stream-binder-rabbit-docs/src/main/asciidoc</directory>
+	                    <includes>
+	                      <include>images/**</include>
+	                    </includes>
+	                    <excludes>
+	                      <exclude>*.sh</exclude>
+	                    </excludes>
+	                  </resource>
+	                  <resource>
+	                    <directory>${main.basedir}/stream/spring-cloud-stream-docs/kafka/spring-cloud-stream-binder-kafka/src/main/asciidoc</directory>
 	                    <includes>
 	                      <include>images/**</include>
 	                    </includes>

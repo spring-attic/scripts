@@ -34,7 +34,8 @@ include::{basedir}/config/docs/src/main/asciidoc/spring-cloud-config.adoc[]
 include::{basedir}/netflix/docs/src/main/asciidoc/spring-cloud-netflix.adoc[]
 
 = Spring Cloud Stream
-include::{basedir}/stream/spring-cloud-stream-docs/src/main/asciidoc/index.adoc[]
+:stream-docs-basedir: {basedir}/stream/spring-cloud-stream-docs
+include::{basedir}/stream/spring-cloud-stream-docs/src/main/asciidoc/spring-cloud-stream-aggregate.adoc[]
 
 include::{basedir}/bus/docs/src/main/asciidoc/spring-cloud-bus.adoc[]
 
