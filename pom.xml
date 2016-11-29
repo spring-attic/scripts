@@ -10,7 +10,7 @@
 
 	<groupId>org.springframework.cloud</groupId>
 	<artifactId>spring-cloud-samples</artifactId>
-	<version>Brixton.SR3</version>
+	<version>Brixton.BUILD-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Spring Cloud Samples Scripts</name>
 
@@ -22,6 +22,15 @@
 		  <module>build</module>
 	    </modules>
       </profile>
+			<profile>
+				<id>docs</id>
+				<activation>
+					<activeByDefault>true</activeByDefault>
+				</activation>
+				<modules>
+					<module>docs</module>
+				</modules>
+			</profile>
       <profile>
         <id>base</id>
         <activation><activeByDefault>true</activeByDefault></activation>
@@ -212,7 +221,7 @@
             </snapshots>
 		</repository>
 	</repositories>
-	
+
 	<pluginRepositories>
 		<pluginRepository>
 			<id>spring-libs-release</id>

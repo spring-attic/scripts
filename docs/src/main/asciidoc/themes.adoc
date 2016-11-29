@@ -1,0 +1,91 @@
+= Spring Cloud Post MVP
+
+This document pulls together some ideas and sets relative priorities for Spring Cloud beyond the MVP stage (which is available as version 1.0).
+
+== MVP Recap
+
+* Config server with git backend
+* Config client featuring refresh and encryption/decryption as well as the bootstrap phase in Spring application lifecycle
+* Common abstractions for load balancer, service discovery and circuit breaker
+* Security integrations: declarative SSO and proxy authentication strategies
+* Eureka for service discovery: client and server (with UI)
+* Eureka sidecar for non-JVM clients
+* Automatic reverse proxy using Zuul
+* Spring configuration model for Zuul filters 
+* Spring configuration model for Ribbon load balancer
+* Feign declarative web service clients (with Ribbon integration)
+* RestTemplate integration with Ribbon
+* Hystrix for circuit breaker: client and dashboard (UI)
+* Turbine for circuit breaker aggregation, pull over HTTP and push over AMQP
+* AWS integration: relational databases, messaging and EC2 metadata
+* AMQP bus for a defined set of operational events like config changes
+* Groovy CLI with support for most of the above
+
+== Stateful Patterns and Spring Cloud Cluster
+
+* Cron server
+* API hooks
+* Event sequencing
+* One-time tokens
+* Global lock service (possibly a building block for other patterns)
+* Global generic state machine
+
+== Switch Patterns
+
+* Feature switches
+* A/B testing
+
+== Messaging and Asynchronous Patterns
+
+=== Messaging for Business Applications
+
+Microservices lend themselves to messaging and other asynchronous patterns, but so far Spring Cloud has mainly been concerned with HTTP as a transport. AMQP and Websockets are lightweight and awesomely easy to set up with Spring and Spring Boot, so those would be the obvious building blocks for anything concrete. Building some sample systems, and publishing some documentation or articles would be a good start to see where it might lead.
+
+=== Building on the Bus
+
+The role of Spring Cloud Bus can be expanded in various ways.
+
+* Some messages might need to be audited or brokered in some way, e.g. to ensure delivery to all members of a cluster, not just the ones that are available at the time the message is sent.
+
+* Telemetry and monitoring. Being able to trace business messages through a distributed system is a powerful enabler, and might require the same level of abstraction as the Bus, or even be able to share infrastructure and configuration. Publishing metrics: OpenTSDB (see https://github.com/Ticketmaster), redis, zookeeper, netflix atlas or http://influxdb.com.
+
+* Messages can already be addressed to all the instances of a service, but no use is made of that feature in Spring Cloud itself (users are left to use it if they feel they need to).
+
+* Publishing more events, and publishing automatically (instead of waiting to be poked on an Actuator `Endpoint`).
+
+* Alternative implementations: Consul, Redis, kafka, AWS (SQS + SNS), Gemfire
+
+=== Reactive Patterns
+
+Integrating more with http://projectreactor.org[Project Reactor], e.g. publishing Hystrix metrics from a circuit breaker in a Reactor stream.
+
+== Miscellaneous
+
+=== Alternative Stacks
+
+* Consul: provide an alternative implementation of the discovery abstraction in Spring Cloud Commons. Consul uses a distributed datastore and cluster manager, so it has an emphasis on consistency (so availability is only an option, while is the main focus of Eureka).
+
+* Maybe other discovery and service registry solutions (Gemfire, redis, etcd, Zookeeper, Spring Cloud Cluster, airbnb/synapse).
+
+* The new generation of Netflix OSS, and its focus on RxNetty creates some challenges, but also a lot nicer programming models and easier integration. These changes will probably end up requiring a new major version of Spring Cloud Netflix.
+
+=== Integration Testing
+
+* Have a full env that is spun up to run full tests against (Eureka, Config Server, Turbine, Hystrix Dashboard and clients of various kinds).
+
+=== Developer Workflow
+
+* Developer deploys a component locally and it joins a remote distributed system (to save from having to deploy the whole system for an integration test of one of its components).
+* Tooling for containers.
+
+=== Demonstrate Cloud Native
+
+* Multi-Zone and Multi-Region demos on CF and AWS using a Mutli-Region DB like Cassandra.
+
+=== More Security Options
+
+Securing business services as well as the platform (Spring Cloud features) itself is bound to be an area of expansion. So far we only make it easy to add HTTP basic security to the Config Server and Eureka. More options, even if it's only documentation, are needed.
+
+=== Multi-tenancy
+
+From a discusion with @joshlong about Hystrix, Config Server and Discovery in a multi-tennant system: see https://github.com/spring-cloud/spring-cloud-commons/issues/20[spring-cloud-commons #20]
