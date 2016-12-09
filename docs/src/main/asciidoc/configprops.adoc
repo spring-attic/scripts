@@ -302,6 +302,8 @@
 
 |eureka.instance.default-address-resolution-order | [] | 
 
+|eureka.instance.environment |  | 
+
 |eureka.instance.health-check-url |  | Gets the absolute health check page URL for this instance. The users can provide
  the healthCheckUrlPath if the health check page resides in the same instance
  talking to eureka, else in the cases where the instance is a proxy for some other
@@ -389,6 +391,11 @@
 |eureka.instance.prefer-ip-address | false | Flag to say that, when guessing a hostname, the IP address of the server should be
  used in prference to the hostname reported by the OS.
 
+|eureka.instance.registry.default-open-for-traffic-count | 1 | Value used in determining when leases are cancelled, default to 1 for standalone.
+ Should be set to 0 for peer replicated eurekas
+
+|eureka.instance.registry.expected-number-of-renews-per-min | 1 | 
+
 |eureka.instance.secure-health-check-url |  | Gets the absolute secure health check page URL for this instance. The users can
  provide the secureHealthCheckUrl if the health check page resides in the same
  instance talking to eureka, else in the cases where the instance is a proxy for
@@ -406,7 +413,7 @@
 
 |eureka.instance.secure-port-enabled | false | Indicates whether the secure port should be enabled for traffic or not.
 
-|eureka.instance.secure-virtual-host-name |  | Gets the secure virtual host name defined for this instance.
+|eureka.instance.secure-virtual-host-name | unknown | Gets the secure virtual host name defined for this instance.
 
  This is typically the way other instance would find this instance by using the
  secure virtual host name.Think of this as similar to the fully qualified domain
@@ -429,7 +436,7 @@
  status of this instance. Users can provide a simple HTML indicating what is the
  current status of the instance.
 
-|eureka.instance.virtual-host-name |  | Gets the virtual host name defined for this instance.
+|eureka.instance.virtual-host-name | unknown | Gets the virtual host name defined for this instance.
 
  This is typically the way other instance would find this instance by using the
  virtual host name.Think of this as similar to the fully qualified domain name, that
@@ -585,6 +592,8 @@
 
 |health.config.enabled | false | Flag to indicate that the config server health indicator should be installed.
 
+|health.config.time-to-live | 0 | Time to live for cached result, in milliseconds. Default 300000 (5 min).
+
 |hystrix.metrics.enabled | true | Enable Hystrix metrics polling. Defaults to true.
 
 |hystrix.metrics.polling-interval-ms | 2000 | Interval between subsequent polling of metrics. Defaults to 2000 ms.
@@ -603,6 +612,10 @@
  This will be useful if you are using string concatenation in RestTemplate urls.
 
 |netflix.metrics.servo.registry-class | com.netflix.servo.BasicMonitorRegistry | Fully qualified class name for monitor registry used by Servo.
+
+|proxy.auth.load-balanced |  | 
+
+|proxy.auth.routes |  | Authentication strategy per route.
 
 |spring.cloud.bus.ack.destination-service |  | Service that wants to listen to acks. By default null (meaning all services).
 
@@ -673,6 +686,77 @@
 
 |spring.cloud.config.retry.multiplier | 1.1 | Multiplier for next interval.
 
+|spring.cloud.config.server.bootstrap | false | Flag indicating that the config server should initialize its own Environment with
+ properties from the remote repository. Off by default because it delays startup but
+ can be useful when embedding the server in another application.
+
+|spring.cloud.config.server.default-application-name | application | Default application name when incoming requests do not have a specific one.
+
+|spring.cloud.config.server.default-label |  | Default repository label when incoming requests do not have a specific label.
+
+|spring.cloud.config.server.default-profile | default | Default application profile when incoming requests do not have a specific one.
+
+|spring.cloud.config.server.encrypt.enabled | true | Enable decryption of environment properties before sending to client.
+
+|spring.cloud.config.server.git.basedir |  | Base directory for local working copy of repository.
+
+|spring.cloud.config.server.git.clone-on-start |  | Flag to indicate that the repository should be cloned on startup (not on demand).
+ Generally leads to slower startup but faster first query.
+
+|spring.cloud.config.server.git.default-label |  | 
+
+|spring.cloud.config.server.git.environment |  | 
+
+|spring.cloud.config.server.git.force-pull |  | Flag to indicate that the repository should force pull. If true discard any local
+ changes and take from remote repository.
+
+|spring.cloud.config.server.git.git-factory |  | 
+
+|spring.cloud.config.server.git.password |  | Password for authentication with remote repository.
+
+|spring.cloud.config.server.git.repos |  | Map of repository identifier to location and other properties.
+
+|spring.cloud.config.server.git.search-paths |  | Search paths to use within local working copy. By default searches only the root.
+
+|spring.cloud.config.server.git.timeout |  | Timeout (in seconds) for obtaining HTTP or SSH connection (if applicable). Default
+ 5 seconds.
+
+|spring.cloud.config.server.git.uri |  | URI of remote repository.
+
+|spring.cloud.config.server.git.username |  | Username for authentication with remote repository.
+
+|spring.cloud.config.server.health.repositories |  | 
+
+|spring.cloud.config.server.native.fail-on-error | false | Flag to determine how to handle exceptions during decryption (default false).
+
+|spring.cloud.config.server.native.search-locations | [] | Locations to search for configuration files. Defaults to the same as a Spring Boot
+ app so [classpath:/,classpath:/config/,file:./,file:./config/].
+
+|spring.cloud.config.server.native.version |  | Version string to be reported for native repository
+
+|spring.cloud.config.server.overrides |  | Extra map for a property source to be sent to all clients unconditionally.
+
+|spring.cloud.config.server.prefix |  | Prefix for configuration resource paths (default is empty). Useful when embedding
+ in another application when you don't want to change the context path or servlet
+ path.
+
+|spring.cloud.config.server.strip-document-from-yaml | true | Flag to indicate that YAML documents that are text or collections (not a map)
+ should be returned in "native" form.
+
+|spring.cloud.config.server.svn.basedir |  | Base directory for local working copy of repository.
+
+|spring.cloud.config.server.svn.default-label | trunk | The default label for environment properties requests.
+
+|spring.cloud.config.server.svn.environment |  | 
+
+|spring.cloud.config.server.svn.password |  | Password for authentication with remote repository.
+
+|spring.cloud.config.server.svn.search-paths |  | Search paths to use within local working copy. By default searches only the root.
+
+|spring.cloud.config.server.svn.uri |  | URI of remote repository.
+
+|spring.cloud.config.server.svn.username |  | Username for authentication with remote repository.
+
 |spring.cloud.config.token |  | Security Token passed thru to underlying environment repository.
 
 |spring.cloud.config.uri | http://localhost:8888 | The URI of the remote server (default http://localhost:8888).
@@ -700,7 +784,10 @@
 
 |spring.cloud.consul.config.watch.enabled | true | If the watch is enabled. Defaults to true.
 
-|spring.cloud.consul.config.watch.wait-time | 60 | The number of seconds to wait (or block) for watch query. Defaults to 60.
+|spring.cloud.consul.config.watch.wait-time | 55 | The number of seconds to wait (or block) for watch query, defaults to 55.
+ Needs to be less than default ConsulClient (defaults to 60). To increase ConsulClient
+ timeout create a ConsulClient bean with a custom ConsulRawClient with a custom
+ HttpClient.
 
 |spring.cloud.consul.discovery.acl-token |  | 
 
@@ -710,7 +797,13 @@
 
 |spring.cloud.consul.discovery.default-query-tag |  | Tag to query for in service list if one is not listed in serverListQueryTags.
 
+|spring.cloud.consul.discovery.default-zone-metadata-name | zone | Service instance zone comes from metadata.
+ This allows changing the metadata tag name.
+
 |spring.cloud.consul.discovery.enabled | true | Is service discovery enabled?
+
+|spring.cloud.consul.discovery.fail-fast | true | Throw exceptions during service registration if true, otherwise, log
+ warnings (defaults to true).
 
 |spring.cloud.consul.discovery.health-check-interval | 10s | How often to perform the health check (e.g. 10s)
 
@@ -735,6 +828,8 @@
 |spring.cloud.consul.discovery.hostname |  | Hostname to use when accessing server
 
 |spring.cloud.consul.discovery.instance-id |  | Unique service instance id
+
+|spring.cloud.consul.discovery.instance-zone |  | Service instance zone
 
 |spring.cloud.consul.discovery.ip-address |  | IP address to use when accessing service (must also set preferIpAddress
 			to use)
@@ -793,7 +888,13 @@
 
 |spring.cloud.inetutils.ignored-interfaces |  | List of Java regex expressions for network interfaces that will be ignored.
 
+|spring.cloud.inetutils.preferred-networks |  | List of Java regex expressions for network addresses that will be ignored.
+
 |spring.cloud.inetutils.timeout-seconds | 1 | Timeout in seconds for calculating hostname.
+
+|spring.cloud.inetutils.use-only-site-local-interfaces | false | Use only interfaces with site local addresses. See {@link InetAddress#isSiteLocalAddress()} for more details.
+
+|spring.cloud.loadbalancer.retry.enabled | false | 
 
 |spring.cloud.stream.binders |  | 
 
@@ -977,6 +1078,8 @@
  sampled. The precision is whole-numbers only (i.e. there's no support for 0.1% of
  the traces).
 
+|spring.sleuth.trace-id128 | false | When true, generate 128-bit trace IDs instead of 64-bit ones.
+
 |zuul.add-host-header | false | Flag to determine whether the proxy forwards the Host header.
 
 |zuul.add-proxy-headers | true | Flag to determine whether the proxy adds X-Forwarded-* headers.
@@ -986,6 +1089,11 @@
 |zuul.host.max-total-connections | 200 | The maximum number of total connections the proxy can hold open to backends.
 
 |zuul.ignore-local-service | true | 
+
+|zuul.ignore-security-headers | true | Flag to say that SECURITY_HEADERS are added to ignored headers if spring security is on the classpath.
+ By setting ignoreSecurityHeaders to false we can switch off this default behaviour. This should be used together with
+ disabling the default spring security headers
+ see https://docs.spring.io/spring-security/site/docs/current/reference/html/headers.html#default-security-headers
 
 |zuul.ignored-headers |  | Names of HTTP headers to ignore completely (i.e. leave them out of downstream
  requests and drop them from downstream responses).
@@ -1006,9 +1114,9 @@
 
 |zuul.routes |  | Map of route names to properties.
 
-|zuul.security_headers |  | Headers that are generally expected to be added by Spring Security, and hence often
+|zuul.s-e-c-u-r-i-t-y-h-e-a-d-e-r-s |  | Headers that are generally expected to be added by Spring Security, and hence often
  duplicated if the proxy and the backend are secured with Spring. By default they
- are added to the ignored headers if Spring Security is present.
+ are added to the ignored headers if Spring Security is present and ignoreSecurityHeaders = true.
 
 |zuul.semaphore.max-semaphores | 100 | The maximum number of total semaphores for Hystrix.
 
