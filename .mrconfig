@@ -1,138 +1,133 @@
 [build]
 clone = echo 'not cloning submodule'
-checkout = git checkout master
+init = git checkout 1.2.x
 
 [cloudfoundry]
 clone = echo 'not cloning submodule'
-checkout = git checkout master
-deploy = mvn deploy "$@" -DaltDeploymentRepository=repo.spring.io::default::https://repo.spring.io/libs-snapshot-local
-install = mvn install "$@"
-
-[cluster]
-clone = echo 'not cloning submodule'
-checkout = git checkout master
+init = git checkout master
 deploy = mvn deploy "$@" -DaltDeploymentRepository=repo.spring.io::default::https://repo.spring.io/libs-snapshot-local
 install = mvn install "$@"
 
 [commons]
 clone = echo 'not cloning submodule'
-checkout = git checkout master
+init = git checkout 1.1.x
 deploy = mvn deploy "$@" -DaltDeploymentRepository=repo.spring.io::default::https://repo.spring.io/libs-snapshot-local
 install = mvn install "$@"
 
 [config]
 clone = echo 'not cloning submodule'
-checkout = git checkout master
+init = git checkout 1.2.x
 deploy = mvn deploy "$@" -DaltDeploymentRepository=repo.spring.io::default::https://repo.spring.io/libs-snapshot-local
 install = mvn install "$@"
 
 [consul]
 clone = echo 'not cloning submodule'
-checkout = git checkout master
+init = git checkout 1.1.x
 deploy = mvn deploy "$@" -DaltDeploymentRepository=repo.spring.io::default::https://repo.spring.io/libs-snapshot-local
 install = mvn install "$@"
 
 [contract]
 clone = echo 'not cloning submodule'
-checkout = git checkout master
+init = git checkout 1.0.x
 deploy = mvn deploy "$@" -DaltDeploymentRepository=repo.spring.io::default::https://repo.spring.io/libs-snapshot-local
 install = mvn install "$@"
 
 [aws]
 clone = echo 'not cloning submodule'
-checkout = git checkout master
+init = git checkout 1.1.x
 deploy = mvn deploy "$@" -DaltDeploymentRepository=repo.spring.io::default::https://repo.spring.io/libs-snapshot-local
 install = mvn install "$@"
 
 [netflix]
 clone = echo 'not cloning submodule'
-checkout = git checkout master
+init = git checkout 1.2.x
 deploy = mvn deploy "$@" -DaltDeploymentRepository=repo.spring.io::default::https://repo.spring.io/libs-snapshot-local
 install = mvn install "$@"
 
 [bus]
 clone = echo 'not cloning submodule'
-checkout = git checkout master
+init = git checkout 1.2.x
 deploy = mvn deploy "$@" -DaltDeploymentRepository=repo.spring.io::default::https://repo.spring.io/libs-snapshot-local
 install = mvn install "$@"
 
 [cli]
 clone = echo 'not cloning submodule'
-checkout = git checkout master
+init = git checkout 1.2.x
 deploy = mvn deploy "$@" -DaltDeploymentRepository=repo.spring.io::default::https://repo.spring.io/libs-snapshot-local
 install = mvn install "$@" && [ -e ~/.gvm/springboot/dev ] && cp target/*.jar ~/.gvm/springboot/dev/lib
 
 [starters]
 clone = echo 'not cloning submodule'
-checkout = git checkout master
+init = git checkout Camden.x
 deploy = mvn deploy "$@" -DaltDeploymentRepository=repo.spring.io::default::https://repo.spring.io/libs-snapshot-local
 install = mvn install "$@"
 
 [task]
 clone = echo 'not cloning submodule'
-checkout = git checkout master
+init = git checkout 1.0.x
 deploy = mvn deploy "$@" -DaltDeploymentRepository=repo.spring.io::default::https://repo.spring.io/libs-snapshot-local
 install = mvn install "$@"
 
-[brewery]
-clone = echo 'not cloning submodule'
-checkout = git checkout master
-
-[config-repo]
-clone = echo 'not cloning submodule'
-checkout = git checkout master
-
-[configserver]
-clone = echo 'not cloning submodule'
-checkout = git checkout master
-
-[eureka]
-clone = echo 'not cloning submodule'
-checkout = git checkout master
-
-[customers-stores]
-clone = echo 'not cloning submodule'
-checkout = git checkout master
-
-[hystrix-dashboard]
-clone = echo 'not cloning submodule'
-checkout = git checkout master
-
-[turbine]
-clone = echo 'not cloning submodule'
-checkout = git checkout master
-
 [security]
 clone = echo 'not cloning submodule'
-checkout = git checkout master
+init = git checkout 1.1.x
 
 [sleuth]
 clone = echo 'not cloning submodule'
-checkout = git checkout master
+init = git checkout 1.1.x
 
 [stream]
 clone = echo 'not cloning submodule'
-checkout = git checkout master
-
-[authserver]
-clone = echo 'not cloning submodule'
-checkout = git checkout master
-
-[sso]
-clone = echo 'not cloning submodule'
-checkout = git checkout master
+init = git checkout Brooklyn.x
 
 [tests]
 clone = echo 'not cloning submodule'
-checkout = git checkout master
+init = git checkout master
 
 [zookeeper]
 clone = echo 'not cloning submodule'
-checkout = git checkout master
+init = git checkout 1.0.x
 deploy = mvn deploy "$@" -DaltDeploymentRepository=repo.spring.io::default::https://repo.spring.io/libs-snapshot-local
 install = mvn install "$@"
 
 []
 clone = git submodule update --init
-checkout = git checkout full
+init = git checkout Camden
+
+[brewery]
+clone = echo 'not cloning submodule'
+init = git checkout master
+
+[config-repo]
+clone = echo 'not cloning submodule'
+init = git checkout master
+
+[configserver]
+clone = echo 'not cloning submodule'
+init = git checkout master
+
+[eureka]
+clone = echo 'not cloning submodule'
+init = git checkout master
+
+[customers-stores]
+clone = echo 'not cloning submodule'
+init = git checkout master
+
+[hystrix-dashboard]
+clone = echo 'not cloning submodule'
+init = git checkout master
+
+[turbine]
+clone = echo 'not cloning submodule'
+init = git checkout master
+
+[authserver]
+clone = echo 'not cloning submodule'
+init = git checkout master
+
+[sso]
+clone = echo 'not cloning submodule'
+init = git checkout master
+
 
