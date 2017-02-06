@@ -199,9 +199,10 @@ echo "For the given modules will enter their directory, pull the changes and che
 for K in "${!PROJECTS[@]}"
 do
   echo -e "\nChecking out tag [v${PROJECTS[$K]}] for project [${K}]"
-  git submodule update --init ${K}
+  git submodule update --init ${K} || echo "Sth went wrong - trying to continue"
   cd ${ROOT_FOLDER}/${K}
-  git fetch
+  git fetch --tags
+  echo "Removing all changes" && git reset --hard
   git checkout v"${PROJECTS[$K]}" || (echo "Failed to check out v${PROJECTS[$K]} will try ${PROJECTS[$K]}" && git checkout "${PROJECTS[$K]}")
   [[ -f .gitmodules ]] && git submodule update --init
   git status
