@@ -85,3 +85,6 @@
 [submodule "stream-core"]
 	path = stream-core
 	url = git@github.com:spring-cloud/spring-cloud-stream.git
+[submodule "vault"]
+	path = vault
+	url = git@github.com:spring-cloud/spring-cloud-vault.git
