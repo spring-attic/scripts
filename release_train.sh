@@ -1,5 +1,5 @@
-#!/bin/bash
 #!/usr/local/bin/bash
+#!/bin/bash
 
 # If you have exceptions while using associative arrays from Bash 4.0 in OSX.
 # instead of #!/bin/bash you have to have #!/usr/local/bin/bash

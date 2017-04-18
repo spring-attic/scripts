@@ -20,7 +20,12 @@
 @Grab('org.springframework.cloud:spring-cloud-starter-sleuth:1.1.0.RELEASE')
 @Grab('org.springframework.cloud:spring-cloud-starter-cloudfoundry:1.0.1.RELEASE')
 @Grab('org.springframework.cloud:spring-cloud-cloudfoundry-discovery:1.0.1.RELEASE')
-@Grab('org.springframework.cloud:spring-cloud-contract-spec:1.0.2.RELEASE')
+@Grab('org.springframework.cloud:spring-cloud-contract-stub-runner:1.0.2.RELEASE')
+@Grab('org.springframework.cloud:spring-cloud-vault-config:1.0.0.RELEASE')
+@Grab('org.springframework.cloud:spring-cloud-vault-config-aws:1.0.0.RELEASE')
+@Grab('org.springframework.cloud:spring-cloud-vault-config-databases:1.0.0.RELEASE')
+@Grab('org.springframework.cloud:spring-cloud-vault-config-consul:1.0.0.RELEASE')
+@Grab('org.springframework.cloud:spring-cloud-vault-config-rabbitmq:1.0.0.RELEASE')
 
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver
 import org.springframework.core.io.Resource
