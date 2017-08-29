@@ -1,5 +1,5 @@
 = Spring Cloud
-:basedir: ../../..
+:basedir: ../../../../
 :toc: left
 
 Spring Cloud provides tools for developers to quickly build some of
