@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.cloud</groupId>
 		<artifactId>spring-cloud-samples</artifactId>
-		<version>Camden.BUILD-SNAPSHOT</version>
+		<version>Finchley.BUILD-SNAPSHOT</version>
 	</parent>
 	<artifactId>spring-cloud-samples-docs</artifactId>
 	<packaging>pom</packaging>
