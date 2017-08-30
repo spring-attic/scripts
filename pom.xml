@@ -11,7 +11,7 @@
 
 	<groupId>org.springframework.cloud</groupId>
 	<artifactId>spring-cloud-samples</artifactId>
-	<version>Camden.BUILD-SNAPSHOT</version>
+	<version>Finchley.BUILD-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Spring Cloud Samples Scripts</name>
 
@@ -52,6 +52,7 @@
 				<module>sleuth</module>
 				<!--module>stream</module-->
 				<module>zookeeper</module>
+				<module>gateway</module>
 			</modules>
 		</profile>
 		<profile>
@@ -84,7 +85,7 @@
 
 	<properties>
 		<java.version>1.7</java.version>
-		<release.train.version>Camden.BUILD-SNAPSHOT</release.train.version>
+		<release.train.version>Finchley.BUILD-SNAPSHOT</release.train.version>
 	</properties>
 
 	<build>
