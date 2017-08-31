@@ -25,7 +25,7 @@ function retrieve_version_from_maven() {
         -Dexec.executable="echo" \
         -Dexec.args="\${spring-cloud-${1}.version}" \
         org.codehaus.mojo:exec-maven-plugin:1.3.1:exec \
-        -o -pl spring-cloud-dependencies )
+        -o -pl spring-cloud-dependencies | sed '$!d' )
     echo "Extracted version for project [$1] from Maven build is [${RETRIEVED_VERSION}]"
 }
 
