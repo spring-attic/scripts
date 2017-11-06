@@ -88,6 +88,6 @@
 [submodule "vault"]
 	path = vault
 	url = git@github.com:spring-cloud/spring-cloud-vault.git
-[submodule "spring-cloud-gateway"]
-	path = spring-cloud-gateway
+[submodule "gateway"]
+	path = gateway
 	url = git@github.com:spring-cloud/spring-cloud-gateway.git
