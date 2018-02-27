@@ -34,6 +34,8 @@ include::{basedir}/config/docs/src/main/asciidoc/spring-cloud-config.adoc[]
 
 include::{basedir}/netflix/docs/src/main/asciidoc/spring-cloud-netflix.adoc[]
 
+include::{basedir}/openfeign/docs/src/main/asciidoc/spring-cloud-openfeign.adoc[]
+
 = Spring Cloud Stream
 :stream-docs-basedir: {stream_basedir}/stream/spring-cloud-stream-docs
 include::{basedir}/stream/spring-cloud-stream-docs/src/main/asciidoc/spring-cloud-stream-aggregate.adoc[]
@@ -55,6 +57,8 @@ include::{basedir}/cloudfoundry/docs/src/main/asciidoc/spring-cloud-cloudfoundry
 include::{basedir}/contract/docs/src/main/asciidoc/spring-cloud-contract.adoc[]
 
 include::{basedir}/vault/docs/src/main/asciidoc/spring-cloud-vault.adoc[]
+
+include::{basedir}/gateway/docs/src/main/asciidoc/spring-cloud-gateway.adoc[]
 
 = Appendix: Compendium of Configuration Properties
 
