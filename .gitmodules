@@ -94,3 +94,6 @@
 [submodule "openfeign"]
 	path = openfeign
 	url = git@github.com:spring-cloud/spring-cloud-openfeign.git
+[submodule "function"]
+	path = function
+	url = git@github.com:spring-cloud/spring-cloud-function.git
