@@ -60,7 +60,7 @@ include::{basedir}/vault/docs/src/main/asciidoc/spring-cloud-vault.adoc[]
 
 include::{basedir}/gateway/docs/src/main/asciidoc/spring-cloud-gateway.adoc[]
 
-include::{basedir}/gateway/docs/src/main/asciidoc/spring-cloud-function.adoc[]
+include::{basedir}/function/docs/src/main/asciidoc/spring-cloud-function.adoc[]
 
 = Appendix: Compendium of Configuration Properties
 
