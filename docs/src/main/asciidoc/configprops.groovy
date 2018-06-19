@@ -28,6 +28,9 @@
 @Grab('org.springframework.cloud:spring-cloud-vault-config-databases:2.0.0.RELEASE')
 @Grab('org.springframework.cloud:spring-cloud-vault-config-consul:2.0.0.RELEASE')
 @Grab('org.springframework.cloud:spring-cloud-vault-config-rabbitmq:2.0.0.RELEASE')
+@Grab('org.springframework.cloud:spring-cloud-starter-gateway:2.0.0.RELEASE')
+@Grab('org.springframework.cloud:spring-cloud-gateway-mvc:2.0.0.RELEASE')
+@Grab('org.springframework.cloud:spring-cloud-gateway-webflux:2.0.0.RELEASE')
 
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver
 import org.springframework.core.io.Resource

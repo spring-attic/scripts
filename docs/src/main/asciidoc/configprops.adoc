@@ -562,6 +562,8 @@
 
 |management.endpoint.features.enabled | true | Whether to enable the features endpoint.
 
+|management.endpoint.gateway.enabled | true | Whether to enable the gateway endpoint.
+
 |management.endpoint.hystrix.config |  | Hystrix settings. These are traditionally set using servlet parameters. Refer to
  the documentation of Hystrix for more details.
 
@@ -949,6 +951,107 @@
 
 |spring.cloud.discovery.client.simple.local.uri |  | The URI of the service instance. Will be parsed to extract the scheme, hos and
  port.
+
+|spring.cloud.gateway.default-filters |  | List of filter definitions that are applied to every route.
+
+|spring.cloud.gateway.discovery.locator.enabled | false | Flag that enables DiscoveryClient gateway integration
+
+|spring.cloud.gateway.discovery.locator.filters |  | 
+
+|spring.cloud.gateway.discovery.locator.include-expression | true | SpEL expression that will evaluate whether to include a service in gateway integration or not,
+ defaults to: true
+
+|spring.cloud.gateway.discovery.locator.lower-case-service-id | false | Option to lower case serviceId in predicates and filters, defaults to false.
+ Useful with eureka when it automatically uppercases serviceId.
+ so MYSERIVCE, would match /myservice/**
+
+|spring.cloud.gateway.discovery.locator.predicates |  | 
+
+|spring.cloud.gateway.discovery.locator.route-id-prefix |  | The prefix for the routeId, defaults to discoveryClient.getClass().getSimpleName() + "_".
+ Service Id will be appended to create the routeId.
+
+|spring.cloud.gateway.discovery.locator.url-expression | 'lb://'+serviceId | SpEL expression that create the uri for each route, defaults to: 'lb://'+serviceId
+
+|spring.cloud.gateway.filter.remove-hop-by-hop.headers |  | 
+
+|spring.cloud.gateway.filter.remove-hop-by-hop.order |  | 
+
+|spring.cloud.gateway.filter.secure-headers.content-security-policy | default-src 'self' https:; font-src 'self' https: data:; img-src 'self' https: data:; object-src 'none'; script-src https:; style-src 'self' https: 'unsafe-inline' | 
+
+|spring.cloud.gateway.filter.secure-headers.content-type-options | nosniff | 
+
+|spring.cloud.gateway.filter.secure-headers.download-options | noopen | 
+
+|spring.cloud.gateway.filter.secure-headers.frame-options | DENY | 
+
+|spring.cloud.gateway.filter.secure-headers.permitted-cross-domain-policies | none | 
+
+|spring.cloud.gateway.filter.secure-headers.referrer-policy | no-referrer | 
+
+|spring.cloud.gateway.filter.secure-headers.strict-transport-security | max-age=631138519 | 
+
+|spring.cloud.gateway.filter.secure-headers.xss-protection-header | 1 ; mode=block | 
+
+|spring.cloud.gateway.httpclient.connect-timeout |  | The connect timeout in millis, the default is 45s.
+
+|spring.cloud.gateway.httpclient.pool.acquire-timeout |  | Only for type FIXED, the maximum time in millis to wait for aquiring.
+
+|spring.cloud.gateway.httpclient.pool.max-connections |  | Only for type FIXED, the maximum number of connections before starting pending acquisition on existing ones.
+
+|spring.cloud.gateway.httpclient.pool.name | proxy | The channel pool map name, defaults to proxy.
+
+|spring.cloud.gateway.httpclient.pool.type |  | Type of pool for HttpClient to use, defaults to ELASTIC.
+
+|spring.cloud.gateway.httpclient.proxy.host |  | Hostname for proxy configuration of Netty HttpClient.
+
+|spring.cloud.gateway.httpclient.proxy.non-proxy-hosts-pattern |  | Regular expression (Java) for a configured list of hosts
+ that should be reached directly, bypassing the proxy
+
+|spring.cloud.gateway.httpclient.proxy.password |  | Password for proxy configuration of Netty HttpClient.
+
+|spring.cloud.gateway.httpclient.proxy.port |  | Port for proxy configuration of Netty HttpClient.
+
+|spring.cloud.gateway.httpclient.proxy.username |  | Username for proxy configuration of Netty HttpClient.
+
+|spring.cloud.gateway.httpclient.ssl.use-insecure-trust-manager | false | Installs the netty InsecureTrustManagerFactory. This is insecure and not suitable for production.
+
+|spring.cloud.gateway.proxy.headers |  | Fixed header values that will be added to all downstream requests.
+
+|spring.cloud.gateway.proxy.sensitive |  | A set of sensitive header names that will not be sent downstream by default.
+
+|spring.cloud.gateway.redis-rate-limiter.burst-capacity-header | X-RateLimit-Burst-Capacity | The name of the header that returns the burst capacity configuration.
+
+|spring.cloud.gateway.redis-rate-limiter.config |  | 
+
+|spring.cloud.gateway.redis-rate-limiter.include-headers | true | Whether or not to include headers containing rate limiter information, defaults to true.
+
+|spring.cloud.gateway.redis-rate-limiter.remaining-header | X-RateLimit-Remaining | The name of the header that returns number of remaining requests during the current second.
+
+|spring.cloud.gateway.redis-rate-limiter.replenish-rate-header | X-RateLimit-Replenish-Rate | The name of the header that returns the replenish rate configuration.
+
+|spring.cloud.gateway.routes |  | List of Routes
+
+|spring.cloud.gateway.streaming-media-types |  | 
+
+|spring.cloud.gateway.x-forwarded.enabled | true | If the XForwardedHeadersFilter is enabled.
+
+|spring.cloud.gateway.x-forwarded.for-append | true | If appending X-Forwarded-For as a list is enabled.
+
+|spring.cloud.gateway.x-forwarded.for-enabled | true | If X-Forwarded-For is enabled.
+
+|spring.cloud.gateway.x-forwarded.host-append | true | If appending X-Forwarded-Host as a list is enabled.
+
+|spring.cloud.gateway.x-forwarded.host-enabled | true | If X-Forwarded-Host is enabled.
+
+|spring.cloud.gateway.x-forwarded.order | 0 | The order of the XForwardedHeadersFilter.
+
+|spring.cloud.gateway.x-forwarded.port-append | true | If appending X-Forwarded-Port as a list is enabled.
+
+|spring.cloud.gateway.x-forwarded.port-enabled | true | If X-Forwarded-Port is enabled.
+
+|spring.cloud.gateway.x-forwarded.proto-append | true | If appending X-Forwarded-Proto as a list is enabled.
+
+|spring.cloud.gateway.x-forwarded.proto-enabled | true | If X-Forwarded-Proto is enabled.
 
 |spring.cloud.hypermedia.refresh.fixed-delay | 5000 | 
 
