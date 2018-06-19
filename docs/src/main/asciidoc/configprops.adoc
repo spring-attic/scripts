@@ -25,63 +25,8 @@
  false (in which case "standard" CBC is used instead). Once it is set do not
  change it (or existing ciphers will not a decryptable).
 
-|endpoints.bus.enabled |  | 
-
-|endpoints.bus.id |  | 
-
-|endpoints.bus.sensitive |  | 
-
-|endpoints.consul.enabled |  | 
-
-|endpoints.consul.id |  | 
-
-|endpoints.consul.sensitive |  | 
-
-|endpoints.env.post.enabled | true | Enable changing the Environment through a POST to /env.
-
-|endpoints.features.enabled |  | 
-
-|endpoints.features.id |  | 
-
-|endpoints.features.sensitive |  | 
-
-|endpoints.pause.enabled | true | Enable the /pause endpoint (to send Lifecycle.stop()).
-
-|endpoints.pause.id |  | 
-
-|endpoints.pause.sensitive |  | 
-
-|endpoints.refresh.enabled | true | Enable the /refresh endpoint to refresh configuration and re-initialize refresh scoped beans.
-
-|endpoints.refresh.id |  | 
-
-|endpoints.refresh.sensitive |  | 
-
-|endpoints.restart.enabled | true | Enable the /restart endpoint to restart the application context.
-
-|endpoints.restart.id |  | 
-
-|endpoints.restart.pause-endpoint.enabled |  | 
-
-|endpoints.restart.pause-endpoint.id |  | 
-
-|endpoints.restart.pause-endpoint.sensitive |  | 
-
-|endpoints.restart.resume-endpoint.enabled |  | 
-
-|endpoints.restart.resume-endpoint.id |  | 
-
-|endpoints.restart.resume-endpoint.sensitive |  | 
-
-|endpoints.restart.sensitive |  | 
-
-|endpoints.restart.timeout | 0 | 
-
-|endpoints.resume.enabled | true | Enable the /resume endpoint (to send Lifecycle.start()).
-
-|endpoints.resume.id |  | 
-
-|endpoints.resume.sensitive |  | 
+|encrypt.salt | deadbeef | A salt for the symmetric key in the form of a hex-encoded byte array. As a stronger
+ alternative consider using a keystore.
 
 |endpoints.zookeeper.enabled | true | Enable the /zookeeper endpoint to inspect the state of zookeeper.
 
@@ -238,7 +183,7 @@
  The changes are effective at runtime at the next registry fetch cycle as specified
  by registryFetchIntervalSeconds
 
-|eureka.client.property-resolver |  | 
+|eureka.client.property-resolver |  |
 
 |eureka.client.proxy-host |  | Gets the proxy host to eureka server if any.
 
@@ -273,7 +218,10 @@
  The changes are effective at runtime at the next service url refresh cycle as
  specified by eurekaServiceUrlPollIntervalSeconds.
 
-|eureka.client.transport |  | 
+|eureka.client.should-enforce-registration-at-init | false | Indicates whether the client should enforce registration during initialization. Defaults to false.
+
+|eureka.client.should-unregister-on-shutdown | true | Indicates whether the client should explicitly unregister itself from the remote server
+ on client shutdown.
 
 |eureka.client.use-dns-for-fetching-service-urls | false | Indicates whether the eureka client should use the DNS mechanism to fetch a list of
  eureka servers to talk to. When the DNS name is updated to have additional servers,
@@ -300,9 +248,9 @@
 |eureka.instance.data-center-info |  | Returns the data center this instance is deployed. This information is used to get
  some AWS specific instance information if the instance is deployed in AWS.
 
-|eureka.instance.default-address-resolution-order | [] | 
+|eureka.instance.default-address-resolution-order | [] |
 
-|eureka.instance.environment |  | 
+|eureka.instance.environment |  |
 
 |eureka.instance.health-check-url |  | Gets the absolute health check page URL for this instance. The users can provide
  the healthCheckUrlPath if the health check page resides in the same instance
@@ -317,7 +265,7 @@
  URL should follow the format http://${eureka.hostname}:7001/ where the value
  ${eureka.hostname} is replaced at runtime.
 
-|eureka.instance.health-check-url-path | /health | Gets the relative health check URL path for this instance. The health check page
+|eureka.instance.health-check-url-path |  | Gets the relative health check URL path for this instance. The health check page
  URL is then constructed out of the hostname and the type of communication - secure
  or unsecure as specified in securePort and nonSecurePort.
 
@@ -340,12 +288,8 @@
  It is normally used for informational purposes for other services to use it as a
  landing page.
 
-|eureka.instance.host-info |  | 
-
 |eureka.instance.hostname |  | The hostname if it can be determined at configuration time (otherwise it will be
  guessed from OS primitives).
-
-|eureka.instance.inet-utils |  | 
 
 |eureka.instance.initial-status |  | Initial status to register with rmeote Eureka server.
 
@@ -394,7 +338,7 @@
 |eureka.instance.registry.default-open-for-traffic-count | 1 | Value used in determining when leases are cancelled, default to 1 for standalone.
  Should be set to 0 for peer replicated eurekas
 
-|eureka.instance.registry.expected-number-of-renews-per-min | 1 | 
+|eureka.instance.registry.expected-number-of-renews-per-min | 1 |
 
 |eureka.instance.secure-health-check-url |  | Gets the absolute secure health check page URL for this instance. The users can
  provide the secureHealthCheckUrl if the health check page resides in the same
@@ -428,7 +372,7 @@
  status of this instance. Users can provide a simple HTML indicating what is the
  current status of the instance.
 
-|eureka.instance.status-page-url-path | /info | Gets the relative status page URL path for this instance. The status page URL is
+|eureka.instance.status-page-url-path |  | Gets the relative status page URL path for this instance. The status page URL is
  then constructed out of the hostName and the type of communication - secure or
  unsecure as specified in securePort and nonSecurePort.
 
@@ -442,153 +386,151 @@
  virtual host name.Think of this as similar to the fully qualified domain name, that
  the users of your services will need to find this instance.
 
-|eureka.server.a-s-g-cache-expiry-timeout-ms | 0 | 
+|eureka.server.a-s-g-cache-expiry-timeout-ms | 0 |
 
-|eureka.server.a-s-g-query-timeout-ms | 300 | 
+|eureka.server.a-s-g-query-timeout-ms | 300 |
 
-|eureka.server.a-s-g-update-interval-ms | 0 | 
+|eureka.server.a-s-g-update-interval-ms | 0 |
 
-|eureka.server.a-w-s-access-id |  | 
+|eureka.server.a-w-s-access-id |  |
 
-|eureka.server.a-w-s-secret-key |  | 
+|eureka.server.a-w-s-secret-key |  |
 
-|eureka.server.batch-replication | false | 
+|eureka.server.batch-replication | false |
 
-|eureka.server.binding-strategy |  | 
+|eureka.server.binding-strategy |  |
 
-|eureka.server.delta-retention-timer-interval-in-ms | 0 | 
+|eureka.server.delta-retention-timer-interval-in-ms | 0 |
 
-|eureka.server.disable-delta | false | 
+|eureka.server.disable-delta | false |
 
-|eureka.server.disable-delta-for-remote-regions | false | 
+|eureka.server.disable-delta-for-remote-regions | false |
 
-|eureka.server.disable-transparent-fallback-to-other-region | false | 
+|eureka.server.disable-transparent-fallback-to-other-region | false |
 
-|eureka.server.e-i-p-bind-rebind-retries | 3 | 
+|eureka.server.e-i-p-bind-rebind-retries | 3 |
 
-|eureka.server.e-i-p-binding-retry-interval-ms | 0 | 
+|eureka.server.e-i-p-binding-retry-interval-ms | 0 |
 
-|eureka.server.e-i-p-binding-retry-interval-ms-when-unbound | 0 | 
+|eureka.server.e-i-p-binding-retry-interval-ms-when-unbound | 0 |
 
-|eureka.server.enable-replicated-request-compression | false | 
+|eureka.server.enable-replicated-request-compression | false |
 
-|eureka.server.enable-self-preservation | true | 
+|eureka.server.enable-self-preservation | true |
 
-|eureka.server.eviction-interval-timer-in-ms | 0 | 
+|eureka.server.eviction-interval-timer-in-ms | 0 |
 
-|eureka.server.g-zip-content-from-remote-region | true | 
+|eureka.server.g-zip-content-from-remote-region | true |
 
-|eureka.server.json-codec-name |  | 
+|eureka.server.json-codec-name |  |
 
-|eureka.server.list-auto-scaling-groups-role-name | ListAutoScalingGroups | 
+|eureka.server.list-auto-scaling-groups-role-name | ListAutoScalingGroups |
 
-|eureka.server.log-identity-headers | true | 
+|eureka.server.log-identity-headers | true |
 
-|eureka.server.max-elements-in-peer-replication-pool | 10000 | 
+|eureka.server.max-elements-in-peer-replication-pool | 10000 |
 
-|eureka.server.max-elements-in-status-replication-pool | 10000 | 
+|eureka.server.max-elements-in-status-replication-pool | 10000 |
 
-|eureka.server.max-idle-thread-age-in-minutes-for-peer-replication | 15 | 
+|eureka.server.max-idle-thread-age-in-minutes-for-peer-replication | 15 |
 
-|eureka.server.max-idle-thread-in-minutes-age-for-status-replication | 10 | 
+|eureka.server.max-idle-thread-in-minutes-age-for-status-replication | 10 |
 
-|eureka.server.max-threads-for-peer-replication | 20 | 
+|eureka.server.max-threads-for-peer-replication | 20 |
 
-|eureka.server.max-threads-for-status-replication | 1 | 
+|eureka.server.max-threads-for-status-replication | 1 |
 
-|eureka.server.max-time-for-replication | 30000 | 
+|eureka.server.max-time-for-replication | 30000 |
 
-|eureka.server.min-threads-for-peer-replication | 5 | 
+|eureka.server.min-available-instances-for-peer-replication | -1 |
 
-|eureka.server.min-threads-for-status-replication | 1 | 
+|eureka.server.min-threads-for-peer-replication | 5 |
 
-|eureka.server.number-of-replication-retries | 5 | 
+|eureka.server.min-threads-for-status-replication | 1 |
 
-|eureka.server.peer-eureka-nodes-update-interval-ms | 0 | 
+|eureka.server.number-of-replication-retries | 5 |
 
-|eureka.server.peer-eureka-status-refresh-time-interval-ms | 0 | 
+|eureka.server.peer-eureka-nodes-update-interval-ms | 0 |
 
-|eureka.server.peer-node-connect-timeout-ms | 200 | 
+|eureka.server.peer-eureka-status-refresh-time-interval-ms | 0 |
 
-|eureka.server.peer-node-connection-idle-timeout-seconds | 30 | 
+|eureka.server.peer-node-connect-timeout-ms | 200 |
 
-|eureka.server.peer-node-read-timeout-ms | 200 | 
+|eureka.server.peer-node-connection-idle-timeout-seconds | 30 |
 
-|eureka.server.peer-node-total-connections | 1000 | 
+|eureka.server.peer-node-read-timeout-ms | 200 |
 
-|eureka.server.peer-node-total-connections-per-host | 500 | 
+|eureka.server.peer-node-total-connections | 1000 |
 
-|eureka.server.prime-aws-replica-connections | true | 
+|eureka.server.peer-node-total-connections-per-host | 500 |
 
-|eureka.server.property-resolver |  | 
+|eureka.server.prime-aws-replica-connections | true |
 
-|eureka.server.rate-limiter-burst-size | 10 | 
+|eureka.server.property-resolver |  |
 
-|eureka.server.rate-limiter-enabled | false | 
+|eureka.server.rate-limiter-burst-size | 10 |
 
-|eureka.server.rate-limiter-full-fetch-average-rate | 100 | 
+|eureka.server.rate-limiter-enabled | false |
 
-|eureka.server.rate-limiter-privileged-clients |  | 
+|eureka.server.rate-limiter-full-fetch-average-rate | 100 |
 
-|eureka.server.rate-limiter-registry-fetch-average-rate | 500 | 
+|eureka.server.rate-limiter-privileged-clients |  |
 
-|eureka.server.rate-limiter-throttle-standard-clients | false | 
+|eureka.server.rate-limiter-registry-fetch-average-rate | 500 |
 
-|eureka.server.registry-sync-retries | 0 | 
+|eureka.server.rate-limiter-throttle-standard-clients | false |
 
-|eureka.server.registry-sync-retry-wait-ms | 0 | 
+|eureka.server.registry-sync-retries | 0 |
 
-|eureka.server.remote-region-app-whitelist |  | 
+|eureka.server.registry-sync-retry-wait-ms | 0 |
 
-|eureka.server.remote-region-connect-timeout-ms | 1000 | 
+|eureka.server.remote-region-app-whitelist |  |
 
-|eureka.server.remote-region-connection-idle-timeout-seconds | 30 | 
+|eureka.server.remote-region-connect-timeout-ms | 1000 |
 
-|eureka.server.remote-region-fetch-thread-pool-size | 20 | 
+|eureka.server.remote-region-connection-idle-timeout-seconds | 30 |
 
-|eureka.server.remote-region-read-timeout-ms | 1000 | 
+|eureka.server.remote-region-fetch-thread-pool-size | 20 |
 
-|eureka.server.remote-region-registry-fetch-interval | 30 | 
+|eureka.server.remote-region-read-timeout-ms | 1000 |
 
-|eureka.server.remote-region-total-connections | 1000 | 
+|eureka.server.remote-region-registry-fetch-interval | 30 |
 
-|eureka.server.remote-region-total-connections-per-host | 500 | 
+|eureka.server.remote-region-total-connections | 1000 |
 
-|eureka.server.remote-region-trust-store |  | 
+|eureka.server.remote-region-total-connections-per-host | 500 |
 
-|eureka.server.remote-region-trust-store-password | changeit | 
+|eureka.server.remote-region-trust-store |  |
 
-|eureka.server.remote-region-urls |  | 
+|eureka.server.remote-region-trust-store-password | changeit |
 
-|eureka.server.remote-region-urls-with-name |  | 
+|eureka.server.remote-region-urls |  |
 
-|eureka.server.renewal-percent-threshold | 0.85 | 
+|eureka.server.remote-region-urls-with-name |  |
 
-|eureka.server.renewal-threshold-update-interval-ms | 0 | 
+|eureka.server.renewal-percent-threshold | 0.85 |
 
-|eureka.server.response-cache-auto-expiration-in-seconds | 180 | 
+|eureka.server.renewal-threshold-update-interval-ms | 0 |
 
-|eureka.server.response-cache-update-interval-ms | 0 | 
+|eureka.server.response-cache-auto-expiration-in-seconds | 180 |
 
-|eureka.server.retention-time-in-m-s-in-delta-queue | 0 | 
+|eureka.server.response-cache-update-interval-ms | 0 |
 
-|eureka.server.route53-bind-rebind-retries | 3 | 
+|eureka.server.retention-time-in-m-s-in-delta-queue | 0 |
 
-|eureka.server.route53-binding-retry-interval-ms | 0 | 
+|eureka.server.route53-bind-rebind-retries | 3 |
 
-|eureka.server.route53-domain-t-t-l | 30 | 
+|eureka.server.route53-binding-retry-interval-ms | 0 |
 
-|eureka.server.sync-when-timestamp-differs | true | 
+|eureka.server.route53-domain-t-t-l | 30 |
 
-|eureka.server.use-read-only-response-cache | true | 
+|eureka.server.sync-when-timestamp-differs | true |
 
-|eureka.server.wait-time-in-ms-when-sync-empty | 0 | 
+|eureka.server.use-read-only-response-cache | true |
 
-|eureka.server.xml-codec-name |  | 
+|eureka.server.wait-time-in-ms-when-sync-empty | 0 |
 
-|feign.compression.request.mime-types | [text/xml, application/xml, application/json] | The list of supported mime types.
-
-|feign.compression.request.min-request-size | 2048 | The minimum threshold content size.
+|eureka.server.xml-codec-name |  |
 
 |health.config.enabled | false | Flag to indicate that the config server health indicator should be installed.
 
@@ -598,24 +540,58 @@
 
 |hystrix.metrics.polling-interval-ms | 2000 | Interval between subsequent polling of metrics. Defaults to 2000 ms.
 
+|management.endpoint.bindings.cache.time-to-live | 0ms | Maximum time that a response can be cached.
+
+|management.endpoint.bindings.enabled | true | Whether to enable the bindings endpoint.
+
+|management.endpoint.bus-env.enabled | true | Whether to enable the bus-env endpoint.
+
+|management.endpoint.bus-refresh.enabled | true | Whether to enable the bus-refresh endpoint.
+
+|management.endpoint.channels.cache.time-to-live | 0ms | Maximum time that a response can be cached.
+
+|management.endpoint.channels.enabled | true | Whether to enable the channels endpoint.
+
+|management.endpoint.consul.cache.time-to-live | 0ms | Maximum time that a response can be cached.
+
+|management.endpoint.consul.enabled | true | Whether to enable the consul endpoint.
+
+|management.endpoint.env.post.enabled | true | Enable changing the Environment through a POST to /env.
+
+|management.endpoint.features.cache.time-to-live | 0ms | Maximum time that a response can be cached.
+
+|management.endpoint.features.enabled | true | Whether to enable the features endpoint.
+
+|management.endpoint.hystrix.config |  | Hystrix settings. These are traditionally set using servlet parameters. Refer to
+ the documentation of Hystrix for more details.
+
+|management.endpoint.hystrix.stream.enabled | true | Whether to enable the hystrix.stream endpoint.
+
+|management.endpoint.pause.enabled | true | Enable the /pause endpoint (to send Lifecycle.stop()).
+
+|management.endpoint.refresh.enabled | true | Enable the /refresh endpoint to refresh configuration and re-initialize refresh scoped beans.
+
+|management.endpoint.restart.enabled | true | Enable the /restart endpoint to restart the application context.
+
+|management.endpoint.resume.enabled | true | Enable the /resume endpoint (to send Lifecycle.start()).
+
+|management.endpoint.service-registry.cache.time-to-live | 0ms | Maximum time that a response can be cached.
+
+|management.endpoint.service-registry.enabled | true | Whether to enable the service-registry endpoint.
+
 |management.health.refresh.enabled | true | Enable the health endpoint for the refresh scope.
 
 |management.health.zookeeper.enabled | true | Enable the health endpoint for zookeeper.
 
-|netflix.atlas.batch-size | 10000 | 
-
-|netflix.atlas.enabled | true | 
-
-|netflix.atlas.uri |  | 
-
-|netflix.metrics.servo.cache-warning-threshold | 1000 | When the `ServoMonitorCache` reaches this size, a warning is logged.
- This will be useful if you are using string concatenation in RestTemplate urls.
-
-|netflix.metrics.servo.registry-class | com.netflix.servo.BasicMonitorRegistry | Fully qualified class name for monitor registry used by Servo.
-
-|proxy.auth.load-balanced |  | 
+|proxy.auth.load-balanced | false |
 
 |proxy.auth.routes |  | Authentication strategy per route.
+
+|ribbon.eager-load.clients |  |
+
+|ribbon.eager-load.enabled | false |
+
+|ribbon.secure-ports |  |
 
 |spring.cloud.bus.ack.destination-service |  | Service that wants to listen to acks. By default null (meaning all services).
 
@@ -627,39 +603,45 @@
 
 |spring.cloud.bus.env.enabled | true | Flag to switch off environment change events (default on).
 
+|spring.cloud.bus.id | application | The identifier for this application instance.
+
 |spring.cloud.bus.refresh.enabled | true | Flag to switch off refresh events (default on).
 
 |spring.cloud.bus.trace.enabled | false | Flag to switch on tracing of acks (default off).
+
+|spring.cloud.cloudfoundry.discovery.default-server-port | 80 | Port to use when no port is defined by ribbon.
 
 |spring.cloud.cloudfoundry.discovery.enabled | true | Flag to indicate that discovery is enabled.
 
 |spring.cloud.cloudfoundry.discovery.heartbeat-frequency | 5000 | Frequency in milliseconds of poll for heart beat. The client will poll on this
  frequency and broadcast a list of service ids.
 
-|spring.cloud.cloudfoundry.discovery.org |  | Organization name to authenticate with (default to user's default).
+|spring.cloud.cloudfoundry.org |  | Organization name to initially target.
 
-|spring.cloud.cloudfoundry.discovery.password |  | Password for user to authenticate and obtain token.
+|spring.cloud.cloudfoundry.password |  | Password for user to authenticate and obtain token.
 
-|spring.cloud.cloudfoundry.discovery.space |  | Space name to authenticate with (default to user's default).
+|spring.cloud.cloudfoundry.skip-ssl-validation | false |
 
-|spring.cloud.cloudfoundry.discovery.url | https://api.run.pivotal.io | URL of Cloud Foundry API (Cloud Controller).
+|spring.cloud.cloudfoundry.space |  | Space name to initially target.
 
-|spring.cloud.cloudfoundry.discovery.username |  | Username to authenticate (usually an email address).
+|spring.cloud.cloudfoundry.url |  | URL of Cloud Foundry API (Cloud Controller).
 
-|spring.cloud.config.allow-override | true | Flag to indicate that {@link #isSystemPropertiesOverride()
+|spring.cloud.cloudfoundry.username |  | Username to authenticate (usually an email address).
+
+|spring.cloud.config.allow-override | true | Flag to indicate that {@link #isOverrideSystemProperties()
  systemPropertiesOverride} can be used. Set to false to prevent users from changing
  the default accidentally. Default true.
 
-|spring.cloud.config.authorization |  | Authorization token used by the client to connect to the server.
-
-|spring.cloud.config.discovery.enabled | false | Flag to indicate that config server discovery is enabled (config server URL will be
- looked up via discovery).
+|spring.cloud.config.discovery.enabled | false | Flag to indicate that config server discovery is enabled (config server URL
+ will be looked up via discovery).
 
 |spring.cloud.config.discovery.service-id | configserver | Service id to locate config server.
 
 |spring.cloud.config.enabled | true | Flag to say that remote configuration is enabled. Default true;
 
 |spring.cloud.config.fail-fast | false | Flag to indicate that failure to connect to the server is fatal (default false).
+
+|spring.cloud.config.headers |  | Additional headers used to create the client request.
 
 |spring.cloud.config.label |  | The label name to use to pull remote configuration properties. The default is set
  on the server (generally "master" for a git based server).
@@ -678,6 +660,8 @@
 |spring.cloud.config.profile | default | The default profile to use when fetching remote configuration (comma-separated).
  Default is "default".
 
+|spring.cloud.config.request-read-timeout | 0 | timeout on waiting to read data from the Config Server.
+
 |spring.cloud.config.retry.initial-interval | 1000 | Initial retry interval in milliseconds.
 
 |spring.cloud.config.retry.max-attempts | 6 | Maximum number of attempts.
@@ -685,6 +669,10 @@
 |spring.cloud.config.retry.max-interval | 2000 | Maximum interval for backoff.
 
 |spring.cloud.config.retry.multiplier | 1.1 | Multiplier for next interval.
+
+|spring.cloud.config.send-state | true | Flag to indicate whether to send state. Default true.
+
+|spring.cloud.config.server.accept-empty | true | Flag to indicate that If HTTP 404 needs to be sent if Application is not Found
 
 |spring.cloud.config.server.bootstrap | false | Flag indicating that the config server should initialize its own Environment with
  properties from the remote repository. Off by default because it delays startup but
@@ -700,34 +688,64 @@
 
 |spring.cloud.config.server.git.basedir |  | Base directory for local working copy of repository.
 
-|spring.cloud.config.server.git.clone-on-start |  | Flag to indicate that the repository should be cloned on startup (not on demand).
- Generally leads to slower startup but faster first query.
+|spring.cloud.config.server.git.clone-on-start | false | Flag to indicate that the repository should be cloned on startup (not on demand). Generally leads to slower startup but faster first query.
 
-|spring.cloud.config.server.git.default-label |  | 
+|spring.cloud.config.server.git.default-label |  | The default label to be used with the remore repository
 
-|spring.cloud.config.server.git.environment |  | 
+|spring.cloud.config.server.git.delete-untracked-branches | false | Flag to indicate that the branch should be deleted locally if it's origin tracked branch was removed.
 
-|spring.cloud.config.server.git.force-pull |  | Flag to indicate that the repository should force pull. If true discard any local
- changes and take from remote repository.
+|spring.cloud.config.server.git.force-pull | false | Flag to indicate that the repository should force pull. If true discard any local changes and take from remote repository.
 
-|spring.cloud.config.server.git.git-factory |  | 
+|spring.cloud.config.server.git.host-key |  | Valid SSH host key. Must be set if hostKeyAlgorithm is also set.
+
+|spring.cloud.config.server.git.host-key-algorithm |  | One of ssh-dss, ssh-rsa, ecdsa-sha2-nistp256, ecdsa-sha2-nistp384, or ecdsa-sha2-nistp521. Must be set if hostKey is also set.
+
+|spring.cloud.config.server.git.ignore-local-ssh-settings | false | If true, use property-based instead of file-based SSH config.
+
+|spring.cloud.config.server.git.known-hosts-file |  | Location of custom .known_hosts file.
+
+|spring.cloud.config.server.git.order |  | The order of the environment repository.
+
+|spring.cloud.config.server.git.passphrase |  | Passphrase for unlocking your ssh private key.
 
 |spring.cloud.config.server.git.password |  | Password for authentication with remote repository.
+
+|spring.cloud.config.server.git.preferred-authentications |  | Override server authentication method order. This should allow for evading login prompts if server has keyboard-interactive authentication before the publickey method.
+
+|spring.cloud.config.server.git.private-key |  | Valid SSH private key. Must be set if ignoreLocalSshSettings is true and Git URI is SSH format.
+
+|spring.cloud.config.server.git.proxy |  | HTTP proxy configuration.
+
+|spring.cloud.config.server.git.refresh-rate | 0 | Time (in seconds) between refresh of the git repository
 
 |spring.cloud.config.server.git.repos |  | Map of repository identifier to location and other properties.
 
 |spring.cloud.config.server.git.search-paths |  | Search paths to use within local working copy. By default searches only the root.
 
-|spring.cloud.config.server.git.timeout |  | Timeout (in seconds) for obtaining HTTP or SSH connection (if applicable). Default
- 5 seconds.
+|spring.cloud.config.server.git.skip-ssl-validation | false | Flag to indicate that SSL certificate validation should be bypassed when
+ communicating with a repository served over an HTTPS connection.
+
+|spring.cloud.config.server.git.strict-host-key-checking | true | If false, ignore errors with host key
+
+|spring.cloud.config.server.git.timeout | 5 | Timeout (in seconds) for obtaining HTTP or SSH connection (if applicable), defaults to 5 seconds.
 
 |spring.cloud.config.server.git.uri |  | URI of remote repository.
 
 |spring.cloud.config.server.git.username |  | Username for authentication with remote repository.
 
-|spring.cloud.config.server.health.repositories |  | 
+|spring.cloud.config.server.health.repositories |  |
+
+|spring.cloud.config.server.jdbc.order | 0 |
+
+|spring.cloud.config.server.jdbc.sql | SELECT KEY, VALUE from PROPERTIES where APPLICATION=? and PROFILE=? and LABEL=? | SQL used to query database for keys and values
+
+|spring.cloud.config.server.native.add-label-locations | true | Flag to determine whether label locations should be added.
+
+|spring.cloud.config.server.native.default-label | master |
 
 |spring.cloud.config.server.native.fail-on-error | false | Flag to determine how to handle exceptions during decryption (default false).
+
+|spring.cloud.config.server.native.order |  |
 
 |spring.cloud.config.server.native.search-locations | [] | Locations to search for configuration files. Defaults to the same as a Spring Boot
  app so [classpath:/,classpath:/config/,file:./,file:./config/].
@@ -745,40 +763,69 @@
 
 |spring.cloud.config.server.svn.basedir |  | Base directory for local working copy of repository.
 
-|spring.cloud.config.server.svn.default-label | trunk | The default label for environment properties requests.
+|spring.cloud.config.server.svn.default-label |  | The default label to be used with the remore repository
 
-|spring.cloud.config.server.svn.environment |  | 
+|spring.cloud.config.server.svn.order |  | The order of the environment repository.
+
+|spring.cloud.config.server.svn.passphrase |  | Passphrase for unlocking your ssh private key.
 
 |spring.cloud.config.server.svn.password |  | Password for authentication with remote repository.
 
 |spring.cloud.config.server.svn.search-paths |  | Search paths to use within local working copy. By default searches only the root.
 
+|spring.cloud.config.server.svn.strict-host-key-checking | true | Reject incoming SSH host keys from remote servers not in the known host list.
+
 |spring.cloud.config.server.svn.uri |  | URI of remote repository.
 
 |spring.cloud.config.server.svn.username |  | Username for authentication with remote repository.
 
+|spring.cloud.config.server.vault.backend | secret | Vault backend. Defaults to secret.
+
+|spring.cloud.config.server.vault.default-key | application | The key in vault shared by all applications. Defaults to application. Set to empty to disable.
+
+|spring.cloud.config.server.vault.host | 127.0.0.1 | Vault host. Defaults to 127.0.0.1.
+
+|spring.cloud.config.server.vault.kv-version | 1 | Value to indicate which version of Vault kv backend is used. Defaults to 1.
+
+|spring.cloud.config.server.vault.order |  |
+
+|spring.cloud.config.server.vault.port | 8200 | Vault port. Defaults to 8200.
+
+|spring.cloud.config.server.vault.profile-separator | , | Vault profile separator. Defaults to comma.
+
+|spring.cloud.config.server.vault.proxy |  | HTTP proxy configuration.
+
+|spring.cloud.config.server.vault.scheme | http | Vault scheme. Defaults to http.
+
+|spring.cloud.config.server.vault.skip-ssl-validation | false | Flag to indicate that SSL certificate validation should be bypassed when communicating with a repository served
+ over an HTTPS connection.
+
+|spring.cloud.config.server.vault.timeout | 5 | Timeout (in seconds) for obtaining HTTP connection, defaults to 5 seconds.
+
 |spring.cloud.config.token |  | Security Token passed thru to underlying environment repository.
 
-|spring.cloud.config.uri | http://localhost:8888 | The URI of the remote server (default http://localhost:8888).
+|spring.cloud.config.uri | [http://localhost:8888] | The URI of the remote server (default http://localhost:8888).
 
 |spring.cloud.config.username |  | The username to use (HTTP Basic) when contacting the remote server.
 
-|spring.cloud.consul.config.acl-token |  | 
+|spring.cloud.consul.config.acl-token |  |
 
 |spring.cloud.consul.config.data-key | data | If format is Format.PROPERTIES or Format.YAML
  then the following field is used as key to look up consul for configuration.
 
-|spring.cloud.consul.config.default-context | application | 
+|spring.cloud.consul.config.default-context | application |
 
-|spring.cloud.consul.config.enabled | true | 
+|spring.cloud.consul.config.enabled | true |
 
 |spring.cloud.consul.config.fail-fast | true | Throw exceptions during config lookup if true, otherwise, log warnings.
 
-|spring.cloud.consul.config.format |  | 
+|spring.cloud.consul.config.format |  |
 
-|spring.cloud.consul.config.prefix | config | 
+|spring.cloud.consul.config.name |  | Alternative to spring.application.name to use in looking up values in consul KV.
 
-|spring.cloud.consul.config.profile-separator | , | 
+|spring.cloud.consul.config.prefix | config |
+
+|spring.cloud.consul.config.profile-separator | , |
 
 |spring.cloud.consul.config.watch.delay | 1000 | The value of the fixed delay for the watch in millis. Defaults to 1000.
 
@@ -789,52 +836,60 @@
  timeout create a ConsulClient bean with a custom ConsulRawClient with a custom
  HttpClient.
 
-|spring.cloud.consul.discovery.acl-token |  | 
+|spring.cloud.consul.discovery.acl-token |  |
 
-|spring.cloud.consul.discovery.catalog-services-watch-delay | 10 | 
+|spring.cloud.consul.discovery.catalog-services-watch-delay | 1000 | The delay between calls to watch consul catalog in millis, default is 1000.
 
-|spring.cloud.consul.discovery.catalog-services-watch-timeout | 2 | 
+|spring.cloud.consul.discovery.catalog-services-watch-timeout | 2 | The number of seconds to block while watching consul catalog, default is 2.
+
+|spring.cloud.consul.discovery.datacenters |  | Map of serviceId's -> datacenter to query for in server list.
+ This allows looking up services in another datacenters.
 
 |spring.cloud.consul.discovery.default-query-tag |  | Tag to query for in service list if one is not listed in serverListQueryTags.
 
 |spring.cloud.consul.discovery.default-zone-metadata-name | zone | Service instance zone comes from metadata.
  This allows changing the metadata tag name.
 
+|spring.cloud.consul.discovery.deregister | true | Disable automatic de-registration of service in consul.
+
 |spring.cloud.consul.discovery.enabled | true | Is service discovery enabled?
 
 |spring.cloud.consul.discovery.fail-fast | true | Throw exceptions during service registration if true, otherwise, log
  warnings (defaults to true).
 
-|spring.cloud.consul.discovery.health-check-interval | 10s | How often to perform the health check (e.g. 10s)
+|spring.cloud.consul.discovery.health-check-critical-timeout |  | Timeout to deregister services critical for longer than timeout (e.g. 30m).
+ Requires consul version 7.x or higher.
 
-|spring.cloud.consul.discovery.health-check-path | /health | Alternate server path to invoke for health checking
+|spring.cloud.consul.discovery.health-check-interval | 10s | How often to perform the health check (e.g. 10s), defaults to 10s.
 
-|spring.cloud.consul.discovery.health-check-timeout |  | Timeout for health check (e.g. 10s)
+|spring.cloud.consul.discovery.health-check-path | /actuator/health | Alternate server path to invoke for health checking
+
+|spring.cloud.consul.discovery.health-check-timeout |  | Timeout for health check (e.g. 10s).
+
+|spring.cloud.consul.discovery.health-check-tls-skip-verify |  | Skips certificate verification during service checks if true, otherwise
+ runs certificate verification.
 
 |spring.cloud.consul.discovery.health-check-url |  | Custom health check url to override default
 
-|spring.cloud.consul.discovery.heartbeat.enabled | false | 
+|spring.cloud.consul.discovery.heartbeat.enabled | false |
 
-|spring.cloud.consul.discovery.heartbeat.heartbeat-interval |  | 
+|spring.cloud.consul.discovery.heartbeat.interval-ratio |  |
 
-|spring.cloud.consul.discovery.heartbeat.interval-ratio |  | 
+|spring.cloud.consul.discovery.heartbeat.ttl-unit | s |
 
-|spring.cloud.consul.discovery.heartbeat.ttl-unit | s | 
-
-|spring.cloud.consul.discovery.heartbeat.ttl-value | 30 | 
-
-|spring.cloud.consul.discovery.host-info |  | 
+|spring.cloud.consul.discovery.heartbeat.ttl-value | 30 |
 
 |spring.cloud.consul.discovery.hostname |  | Hostname to use when accessing server
+
+|spring.cloud.consul.discovery.instance-group |  | Service instance group
 
 |spring.cloud.consul.discovery.instance-id |  | Unique service instance id
 
 |spring.cloud.consul.discovery.instance-zone |  | Service instance zone
 
-|spring.cloud.consul.discovery.ip-address |  | IP address to use when accessing service (must also set preferIpAddress
-			to use)
+|spring.cloud.consul.discovery.ip-address |  | IP address to use when accessing service (must also set preferIpAddress to use)
 
-|spring.cloud.consul.discovery.lifecycle.enabled | true | 
+|spring.cloud.consul.discovery.lifecycle.enabled | true |
 
 |spring.cloud.consul.discovery.management-port |  | Port to register the management service under (defaults to management port)
 
@@ -878,9 +933,26 @@
 
 |spring.cloud.consul.retry.multiplier | 1.1 | Multiplier for next interval.
 
-|spring.cloud.hypermedia.refresh.fixed-delay | 5000 | 
+|spring.cloud.consul.scheme |  | Consul agent scheme (HTTP/HTTPS). If there is no scheme in address - client will use HTTP.
 
-|spring.cloud.hypermedia.refresh.initial-delay | 10000 | 
+|spring.cloud.discovery.client.health-indicator.enabled | true |
+
+|spring.cloud.discovery.client.health-indicator.include-description | false |
+
+|spring.cloud.discovery.client.simple.instances |  |
+
+|spring.cloud.discovery.client.simple.local.metadata |  | Metadata for the service instance. Can be used by discovery clients to modify
+ their behaviour per instance, e.g. when load balancing.
+
+|spring.cloud.discovery.client.simple.local.service-id |  | The identifier or name for the service. Multiple instances might share the same
+ service id.
+
+|spring.cloud.discovery.client.simple.local.uri |  | The URI of the service instance. Will be parsed to extract the scheme, hos and
+ port.
+
+|spring.cloud.hypermedia.refresh.fixed-delay | 5000 |
+
+|spring.cloud.hypermedia.refresh.initial-delay | 10000 |
 
 |spring.cloud.inetutils.default-hostname | localhost | The default hostname. Used in case of errors.
 
@@ -888,41 +960,81 @@
 
 |spring.cloud.inetutils.ignored-interfaces |  | List of Java regex expressions for network interfaces that will be ignored.
 
-|spring.cloud.inetutils.preferred-networks |  | List of Java regex expressions for network addresses that will be ignored.
+|spring.cloud.inetutils.preferred-networks |  | List of Java regex expressions for network addresses that will be preferred.
 
 |spring.cloud.inetutils.timeout-seconds | 1 | Timeout in seconds for calculating hostname.
 
 |spring.cloud.inetutils.use-only-site-local-interfaces | false | Use only interfaces with site local addresses. See {@link InetAddress#isSiteLocalAddress()} for more details.
 
-|spring.cloud.loadbalancer.retry.enabled | false | 
+|spring.cloud.loadbalancer.retry.enabled | true |
 
-|spring.cloud.stream.binders |  | 
+|spring.cloud.refresh.extra-refreshable | true | Additional class names for beans to post process into refresh scope.
 
-|spring.cloud.stream.bindings |  | 
+|spring.cloud.service-registry.auto-registration.enabled | true | If Auto-Service Registration is enabled, default to true.
 
-|spring.cloud.stream.consul.binder.event-timeout | 5 | 
+|spring.cloud.service-registry.auto-registration.fail-fast | false | Should startup fail if there is no AutoServiceRegistration, default to false.
 
-|spring.cloud.stream.consumer-defaults |  | 
+|spring.cloud.service-registry.auto-registration.register-management | true | Whether to register the management as a service, defaults to true
 
-|spring.cloud.stream.default-binder |  | 
+|spring.cloud.stream.binders |  | Additional per-binder properties (see {@link BinderProperties}) if more then one binder of the same type is used
+ (i.e., connect to multiple instances of RabbitMq). Here you can specify multiple
+ binder configurations, each with different environment settings. For example;
+ spring.cloud.stream.binders.rabbit1.environment. . . , spring.cloud.stream.binders.rabbit2.environment. . .
 
-|spring.cloud.stream.dynamic-destinations | [] | 
+|spring.cloud.stream.binding-retry-interval | 30 | Retry interval (in seconds) used to schedule binding attempts. Default: 30 sec.
 
-|spring.cloud.stream.ignore-unknown-properties | true | 
+|spring.cloud.stream.bindings |  | Additional binding properties (see {@link BinderProperties}) per binding name (e.g., 'input`).
 
-|spring.cloud.stream.instance-count | 1 | 
+ For example; This sets the content-type for the 'input' binding of a Sink application:
+ 'spring.cloud.stream.bindings.input.contentType=text/plain'
 
-|spring.cloud.stream.instance-index | 0 | 
+|spring.cloud.stream.consul.binder.event-timeout | 5 |
 
-|spring.cloud.stream.producer-defaults |  | 
+|spring.cloud.stream.default-binder |  | The name of the binder to use by all bindings in the event multiple binders available (e.g., 'rabbit');
 
-|spring.cloud.stream.rabbit.binder.admin-adresses | [] | 
+|spring.cloud.stream.dynamic-destinations | [] | A list of destinations that can be bound dynamically. If set, only listed destinations can be bound.
 
-|spring.cloud.stream.rabbit.binder.compression-level | 0 | 
+|spring.cloud.stream.instance-count | 1 | The number of deployed instances of an application.
+ Default: 1.
+ NOTE: Could also be managed per individual binding
+ "spring.cloud.stream.bindings.foo.consumer.instance-count" where 'foo' is
+ the name of the binding.
 
-|spring.cloud.stream.rabbit.binder.nodes | [] | 
+|spring.cloud.stream.instance-index | 0 | The instance id of the application: a number from 0 to instanceCount-1.
+ Used for partitioning and with Kafka.
+ NOTE: Could also be managed per individual binding
+ "spring.cloud.stream.bindings.foo.consumer.instance-index" where 'foo' is
+ the name of the binding.
 
-|spring.cloud.stream.rabbit.bindings |  | 
+|spring.cloud.stream.integration.message-handler-not-propagated-headers |  | Message header names that will NOT be copied from the inbound message.
+
+|spring.cloud.stream.metrics.export-properties |  | List of properties that are going to be appended to each message. This gets
+ populate by onApplicationEvent, once the context refreshes to avoid overhead of
+ doing per message basis.
+
+|spring.cloud.stream.metrics.key |  | The name of the metric being emitted. Should be an unique value per application.
+ Defaults to: ${spring.application.name:${vcap.application.name:${spring.config.name:application}}}
+
+|spring.cloud.stream.metrics.meter-filter |  | Pattern to control the 'meters' one wants to capture. By default all 'meters' will be captured.
+ For example, 'spring.integration.*' will only capture metric information for meters whose name starts with 'spring.integration'.
+
+|spring.cloud.stream.metrics.properties |  | Application properties that should be added to the metrics payload
+ For example: `spring.application**`
+
+|spring.cloud.stream.metrics.schedule-interval | 60s | Interval expressed as Duration for scheduling metrics snapshots publishing.
+ Defaults to 60 seconds
+
+|spring.cloud.stream.rabbit.binder.admin-addresses | [] | Urls for management plugins; only needed for queue affinity.
+
+|spring.cloud.stream.rabbit.binder.admin-adresses |  |
+
+|spring.cloud.stream.rabbit.binder.compression-level | 0 | Compression level for compressed bindings; see 'java.util.zip.Deflator'.
+
+|spring.cloud.stream.rabbit.binder.connection-name-prefix |  | Prefix for connection names from this binder.
+
+|spring.cloud.stream.rabbit.binder.nodes | [] | Cluster member node names; only needed for queue affinity.
+
+|spring.cloud.stream.rabbit.bindings |  |
 
 |spring.cloud.zookeeper.base-sleep-time-ms | 50 | Initial amount of time to wait between retries
 
@@ -937,16 +1049,22 @@
 |spring.cloud.zookeeper.dependencies |  | Mapping of alias to ZookeeperDependency. From Ribbon perspective the alias
  is actually serviceID since Ribbon can't accept nested structures in serviceID
 
-|spring.cloud.zookeeper.dependency-configurations |  | 
+|spring.cloud.zookeeper.dependency-configurations |  |
 
-|spring.cloud.zookeeper.dependency-names |  | 
+|spring.cloud.zookeeper.dependency-names |  |
 
-|spring.cloud.zookeeper.discovery.enabled | true | 
+|spring.cloud.zookeeper.discovery.enabled | true |
+
+|spring.cloud.zookeeper.discovery.initial-status |  | The initial status of this instance (defaults to {@link StatusConstants#STATUS_UP}).
 
 |spring.cloud.zookeeper.discovery.instance-host |  | Predefined host with which a service can register itself in Zookeeper. Corresponds
  to the {code address} from the URI spec.
 
+|spring.cloud.zookeeper.discovery.instance-id |  | Id used to register with zookeeper. Defaults to a random UUID.
+
 |spring.cloud.zookeeper.discovery.instance-port |  | Port to register the service under (defaults to listening port)
+
+|spring.cloud.zookeeper.discovery.instance-ssl-port |  | Ssl port of the registered service.
 
 |spring.cloud.zookeeper.discovery.metadata |  | Gets the metadata name/value pairs associated with this instance. This information
  is sent to zookeeper and can be used by other instances.
@@ -969,171 +1087,154 @@
 
 |spring.integration.poller.max-messages-per-poll | 1 | Maximum messages per poll for the default poller.
 
+|spring.sleuth.annotation.enabled | true |
+
+|spring.sleuth.async.configurer.enabled | true | Enable default AsyncConfigurer.
+
+|spring.sleuth.async.enabled | true | Enable instrumenting async related components so that the tracing information is passed between threads.
+
+|spring.sleuth.baggage-keys |  | List of baggage key names that should be propagated out of process.
+ These keys will be prefixed with `baggage` before the actual key.
+ This property is set in order to be backward compatible with previous
+ Sleuth versions.
+
+ @see brave.propagation.ExtraFieldPropagation.FactoryBuilder#addPrefixedFields(String, java.util.Collection)
+
+|spring.sleuth.enabled | true |
+
+|spring.sleuth.feign.enabled | true | Enable span information propagation when using Feign.
+
+|spring.sleuth.feign.processor.enabled | true | Enable post processor that wraps Feign Context in its tracing representations.
+
+|spring.sleuth.http.enabled | true |
+
+|spring.sleuth.http.legacy.enabled | false |
+
+|spring.sleuth.hystrix.strategy.enabled | true | Enable custom HystrixConcurrencyStrategy that wraps all Callable instances into their Sleuth representative - the TraceCallable.
+
 |spring.sleuth.integration.enabled | true | Enable Spring Integration sleuth instrumentation.
 
-|spring.sleuth.integration.patterns | * | An array of simple patterns against which channel names will be matched. Default is * (all channels). See org.springframework.util.PatternMatchUtils.simpleMatch(String, String).
+|spring.sleuth.integration.patterns | [!hystrixStreamOutput*, *] | An array of patterns against which channel names will be matched.
+ @see org.springframework.integration.config.GlobalChannelInterceptor#patterns().
+ Defaults to any channel name not matching the Hystrix Stream channel name.
 
-|spring.sleuth.keys.async.class-name-key | class | Simple name of the class with a method annotated with {@code @Async}
- from which the asynchronous process started
-
- @see org.springframework.scheduling.annotation.Async
-
-|spring.sleuth.keys.async.method-name-key | method | Name of the method annotated with {@code @Async}
-
- @see org.springframework.scheduling.annotation.Async
-
-|spring.sleuth.keys.async.prefix |  | Prefix for header names if they are added as tags.
-
-|spring.sleuth.keys.async.thread-name-key | thread | Name of the thread that executed the async method
-
- @see org.springframework.scheduling.annotation.Async
+|spring.sleuth.integration.websockets.enabled | true | Enable tracing for WebSockets.
 
 |spring.sleuth.keys.http.headers |  | Additional headers that should be added as tags if they exist. If the header
  value is multi-valued, the tag value will be a comma-separated, single-quoted
  list.
 
-|spring.sleuth.keys.http.host | http.host | The domain portion of the URL or host header. Example:
- "mybucket.s3.amazonaws.com". Used to filter by host as opposed to ip address.
-
-|spring.sleuth.keys.http.method | http.method | The HTTP method, or verb, such as "GET" or "POST". Used to filter against an
- http route.
-
-|spring.sleuth.keys.http.path | http.path | The absolute http path, without any query parameters. Example:
- "/objects/abcd-ff". Used to filter against an http route, portably with zipkin
- v1. In zipkin v1, only equals filters are supported. Dropping query parameters
- makes the number of distinct URIs less. For example, one can query for the same
- resource, regardless of signing parameters encoded in the query line. This does
- not reduce cardinality to a HTTP single route. For example, it is common to
- express a route as an http URI template like "/resource/{resource_id}". In
- systems where only equals queries are available, searching for
- {@code http.uri=/resource} won't match if the actual request was
- "/resource/abcd-ff". Historical note: This was commonly expressed as "http.uri"
- in zipkin, eventhough it was most often just a path.
-
 |spring.sleuth.keys.http.prefix | http. | Prefix for header names if they are added as tags.
 
-|spring.sleuth.keys.http.request-size | http.request.size | The size of the non-empty HTTP request body, in bytes. Ex. "16384"
+|spring.sleuth.log.slf4j.enabled | true | Enable a {@link Slf4jCurrentTraceContext} that prints tracing information in the logs.
 
- <p>Large uploads can exceed limits or contribute directly to latency.
+|spring.sleuth.messaging.enabled | false |
 
-|spring.sleuth.keys.http.response-size | http.response.size | The size of the non-empty HTTP response body, in bytes. Ex. "16384"
+|spring.sleuth.messaging.kafka.enabled | false |
 
- <p>Large downloads can exceed limits or contribute directly to latency.
+|spring.sleuth.messaging.kafka.remote-service-name | kafka |
 
-|spring.sleuth.keys.http.status-code | http.status_code | The HTTP response code, when not in 2xx range. Ex. "503" Used to filter for
- error status. 2xx range are not logged as success codes are less interesting
- for latency troubleshooting. Omitting saves at least 20 bytes per span.
+|spring.sleuth.messaging.rabbit.enabled | false |
 
-|spring.sleuth.keys.http.url | http.url | The entire URL, including the scheme, host and query parameters if available.
- Ex.
- "https://mybucket.s3.amazonaws.com/objects/abcd-ff?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Algorithm=AWS4-HMAC-SHA256..."
- Combined with {@link #method}, you can understand the fully-qualified
- request line. This is optional as it may include private data or be of
- considerable length.
+|spring.sleuth.messaging.rabbit.remote-service-name | rabbitmq |
 
-|spring.sleuth.keys.hystrix.command-group | commandGroup | Name of the command group. Hystrix uses the command group key to group
- together commands such as for reporting, alerting, dashboards,
- or team/library ownership.
+|spring.sleuth.opentracing.enabled | true |
 
- @see com.netflix.hystrix.HystrixCommandGroupKey
+|spring.sleuth.propagation-keys |  | List of fields that are referenced the same in-process as it is on the wire. For example, the
+ name "x-vcap-request-id" would be set as-is including the prefix.
 
-|spring.sleuth.keys.hystrix.command-key | commandKey | Name of the command key. Describes the name for the given command.
- A key to represent a {@link com.netflix.hystrix.HystrixCommand} for
- monitoring, circuit-breakers, metrics publishing, caching and other such uses.
+ <p>Note: {@code fieldName} will be implicitly lower-cased.
 
- @see com.netflix.hystrix.HystrixCommandKey
+ @see brave.propagation.ExtraFieldPropagation.FactoryBuilder#addField(String)
 
-|spring.sleuth.keys.hystrix.prefix |  | Prefix for header names if they are added as tags.
+|spring.sleuth.rxjava.schedulers.hook.enabled | true | Enable support for RxJava via RxJavaSchedulersHook.
 
-|spring.sleuth.keys.hystrix.thread-pool-key | threadPoolKey | Name of the thread pool key. The thread-pool key represents a {@link com.netflix.hystrix.HystrixThreadPool}
- for monitoring, metrics publishing, caching, and other such uses. A {@link com.netflix.hystrix.HystrixCommand}
- is associated with a single {@link com.netflix.hystrix.HystrixThreadPool} as
- retrieved by the {@link com.netflix.hystrix.HystrixThreadPoolKey} injected into it,
- or it defaults to one created using the {@link com.netflix.hystrix.HystrixCommandGroupKey}
- it is created with.
+|spring.sleuth.rxjava.schedulers.ignoredthreads | [HystrixMetricPoller, ^RxComputation.*$] | Thread names for which spans will not be sampled.
 
- @see com.netflix.hystrix.HystrixThreadPoolKey
-
-|spring.sleuth.keys.message.headers |  | Additional headers that should be added as tags if they exist. If the header
- value is not a String it will be converted to a String using its toString()
- method.
-
-|spring.sleuth.keys.message.payload.size | message/payload-size | An estimate of the size of the payload if available.
-
-|spring.sleuth.keys.message.payload.type | message/payload-type | The type of the payload.
-
-|spring.sleuth.keys.message.prefix | message/ | Prefix for header names if they are added as tags.
-
-|spring.sleuth.keys.mvc.controller-class | mvc.controller.class | The lower case, hyphen delimited name of the class that processes the request.
- Ex. class named "BookController" will result in "book-controller" tag value.
-
-|spring.sleuth.keys.mvc.controller-method | mvc.controller.method | The lower case, hyphen delimited name of the class that processes the request.
- Ex. method named "listOfBooks" will result in "list-of-books" tag value.
-
-|spring.sleuth.metric.span.accepted-name | counter.span.accepted | 
-
-|spring.sleuth.metric.span.dropped-name | counter.span.dropped | 
-
-|spring.sleuth.sampler.percentage | 0.1 | Percentage of requests that should be sampled. E.g. 1.0 - 100% requests should be
+|spring.sleuth.sampler.probability | 0.1 | Probability of requests that should be sampled. E.g. 1.0 - 100% requests should be
  sampled. The precision is whole-numbers only (i.e. there's no support for 0.1% of
  the traces).
 
+|spring.sleuth.scheduled.enabled | true | Enable tracing for {@link org.springframework.scheduling.annotation.Scheduled}.
+
+|spring.sleuth.scheduled.skip-pattern | org.springframework.cloud.netflix.hystrix.stream.HystrixStreamTask | Pattern for the fully qualified name of a class that should be skipped.
+
+|spring.sleuth.supports-join | true | True means the tracing system supports sharing a span ID between a client and server.
+
 |spring.sleuth.trace-id128 | false | When true, generate 128-bit trace IDs instead of 64-bit ones.
 
-|zuul.add-host-header | false | Flag to determine whether the proxy forwards the Host header.
+|spring.sleuth.web.additional-skip-pattern |  | Additional pattern for URLs that should be skipped in tracing.
+ This will be appended to the {@link SleuthWebProperties#skipPattern}
 
-|zuul.add-proxy-headers | true | Flag to determine whether the proxy adds X-Forwarded-* headers.
+|spring.sleuth.web.client.enabled | true | Enable interceptor injecting into {@link org.springframework.web.client.RestTemplate}
 
-|zuul.host.max-per-route-connections | 20 | The maximum number of connections that can be used by a single route.
+|spring.sleuth.web.enabled | true | When true enables instrumentation for web applications
 
-|zuul.host.max-total-connections | 200 | The maximum number of total connections the proxy can hold open to backends.
+|spring.sleuth.web.skip-pattern | /api-docs.*|/autoconfig|/configprops|/dump|/health|/info|/metrics.*|/mappings|/trace|/swagger.*|.*\.png|.*\.css|.*\.js|.*\.html|/favicon.ico|/hystrix.stream|/application/.*|/actuator.*|/cloudfoundryapplication | Pattern for URLs that should be skipped in tracing
 
-|zuul.ignore-local-service | true | 
+|spring.sleuth.zuul.enabled | true | Enable span information propagation when using Zuul.
 
-|zuul.ignore-security-headers | true | Flag to say that SECURITY_HEADERS are added to ignored headers if spring security is on the classpath.
- By setting ignoreSecurityHeaders to false we can switch off this default behaviour. This should be used together with
- disabling the default spring security headers
- see https://docs.spring.io/spring-security/site/docs/current/reference/html/headers.html#default-security-headers
+|stubrunner.amqp.enabled | false | Whether to enable support for Stub Runner and AMQP.
 
-|zuul.ignored-headers |  | Names of HTTP headers to ignore completely (i.e. leave them out of downstream
- requests and drop them from downstream responses).
+|stubrunner.amqp.mockCOnnection | true | Whether to enable support for Stub Runner and AMQP mocked connection factory.
 
-|zuul.ignored-patterns |  | 
+|stubrunner.classifier | stubs | The classifier to use by default in ivy co-ordinates for a stub.
 
-|zuul.ignored-services |  | Set of service names not to consider for proxying automatically. By default all
- services in the discovery client will be proxied.
+|stubrunner.cloud.consul.enabled | true | Whether to enable stubs registration in Consul.
 
-|zuul.prefix |  | A common prefix for all routes.
+|stubrunner.cloud.delegate.enabled | true | Whether to enable DiscoveryClient's Stub Runner implementation.
 
-|zuul.remove-semicolon-content | true | Flag to say that path elements past the first semicolon can be dropped.
+|stubrunner.cloud.enabled | true | Whether to enable Spring Cloud support for Stub Runner.
 
-|zuul.retryable |  | Flag for whether retry is supported by default (assuming the routes themselves
- support it).
+|stubrunner.cloud.eureka.enabled | true | Whether to enable stubs registration in Eureka.
 
-|zuul.ribbon-isolation-strategy |  | 
+|stubrunner.cloud.ribbon.enabled | true | Whether to enable Stub Runner's Ribbon integration.
 
-|zuul.routes |  | Map of route names to properties.
+|stubrunner.cloud.stubbed.discovery.enabled | true | Whether Service Discovery should be stubbed for Stub Runner. If set to false, stubs will get registered in real service discovery.
 
-|zuul.s-e-c-u-r-i-t-y-h-e-a-d-e-r-s |  | Headers that are generally expected to be added by Spring Security, and hence often
- duplicated if the proxy and the backend are secured with Spring. By default they
- are added to the ignored headers if Spring Security is present and ignoreSecurityHeaders = true.
+|stubrunner.cloud.zookeeper.enabled | true | Whether to enable stubs registration in Zookeeper.
 
-|zuul.semaphore.max-semaphores | 100 | The maximum number of total semaphores for Hystrix.
+|stubrunner.consumer-name |  | You can override the default {@code spring.application.name} of this field by setting a value to this parameter.
 
-|zuul.sensitive-headers |  | List of sensitive headers that are not passed to downstream requests. Defaults to a
- "safe" set of headers that commonly contain user credentials. It's OK to remove
- those from the list if the downstream service is part of the same system as the
- proxy, so they are sharing authentication data. If using a physical URL outside
- your own domain, then generally it would be a bad idea to leak user credentials.
+|stubrunner.delete-stubs-after-test | true | If set to {@code false} will NOT delete stubs from a temporary
+ folder after running tests
 
-|zuul.servlet-path | /zuul | Path to install Zuul as a servlet (not part of Spring MVC). The servlet is more
- memory efficient for requests with large bodies, e.g. file uploads.
+|stubrunner.ids | [] | The ids of the stubs to run in "ivy" notation ([groupId]:artifactId:[version]:[classifier][:port]).
+ {@code groupId}, {@code classifier}, {@code version} and {@code port} can be optional.
 
-|zuul.ssl-hostname-validation-enabled | true | Flag to say whether the hostname for ssl connections should be verified or not. Default is true.
- This should only be used in test setups!
+|stubrunner.ids-to-service-ids |  | Mapping of Ivy notation based ids to serviceIds
+ inside your application
 
-|zuul.strip-prefix | true | Flag saying whether to strip the prefix from the path before forwarding.
+ Example
 
-|zuul.trace-request-body | true | Flag to say that request bodies can be traced.
+ "a:b"			->		"myService"
+ "artifactId"		->		"myOtherService"
+
+|stubrunner.integration.enabled | true | Whether to enable Stub Runner integration with Spring Integration.
+
+|stubrunner.mappings-output-folder |  | Dumps the mappings of each HTTP server to the selected folder
+
+|stubrunner.max-port | 15000 | Max value of a port for the automatically started WireMock server
+
+|stubrunner.min-port | 10000 | Min value of a port for the automatically started WireMock server
+
+|stubrunner.password |  | Repository password
+
+|stubrunner.properties |  | Map of properties that can be passed to custom {@link org.springframework.cloud.contract.stubrunner.StubDownloaderBuilder}
+
+|stubrunner.proxy-host |  | Repository proxy host
+
+|stubrunner.proxy-port |  | Repository proxy port
+
+|stubrunner.snapshot-check-skip | false | If set to {@code true} will not assert whether the downloaded stubs / contract
+ JAR was downloaded from a remote location or a local one(only applicable to Maven repos, not Git or Pact)
+
+|stubrunner.stream.enabled | true | Whether to enable Stub Runner integration with Spring Cloud Stream.
+
+|stubrunner.stubs-mode |  | Pick where the stubs should come from
+
+|stubrunner.stubs-per-consumer | false | Should only stubs for this particular consumer get registered in HTTP server stub.
+
+|stubrunner.username |  | Repository username
 
 |===
