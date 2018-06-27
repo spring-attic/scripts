@@ -56,6 +56,8 @@ include::{basedir}/contract/docs/src/main/asciidoc/spring-cloud-contract.adoc[]
 
 include::{basedir}/vault/docs/src/main/asciidoc/spring-cloud-vault.adoc[]
 
+include::{basedir}/function/docs/src/main/asciidoc/spring-cloud-function.adoc[]
+
 = Appendix: Compendium of Configuration Properties
 
 include::configprops.adoc[]

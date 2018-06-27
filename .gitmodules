@@ -91,3 +91,6 @@
 [submodule "gateway"]
 	path = gateway
 	url = https://github.com/spring-cloud/spring-cloud-gateway
+[submodule "function"]
+	path = function
+	url = git@github.com:spring-cloud/spring-cloud-function.git
