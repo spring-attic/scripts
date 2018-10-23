@@ -16,7 +16,7 @@
 		<docs.whitelisted.branches>1.0.x,Dalston,Edgware,Finchley</docs.whitelisted.branches>
 		<main.basedir>${basedir}/..</main.basedir>
 		<docs.main>spring-cloud</docs.main>
-		<spring-cloud-version>${release.train.version}</spring-cloud-version>
+		<spring-cloud-version>${spring-cloud-release.version}</spring-cloud-version>
 	</properties>
 	<profiles>
 		<profile>

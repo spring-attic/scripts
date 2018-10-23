@@ -9,32 +9,49 @@
 @Grab('org.codehaus.groovy:groovy-json:2.5.0')
 @Grab('org.codehaus.groovy:groovy-nio:2.5.0')
 @Grab('org.codehaus.groovy:groovy-xml:2.5.0')
-@Grab('org.springframework.cloud:spring-cloud-stream:2.0.1.RELEASE')
-@Grab('org.springframework.cloud:spring-cloud-starter-bus-amqp:2.0.0.RELEASE')
-@Grab('org.springframework.cloud:spring-cloud-starter-config:2.0.1.RELEASE')
-@Grab('org.springframework.cloud:spring-cloud-config-server:2.0.1.RELEASE')
-@Grab('org.springframework.cloud:spring-cloud-starter-netflix-eureka-server:2.0.1.RELEASE')
-@Grab('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:2.0.1.RELEASE')
-@Grab('org.springframework.cloud:spring-cloud-starter-aws:2.0.0.RELEASE')
-@Grab('org.springframework.cloud:spring-cloud-starter-security:2.0.0.RELEASE')
-@Grab('org.springframework.cloud:spring-cloud-starter-consul-all:2.0.1.RELEASE')
-@Grab('org.springframework.cloud:spring-cloud-starter-zookeeper-all:2.0.0.RELEASE')
-@Grab('org.springframework.cloud:spring-cloud-starter-sleuth:2.0.1.RELEASE')
-@Grab('org.springframework.cloud:spring-cloud-starter-cloudfoundry:2.0.0.RELEASE')
-@Grab('org.springframework.cloud:spring-cloud-cloudfoundry-discovery:2.0.0.RELEASE')
-@Grab('org.springframework.cloud:spring-cloud-contract-stub-runner:2.0.1.RELEASE')
-@Grab('org.springframework.cloud:spring-cloud-vault-config:2.0.1.RELEASE')
-@Grab('org.springframework.cloud:spring-cloud-vault-config-aws:2.0.1.RELEASE')
-@Grab('org.springframework.cloud:spring-cloud-vault-config-databases:2.0.1.RELEASE')
-@Grab('org.springframework.cloud:spring-cloud-vault-config-consul:2.0.1.RELEASE')
-@Grab('org.springframework.cloud:spring-cloud-vault-config-rabbitmq:2.0.1.RELEASE')
-@Grab('org.springframework.cloud:spring-cloud-starter-gateway:2.0.1.RELEASE')
-@Grab('org.springframework.cloud:spring-cloud-gateway-mvc:2.0.1.RELEASE')
-@Grab('org.springframework.cloud:spring-cloud-gateway-webflux:2.0.1.RELEASE')
+@Grab('org.springframework:spring-core:5.1.1.RELEASE')
 
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver
-import org.springframework.core.io.Resource
+import groovy.grape.Grape
 import groovy.json.JsonSlurper
+
+String outputFile = "configprops.adoc"
+
+Map<String, List<String>> modules = [
+  "spring-cloud-stream" : ["spring-cloud-stream"],
+  "spring-cloud-bus" : ["spring-cloud-starter-bus-amqp"],
+  "spring-cloud-config" : ["spring-cloud-starter-config", "spring-cloud-config-server"],
+  "spring-cloud-netflix" : ["spring-cloud-starter-netflix-eureka-server", "spring-cloud-starter-netflix-eureka-client"],
+  "spring-cloud-aws" : ["spring-cloud-starter-aws"],
+  "spring-cloud-security" : ["spring-cloud-starter-security"],
+  "spring-cloud-consul" : ["spring-cloud-starter-consul-all"],
+  "spring-cloud-zookeeper" : ["spring-cloud-starter-zookeeper-all"],
+  "spring-cloud-sleuth" : ["spring-cloud-starter-zipkin"],
+  "spring-cloud-cloudfoundry" : ["spring-cloud-starter-cloudfoundry", "spring-cloud-cloudfoundry-discovery"],
+  "spring-cloud-contract" : ["spring-cloud-starter-contract-stub-runner"],
+  "spring-cloud-vault" : ["spring-cloud-vault-config", "spring-cloud-vault-config-aws", "spring-cloud-vault-config-databases", "spring-cloud-vault-config-consul", "spring-cloud-vault-config-rabbitmq"],
+  "spring-cloud-gateway" : ["spring-cloud-starter-gateway", "spring-cloud-gateway-mvc", "spring-cloud-gateway-webflux"],
+  "spring-cloud-stream" : ["spring-cloud-stream-dependencies"],
+]
+
+File versionsFile = new File("versions.txt")
+
+if (versionsFile.exists()) {
+  println "Found versions file with versions \n\n${versionsFile.text}\n\n"
+  println "Grabbing all versions"
+  versionsFile.eachLine { String line ->
+    String[] split = line.split(":")
+    String versionValue = split[1]
+    List<String> moduleNames = modules[split[0]]
+    moduleNames.each { String moduleName ->
+      println "Grabbing [org.springframework.cloud:${moduleName}:${versionValue}]"
+      if (moduleName.endsWith("dependencies")) {
+        
+      }
+      Grape.grab(group: 'org.springframework.cloud', module: moduleName, version: versionValue)
+    }
+  }
+}
 
 def resources = new PathMatchingResourcePatternResolver().getResources("classpath*:/META-INF/spring-configuration-metadata.json")
 
@@ -49,15 +66,20 @@ resources.each { it ->
     }
   }
 }
-println "|==="
-println "|Name | Default | Description"
-println ""
-names.each { it ->
-  println descriptions[it]
-  println ""
-}
-println "|==="
 
+if (names.empty) {
+  throw new IllegalStateException("Will not update the table, since no configuration properties were found!")
+}
+
+new File(outputFile).text = """\
+|===
+|Name | Default | Description
+${names.collect { it -> return descriptions[it] }.join("\n") }
+
+
+
+|===
+"""
 
 class ConfigValue {
   String name

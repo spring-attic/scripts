@@ -210,8 +210,20 @@ do
 done
 
 cd ${ROOT_FOLDER}
+rm -rf docs/src/main/asciidoc/versions.txt
+for K in "${!PROJECTS[@]}"
+do
+  echo "spring-cloud-${K}:${PROJECTS[$K]}" >>  docs/src/main/asciidoc/versions.txt
+done
+echo -e "\n\nUpdating configprops.adoc... This might take a while..."
+pushd docs/src/main/asciidoc
+  groovy configprops.groovy
+popd
+echo -e "Updated configprops.groovy!\n\n"
+
+cd ${ROOT_FOLDER}
 echo "Building the docs with release train version [${RELEASE_TRAIN}]"
-./mvnw clean install -Pdocs,build -Drelease.train.version=${RELEASE_TRAIN} -pl docs
+# ./mvnw clean install -Pdocs,build -Dspring-cloud-release.version=${RELEASE_TRAIN} -pl docs
 
 if [[ "${GH_PAGES}" == "yes" ]] ; then
   echo "Downloading gh-pages.sh from spring-cloud-build's master"
