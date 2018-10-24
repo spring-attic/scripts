@@ -73,6 +73,8 @@
 
 |eureka.client.g-zip-content | true | Indicates whether the content fetched from eureka server has to be compressed whenever it is supported by the server. The registry information from the eureka server is compressed for optimum network traffic.
 
+|eureka.client.healthcheck.enabled | true | Enables the Eureka health check handler.
+
 |eureka.client.heartbeat-executor-exponential-back-off-bound | 10 | Heartbeat executor exponential back off related property. It is a maximum multiplier value for retry delay, in case where a sequence of timeouts occurred.
 
 |eureka.client.heartbeat-executor-thread-pool-size | 2 | The thread pool size for the heartbeatExecutor to initialise with
@@ -333,6 +335,8 @@
 
 |hystrix.metrics.polling-interval-ms | 2000 | Interval between subsequent polling of metrics. Defaults to 2000 ms.
 
+|hystrix.shareSecurityContext | false | Enables auto-configuration of the Hystrix concurrency strategy plugin hook who will transfer the `SecurityContext` from your main thread to the one used by the Hystrix command.
+
 |management.endpoint.bindings.cache.time-to-live | 0ms | Maximum time that a response can be cached.
 
 |management.endpoint.bindings.enabled | true | Whether to enable the bindings endpoint.
@@ -377,6 +381,8 @@
 
 |management.health.zookeeper.enabled | true | Enable the health endpoint for zookeeper.
 
+|management.metrics.binders.hystrix.enabled | true | Enables creation of OK Http Client factory beans.
+
 |proxy.auth.load-balanced | false | 
 
 |proxy.auth.routes |  | Authentication strategy per route.
@@ -384,6 +390,14 @@
 |ribbon.eager-load.clients |  | 
 
 |ribbon.eager-load.enabled | false | 
+
+|ribbon.eureka.enabled | true | Enables the use of Eureka with Ribbon.
+
+|ribbon.http.client.enabled | false | Deprecated property to enable Ribbon RestClient.
+
+|ribbon.okhttp.enabled | false | Enables the use of the OK HTTP Client with Ribbon.
+
+|ribbon.restclient.enabled | false | Enables the use of the deprecated Ribbon RestClient.
 
 |ribbon.secure-ports |  | 
 
@@ -407,8 +421,7 @@
 
 |spring.cloud.cloudfoundry.discovery.enabled | true | Flag to indicate that discovery is enabled.
 
-|spring.cloud.cloudfoundry.discovery.heartbeat-frequency | 5000 | Frequency in milliseconds of poll for heart beat. The client will poll on this
- frequency and broadcast a list of service ids.
+|spring.cloud.cloudfoundry.discovery.heartbeat-frequency | 5000 | Frequency in milliseconds of poll for heart beat. The client will poll on this frequency and broadcast a list of service ids.
 
 |spring.cloud.cloudfoundry.org |  | Organization name to initially target.
 
@@ -740,6 +753,8 @@
 
 |spring.cloud.gateway.discovery.locator.url-expression | 'lb://'+serviceId | SpEL expression that create the uri for each route, defaults to: 'lb://'+serviceId
 
+|spring.cloud.gateway.enabled | true | Enables gateway functionality.
+
 |spring.cloud.gateway.filter.remove-hop-by-hop.headers |  | 
 
 |spring.cloud.gateway.filter.remove-hop-by-hop.order |  | 
@@ -759,6 +774,8 @@
 |spring.cloud.gateway.filter.secure-headers.strict-transport-security | max-age=631138519 | 
 
 |spring.cloud.gateway.filter.secure-headers.xss-protection-header | 1 ; mode=block | 
+
+|spring.cloud.gateway.forwarded.enabled | true | Enables the ForwardedHeadersFilter.
 
 |spring.cloud.gateway.globalcors.cors-configurations |  | 
 
@@ -784,9 +801,17 @@
 
 |spring.cloud.gateway.httpclient.response-timeout |  | The response timeout.
 
+|spring.cloud.gateway.httpclient.ssl.close-notify-flush-timeout-millis | 3000 | 
+
+|spring.cloud.gateway.httpclient.ssl.close-notify-read-timeout-millis | 0 | 
+
+|spring.cloud.gateway.httpclient.ssl.handshake-timeout-millis | 10000 | 
+
 |spring.cloud.gateway.httpclient.ssl.trusted-x509-certificates |  | 
 
 |spring.cloud.gateway.httpclient.ssl.use-insecure-trust-manager | false | Installs the netty InsecureTrustManagerFactory. This is insecure and not suitable for production.
+
+|spring.cloud.gateway.metrics.enabled | false | Enables the collection of metrics data.
 
 |spring.cloud.gateway.proxy.headers |  | Fixed header values that will be added to all downstream requests.
 
@@ -821,6 +846,10 @@
 |spring.cloud.gateway.x-forwarded.port-append | true | If appending X-Forwarded-Port as a list is enabled.
 
 |spring.cloud.gateway.x-forwarded.port-enabled | true | If X-Forwarded-Port is enabled.
+
+|spring.cloud.gateway.x-forwarded.prefix-append | true | If appending X-Forwarded-Prefix as a list is enabled.
+
+|spring.cloud.gateway.x-forwarded.prefix-enabled | true | If X-Forwarded-Prefix is enabled.
 
 |spring.cloud.gateway.x-forwarded.proto-append | true | If appending X-Forwarded-Proto as a list is enabled.
 
@@ -1183,6 +1212,8 @@
 
 |spring.sleuth.propagation-keys |  | List of fields that are referenced the same in-process as it is on the wire. For example, the name "x-vcap-request-id" would be set as-is including the prefix. <p>Note: {@code fieldName} will be implicitly lower-cased. @see brave.propagation.ExtraFieldPropagation.FactoryBuilder#addField(String)
 
+|spring.sleuth.reactor.enabled.enabled | true | When true enables instrumentation for reactor
+
 |spring.sleuth.rxjava.schedulers.hook.enabled | true | Enable support for RxJava via RxJavaSchedulersHook.
 
 |spring.sleuth.rxjava.schedulers.ignoredthreads | [HystrixMetricPoller, ^RxComputation.*$] | Thread names for which spans will not be sampled.
@@ -1202,6 +1233,10 @@
 |spring.sleuth.web.client.enabled | true | Enable interceptor injecting into {@link org.springframework.web.client.RestTemplate}
 
 |spring.sleuth.web.enabled | true | When true enables instrumentation for web applications
+
+|spring.sleuth.web.exception-throwing-filter-enabled | true | Flag to toggle the presence of a filter that logs thrown exceptions
+
+|spring.sleuth.web.filter-order |  | Order in which the tracing filters should be registered. Defaults to {@link TraceHttpAutoConfiguration#TRACING_FILTER_ORDER}
 
 |spring.sleuth.web.skip-pattern | /api-docs.*|/autoconfig|/configprops|/dump|/health|/info|/metrics.*|/mappings|/trace|/swagger.*|.*\.png|.*\.css|.*\.js|.*\.html|/favicon.ico|/hystrix.stream|/application/.*|/actuator.*|/cloudfoundryapplication | Pattern for URLs that should be skipped in tracing
 
