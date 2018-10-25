@@ -211,7 +211,7 @@ done
 
 cd ${ROOT_FOLDER}
 echo "Building the docs with release train version [${RELEASE_TRAIN}]"
-./mvnw clean install -Pdocs,build -Drelease.train.version=${RELEASE_TRAIN} -pl docs
+./mvnw clean install -Pdocs,build -Dspring-cloud-release.version=${RELEASE_TRAIN} -Dspring-cloud.version=${RELEASE_TRAIN} -pl docs
 
 if [[ "${GH_PAGES}" == "yes" ]] ; then
   echo "Downloading gh-pages.sh from spring-cloud-build's master"
