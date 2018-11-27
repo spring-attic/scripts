@@ -11,7 +11,7 @@ declare -A PROJECTS
 ROOT_FOLDER=$(pwd)
 SPRING_CLOUD_RELEASE_REPO=${SPRING_CLOUD_RELEASE_REPO:-git@github.com:spring-cloud/spring-cloud-release.git}
 MAVEN_PATH=${MAVEN_PATH:-}
-RELEASE_TRAIN_PROJECTS=${RELEASE_TRAIN_PROJECTS:-aws bus cloudfoundry commons contract config netflix openfeign security consul sleuth function stream task zookeeper vault gateway}
+RELEASE_TRAIN_PROJECTS=${RELEASE_TRAIN_PROJECTS:-aws bus cloudfoundry commons contract config netflix openfeign security consul sleuth function stream task zookeeper vault gateway kubernetes}
 
 if [ -e "${ROOT_FOLDER}/mvnw" ]; then
     MAVEN_EXEC="$ROOT_FOLDER/mvnw"

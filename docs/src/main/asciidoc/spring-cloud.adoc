@@ -62,6 +62,8 @@ include::{basedir}/gateway/docs/src/main/asciidoc/spring-cloud-gateway.adoc[]
 
 include::{basedir}/function/docs/src/main/asciidoc/spring-cloud-function.adoc[]
 
+include::{basedir}/kubernetes/docs/src/main/asciidoc/spring-cloud-kubernetes.adoc[]
+
 = Appendix: Compendium of Configuration Properties
 
 include::configprops.adoc[]
