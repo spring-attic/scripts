@@ -48,7 +48,7 @@ include::{basedir}/consul/docs/src/main/asciidoc/spring-cloud-consul.adoc[]
 
 include::{basedir}/zookeeper/docs/src/main/asciidoc/spring-cloud-zookeeper.adoc[]
 
-include::{basedir}/cli/docs/src/main/asciidoc/spring-cloud-cli.adoc[]
+//include::{basedir}/cli/docs/src/main/asciidoc/spring-cloud-cli.adoc[]
 
 include::{basedir}/security/docs/src/main/asciidoc/spring-cloud-security.adoc[]
 
