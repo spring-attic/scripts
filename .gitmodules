@@ -100,6 +100,6 @@
 [submodule "kubernetes"]
 	path = kubernetes
 	url = git@github.com:spring-cloud/spring-cloud-kubernetes.git
-[submodule "spring-cloud-gcp"]
-	path = spring-cloud-gcp
+[submodule "gcp"]
+	path = gcp
 	url = git@github.com:spring-cloud/spring-cloud-gcp.git
