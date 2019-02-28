@@ -63,13 +63,17 @@ ${names.collect { it -> return descriptions[it] }.join("\n")}
 
 		ConfigValue(String name, String description, Object defaultValue) {
 			this.name = name
-			this.description = description
-			this.defaultValue = defaultValue
+			this.description = escapedValue(description)
+			this.defaultValue = escapedValue(defaultValue)
+		}
+
+		private String escapedValue(Object value) {
+			return value != null ?
+					value.toString().replaceAll('\\|', '\\\\|') : ''
 		}
 
 		String toString() {
-			def value = defaultValue == null ? '' : "${defaultValue}"
-			"|${name} | ${value} | ${description ?: ''}"
+			"|${name} | ${defaultValue} | ${description}"
 		}
 	}
 }

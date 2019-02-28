@@ -25,6 +25,7 @@
 |encrypt.key-store.location |  | Location of the key store file, e.g. classpath:/keystore.jks.
 |encrypt.key-store.password |  | Password that locks the keystore.
 |encrypt.key-store.secret |  | Secret protecting the key (defaults to the same as the password).
+|encrypt.key-store.type | jks | The KeyStore type. Defaults to jks.
 |encrypt.rsa.algorithm |  | The RSA algorithm to use (DEFAULT or OEAP). Once it is set, do not change it (or existing ciphers will not be decryptable).
 |encrypt.rsa.salt | deadbeef | Salt for the random secret used to encrypt cipher text. Once it is set, do not change it (or existing ciphers will not be decryptable).
 |encrypt.rsa.strong | false | Flag to indicate that "strong" AES encryption should be used internally. If true, then the GCM algorithm is applied to the AES encrypted bytes. Default is false (in which case "standard" CBC is used instead). Once it is set, do not change it (or existing ciphers will not be decryptable).
@@ -268,7 +269,7 @@
 |spring.cloud.discovery.enabled | true | Enables discovery client health indicators.
 |spring.cloud.features.enabled | true | Enables the features endpoint.
 |spring.cloud.function.compile |  | Configuration for function bodies, which will be compiled. The key in the map is the function name and the value is a map containing a key "lambda" which is the body to compile, and optionally a "type" (defaults to "function"). Can also contain "inputType" and "outputType" in case it is ambiguous.
-|spring.cloud.function.definition |  | Name (e.g., 'foo') or composition instruction (e.g., 'foo|bar') used to resolve default function especially for cases where there is more then once function available in catalog.
+|spring.cloud.function.definition |  | Name (e.g., 'foo') or composition instruction (e.g., 'foo\|bar') used to resolve default function especially for cases where there is more then once function available in catalog.
 |spring.cloud.function.imports |  | Configuration for a set of files containing function bodies, which will be imported and compiled. The key in the map is the function name and the value is another map, containing a "location" of the file to compile and (optionally) a "type" (defaults to "function").
 |spring.cloud.function.scan.packages | functions | Triggers scanning within the specified base packages for any class that is assignable to java.util.function.Function. For each detected Function class, a bean instance will be added to the context.
 |spring.cloud.function.task.consumer |  | 
@@ -532,7 +533,7 @@
 |spring.cloud.stream.consul.binder.event-timeout | 5 | 
 |spring.cloud.stream.default-binder |  | The name of the binder to use by all bindings in the event multiple binders available (e.g., 'rabbit').
 |spring.cloud.stream.dynamic-destinations | [] | A list of destinations that can be bound dynamically. If set, only listed destinations can be bound.
-|spring.cloud.stream.function.definition |  | Definition of functions to bind. If several functions need to be composed into one, use pipes (e.g., 'fooFunc\|barFunc')
+|spring.cloud.stream.function.definition |  | Definition of functions to bind. If several functions need to be composed into one, use pipes (e.g., 'fooFunc\\|barFunc')
 |spring.cloud.stream.instance-count | 1 | The number of deployed instances of an application. Default: 1. NOTE: Could also be managed per individual binding "spring.cloud.stream.bindings.foo.consumer.instance-count" where 'foo' is the name of the binding.
 |spring.cloud.stream.instance-index | 0 | The instance id of the application: a number from 0 to instanceCount-1. Used for partitioning and with Kafka. NOTE: Could also be managed per individual binding "spring.cloud.stream.bindings.foo.consumer.instance-index" where 'foo' is the name of the binding.
 |spring.cloud.stream.integration.message-handler-not-propagated-headers |  | Message header names that will NOT be copied from the inbound message.
@@ -792,7 +793,7 @@
 |spring.sleuth.feign.processor.enabled | true | Enable post processor that wraps Feign Context in its tracing representations.
 |spring.sleuth.grpc.enabled | true | Enable span information propagation when using GRPC.
 |spring.sleuth.http.enabled | true | 
-|spring.sleuth.http.legacy.enabled | false | Enables the legacy Sleuth setup.
+|spring.sleuth.http.legacy.enabled | false | 
 |spring.sleuth.hystrix.strategy.enabled | true | Enable custom HystrixConcurrencyStrategy that wraps all Callable instances into their Sleuth representative - the TraceCallable.
 |spring.sleuth.integration.enabled | true | Enable Spring Integration sleuth instrumentation.
 |spring.sleuth.integration.patterns | [!hystrixStreamOutput*, *] | An array of patterns against which channel names will be matched. @see org.springframework.integration.config.GlobalChannelInterceptor#patterns() Defaults to any channel name not matching the Hystrix Stream channel name.
@@ -829,7 +830,7 @@
 |spring.sleuth.web.exception-throwing-filter-enabled | true | Flag to toggle the presence of a filter that logs thrown exceptions. @deprecated use {@link #exceptionLoggingFilterEnabled}
 |spring.sleuth.web.filter-order |  | Order in which the tracing filters should be registered. Defaults to {@link TraceHttpAutoConfiguration#TRACING_FILTER_ORDER}.
 |spring.sleuth.web.ignore-auto-configured-skip-patterns | false | If set to true, auto-configured skip patterns will be ignored. @see TraceWebAutoConfiguration
-|spring.sleuth.web.skip-pattern | /api-docs.*|/swagger.*|.*\.png|.*\.css|.*\.js|.*\.html|/favicon.ico|/hystrix.stream | Pattern for URLs that should be skipped in tracing.
+|spring.sleuth.web.skip-pattern | /api-docs.*\|/swagger.*\|.*\.png\|.*\.css\|.*\.js\|.*\.html\|/favicon.ico\|/hystrix.stream | Pattern for URLs that should be skipped in tracing.
 |spring.sleuth.zuul.enabled | true | Enable span information propagation when using Zuul.
 |spring.zipkin.base-url | http://localhost:9411/ | URL of the zipkin query server instance. You can also provide the service id of the Zipkin server if Zipkin's registered in service discovery (e.g. http://zipkinserver/).
 |spring.zipkin.compression.enabled | false | 
