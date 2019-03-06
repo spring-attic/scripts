@@ -68,6 +68,7 @@
 |management.metrics.export.cloudwatch.num-threads |  | 
 |management.metrics.export.cloudwatch.read-timeout |  | 
 |management.metrics.export.cloudwatch.step |  | 
+|maven.checksum-policy |  | 
 |maven.connect-timeout |  | 
 |maven.local-repository |  | 
 |maven.offline |  | 
@@ -75,6 +76,7 @@
 |maven.remote-repositories |  | 
 |maven.request-timeout |  | 
 |maven.resolve-pom |  | 
+|maven.update-policy |  | 
 |proxy.auth.load-balanced | false | 
 |proxy.auth.routes |  | Authentication strategy per route.
 |ribbon.eager-load.clients |  | 
@@ -181,6 +183,7 @@
 |spring.cloud.config.server.vault.default-key | application | The key in vault shared by all applications. Defaults to application. Set to empty to disable.
 |spring.cloud.config.server.vault.host | 127.0.0.1 | Vault host. Defaults to 127.0.0.1.
 |spring.cloud.config.server.vault.kv-version | 1 | Value to indicate which version of Vault kv backend is used. Defaults to 1.
+|spring.cloud.config.server.vault.namespace |  | The value of the Vault X-Vault-Namespace header. Defaults to null. This a Vault Enterprise feature only.
 |spring.cloud.config.server.vault.order |  | 
 |spring.cloud.config.server.vault.port | 8200 | Vault port. Defaults to 8200.
 |spring.cloud.config.server.vault.profile-separator | , | Vault profile separator. Defaults to comma.
@@ -629,34 +632,34 @@
 |spring.cloud.stream.schema.avro.schema-locations |  | The source directory of Apache Avro schema. This schema is used by this converter. If this schema depends on other schemas consider defining those those dependent ones in the {@link #schemaImports} @parameter
 |spring.cloud.stream.schema.server.allow-schema-deletion | false | Boolean flag to enable/disable schema deletion.
 |spring.cloud.stream.schema.server.path |  | Prefix for configuration resource paths (default is empty). Useful when embedding in another application when you don't want to change the context path or servlet path.
-|spring.cloud.task.batch.command-line-runner-order | 0 | The order for the {@coce CommandLineRunner} used to run batch jobs when
- {@code spring.cloud.task.batch.failOnJobFailure=true}.  Defaults to 0 (same as the
- {@link org.springframework.boot.autoconfigure.batch.JobLauncherCommandLineRunner}).
+|spring.cloud.task.batch.command-line-runner-order | 0 | The order for the {@code CommandLineRunner} used to run batch jobs when {@code spring.cloud.task.batch.fail-on-job-failure=true}.  Defaults to 0 (same as the {@link org.springframework.boot.autoconfigure.batch.JobLauncherCommandLineRunner}).
 |spring.cloud.task.batch.events.chunk-order |  | Properties for chunk listener order
+|spring.cloud.task.batch.events.chunk.enabled | true | This property is used to determine if a task should listen for batch chunk events.
+|spring.cloud.task.batch.events.enabled | true | This property is used to determine if a task should listen for batch events.
 |spring.cloud.task.batch.events.item-process-order |  | Properties for itemProcess listener order
+|spring.cloud.task.batch.events.item-process.enabled | true | This property is used to determine if a task should listen for batch item processed events.
 |spring.cloud.task.batch.events.item-read-order |  | Properties for itemRead listener order
+|spring.cloud.task.batch.events.item-read.enabled | true | This property is used to determine if a task should listen for batch item read events.
 |spring.cloud.task.batch.events.item-write-order |  | Properties for itemWrite listener order
+|spring.cloud.task.batch.events.item-write.enabled | true | This property is used to determine if a task should listen for batch item write events.
 |spring.cloud.task.batch.events.job-execution-order |  | Properties for jobExecution listener order
+|spring.cloud.task.batch.events.job-execution.enabled | true | This property is used to determine if a task should listen for batch job execution events.
 |spring.cloud.task.batch.events.skip-order |  | Properties for skip listener order
+|spring.cloud.task.batch.events.skip.enabled | true | This property is used to determine if a task should listen for batch skip events.
 |spring.cloud.task.batch.events.step-execution-order |  | Properties for stepExecution listener order
-|spring.cloud.task.batch.job-names |  | Comma-separated list of job names to execute on startup (for instance,
- `job1,job2`). By default, all Jobs found in the context are executed.
-|spring.cloud.task.closecontext-enabled | false | When set to true the context is closed at the end of the task.  Else
- the context remains open.
+|spring.cloud.task.batch.events.step-execution.enabled | true | This property is used to determine if a task should listen for batch step execution events.
+|spring.cloud.task.batch.fail-on-job-failure | false | This property is used to determine if a task app should return with a non zero exit code if a batch job fails.
+|spring.cloud.task.batch.fail-on-job-failure-poll-interval | 5000 | Fixed delay in milliseconds that Spring Cloud Task will wait when checking if {@link org.springframework.batch.core.JobExecution}s have completed, when spring.cloud.task.batch.failOnJobFailure is set to true.  Defaults to 5000.
+|spring.cloud.task.batch.job-names |  | Comma-separated list of job names to execute on startup (for instance, `job1,job2`). By default, all Jobs found in the context are executed.
+|spring.cloud.task.batch.listener.enabled | true | This property is used to determine if a task will be linked to the batch jobs that are run.
+|spring.cloud.task.closecontext-enabled | false | When set to true the context is closed at the end of the task.  Else the context remains open.
+|spring.cloud.task.events.enabled | true | This property is used to determine if a task app should emit task events.
 |spring.cloud.task.executionid |  | An id that will be used by the task when updating the task execution.
 |spring.cloud.task.external-execution-id |  | An id that can be associated with a task.
-|spring.cloud.task.parent-execution-id |  | The id of the parent task execution id that launched this task execution.
- Defaults to null if task execution had no parent.
-|spring.cloud.task.single-instance-enabled | false | When set to true it
- will check to see if a task execution with the same task name is already
- running.  If a task is still running then it will throw a
- {@link org.springframework.cloud.task.listener.TaskExecutionException}.
- When task execution ends the lock is released.
-|spring.cloud.task.single-instance-lock-check-interval | 500 | Declares the  time (in millis) that a task execution will wait between
- checks. Default time is: 500 millis.
-|spring.cloud.task.single-instance-lock-ttl |  | Declares the maximum amount of time (in millis) that a task execution can
- hold a lock to prevent another task from executing with a specific task
- name when the singleInstanceEnabled is set to true. Default time is: Integer.MAX_VALUE.
+|spring.cloud.task.parent-execution-id |  | The id of the parent task execution id that launched this task execution. Defaults to null if task execution had no parent.
+|spring.cloud.task.single-instance-enabled | false | This property is used to determine if a task will execute if another task with the same app name is running.
+|spring.cloud.task.single-instance-lock-check-interval | 500 | Declares the  time (in millis) that a task execution will wait between checks. Default time is: 500 millis.
+|spring.cloud.task.single-instance-lock-ttl |  | Declares the maximum amount of time (in millis) that a task execution can hold a lock to prevent another task from executing with a specific task name when the single-instance-enabled is set to true. Default time is: Integer.MAX_VALUE.
 |spring.cloud.task.table-prefix | TASK_ | The prefix to append to the table names created by Spring Cloud Task.
 |spring.cloud.util.enabled | true | Enables creation of Spring Cloud utility beans.
 |spring.cloud.vault.app-id.app-id-path | app-id | Mount path of the AppId authentication backend.
