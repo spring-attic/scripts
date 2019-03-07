@@ -13,6 +13,20 @@ SPRING_CLOUD_RELEASE_REPO=${SPRING_CLOUD_RELEASE_REPO:-git@github.com:spring-clo
 MAVEN_PATH=${MAVEN_PATH:-}
 RELEASE_TRAIN_PROJECTS=${RELEASE_TRAIN_PROJECTS:-aws bus cloudfoundry commons contract config netflix openfeign security consul sleuth function stream task zookeeper vault gateway kubernetes gcp}
 
+# Adds the oauth token if present to the remote url
+function add_oauth_token_to_remote_url() {
+    remote=`echo "${SPRING_CLOUD_RELEASE_REPO}" | sed -e 's/^git:/https:/'`
+    echo "Current releaser repo [${remote}]"
+    if [[ "${RELEASER_GIT_OAUTH_TOKEN}" != "" && ${remote} != *"@"* ]]; then
+        echo "OAuth token found. Will reuse it to clone the code"
+        withToken=${remote/https:\/\//https://${RELEASER_GIT_OAUTH_TOKEN}@}
+        SPRING_CLOUD_RELEASE_REPO="${withToken}"
+    else
+        echo "No OAuth token found"
+    fi
+}
+add_oauth_token_to_remote_url
+
 if [ -e "${ROOT_FOLDER}/mvnw" ]; then
     MAVEN_EXEC="$ROOT_FOLDER/mvnw"
 else
@@ -88,11 +102,11 @@ case ${key} in
     ;;
     -v|--version)
     VERSION="$2"
-    shift # past argumen
+    shift # past argument
     ;;
     -p|--projects)
     INPUT_PROJECTS="$2"
-    shift # past argumen
+    shift # past argument
     ;;
     -g|--ghpages)
     GH_PAGES="yes"
@@ -152,7 +166,7 @@ elif [[ "${VERSION}" != "" && -z "${RETRIEVE_VERSIONS}" ]] ; then
   done
 else
   RELEASE_TRAIN=${VERSION}
-  echo "Will attempt to retrieve versions from [git@github.com:spring-cloud/spring-cloud-release.git]"
+  echo "Will attempt to retrieve versions from [${SPRING_CLOUD_RELEASE_REPO}]"
   mkdir -p ${ROOT_FOLDER}/target
   clonedStatic=${ROOT_FOLDER}/target/spring-cloud-release
   if [[ ! -e "${clonedStatic}/.git" ]]; then
