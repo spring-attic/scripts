@@ -171,7 +171,7 @@
 
 |eureka.client.registry-refresh-single-vip-address |  | Indicates whether the client is only interested in the registry information for a single VIP.
 
-|eureka.client.service-url |  | Map of availability zone to list of fully qualified URLs to communicate with eureka server. Each value can be a single URL or a comma separated list of alternative locations. Typically the eureka server URLs carry protocol,host,port,context and version information if any. Example: http://ec2-256-156-243-129.compute-1.amazonaws.com:7001/eureka/ The changes are effective at runtime at the next service url refresh cycle as specified by eurekaServiceUrlPollIntervalSeconds.
+|eureka.client.service-url |  | Map of availability zone to list of fully qualified URLs to communicate with eureka server. Each value can be a single URL or a comma separated list of alternative locations. Typically the eureka server URLs carry protocol,host,port,context and version information if any. Example: https://ec2-256-156-243-129.compute-1.amazonaws.com:7001/eureka/ The changes are effective at runtime at the next service url refresh cycle as specified by eurekaServiceUrlPollIntervalSeconds.
 
 |eureka.client.use-dns-for-fetching-service-urls | false | Indicates whether the eureka client should use the DNS mechanism to fetch a list of eureka servers to talk to. When the DNS name is updated to have additional servers, that information is used immediately after the eureka client polls for that information as specified in eurekaServiceUrlPollIntervalSeconds. Alternatively, the service urls can be returned serviceUrls, but the users should implement their own mechanism to return the updated list in case of changes. The changes are effective at runtime.
 
@@ -473,8 +473,7 @@
 
 |spring.cloud.cloudfoundry.discovery.enabled | true | Flag to indicate that discovery is enabled.
 
-|spring.cloud.cloudfoundry.discovery.heartbeat-frequency | 5000 | Frequency in milliseconds of poll for heart beat. The client will poll on this
- frequency and broadcast a list of service ids.
+|spring.cloud.cloudfoundry.discovery.heartbeat-frequency | 5000 | Frequency in milliseconds of poll for heart beat. The client will poll on this frequency and broadcast a list of service ids.
 
 |spring.cloud.cloudfoundry.discovery.org |  | Organization name to authenticate with (default to user's default).
 
@@ -485,6 +484,10 @@
 |spring.cloud.cloudfoundry.discovery.url | https://api.run.pivotal.io | URL of Cloud Foundry API (Cloud Controller).
 
 |spring.cloud.cloudfoundry.discovery.username |  | Username to authenticate (usually an email address).
+
+|spring.cloud.compatibility-verifier.compatible-boot-versions | 1.5.x | Default accepted versions for the Spring Boot dependency. You can set {@code x} for the patch version if you don't want to specify a concrete value. Example: {@code 3.4.x}
+
+|spring.cloud.compatibility-verifier.enabled | false | Enables creation of Spring Cloud compatibility verification.
 
 |spring.cloud.config.allow-override | true | Flag to indicate that {@link #isOverrideSystemProperties() systemPropertiesOverride} can be used. Set to false to prevent users from changing the default accidentally. Default true.
 
@@ -996,8 +999,7 @@
 
 |spring.cloud.zookeeper.default-health-endpoint |  | Default health endpoint that will be checked to verify that a dependency is alive
 
-|spring.cloud.zookeeper.dependencies |  | Mapping of alias to ZookeeperDependency. From Ribbon perspective the alias
- is actually serviceID since Ribbon can't accept nested structures in serviceID
+|spring.cloud.zookeeper.dependencies |  | Mapping of alias to ZookeeperDependency. From Ribbon perspective the alias is actually serviceID since Ribbon can't accept nested structures in serviceID
 
 |spring.cloud.zookeeper.dependency-configurations |  | 
 
@@ -1007,8 +1009,7 @@
 
 |spring.cloud.zookeeper.discovery.initial-status |  | The initial status of this instance (defaults to {@link StatusConstants#STATUS_UP}).
 
-|spring.cloud.zookeeper.discovery.instance-host |  | Predefined host with which a service can register itself in Zookeeper. Corresponds
- to the {code address} from the URI spec.
+|spring.cloud.zookeeper.discovery.instance-host |  | Predefined host with which a service can register itself in Zookeeper. Corresponds to the {code address} from the URI spec.
 
 |spring.cloud.zookeeper.discovery.instance-id |  | Id used to register with zookeeper. Defaults to a random UUID.
 
@@ -1016,8 +1017,7 @@
 
 |spring.cloud.zookeeper.discovery.instance-ssl-port |  | Ssl port of the registered service.
 
-|spring.cloud.zookeeper.discovery.metadata |  | Gets the metadata name/value pairs associated with this instance. This information
- is sent to zookeeper and can be used by other instances.
+|spring.cloud.zookeeper.discovery.metadata |  | Gets the metadata name/value pairs associated with this instance. This information is sent to zookeeper and can be used by other instances.
 
 |spring.cloud.zookeeper.discovery.register | true | Register as a service in zookeeper.
 
