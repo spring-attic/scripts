@@ -10,6 +10,7 @@ declare -A PROJECTS
 
 ROOT_FOLDER=$(pwd)
 SPRING_CLOUD_RELEASE_REPO=${SPRING_CLOUD_RELEASE_REPO:-git@github.com:spring-cloud/spring-cloud-release.git}
+SPRING_CLOUD_RELEASE_REPO_HTTPS=${SPRING_CLOUD_RELEASE_REPO_HTTPS:-https://github.com/spring-cloud-samples/scripts.git}
 MAVEN_PATH=${MAVEN_PATH:-}
 RELEASE_TRAIN_PROJECTS=${RELEASE_TRAIN_PROJECTS:-aws bus cloudfoundry commons contract config netflix openfeign security consul sleuth function stream task zookeeper vault gateway kubernetes gcp}
 
@@ -17,7 +18,12 @@ RELEASE_TRAIN_PROJECTS=${RELEASE_TRAIN_PROJECTS:-aws bus cloudfoundry commons co
 function add_oauth_token_to_remote_url() {
     remote=`echo "${SPRING_CLOUD_RELEASE_REPO}" | sed -e 's/^git:/https:/'`
     echo "Current releaser repo [${remote}]"
-    if [[ "${RELEASER_GIT_OAUTH_TOKEN}" != "" && ${remote} != *"@"* ]]; then
+    if [[ "${RELEASER_GIT_OAUTH_TOKEN}" != "" && ${remote} == *"@"* ]]; then
+        echo "OAuth token found. Will use the HTTPS Spring Cloud Release repo with the token"
+        remote="${SPRING_CLOUD_RELEASE_REPO_HTTPS}"
+        withToken=${remote/https:\/\//https://${RELEASER_GIT_OAUTH_TOKEN}@}
+        SPRING_CLOUD_RELEASE_REPO="${withToken}"
+    elif [[ "${RELEASER_GIT_OAUTH_TOKEN}" != "" && ${remote} != *"@"* ]]; then
         echo "OAuth token found. Will reuse it to clone the code"
         withToken=${remote/https:\/\//https://${RELEASER_GIT_OAUTH_TOKEN}@}
         SPRING_CLOUD_RELEASE_REPO="${withToken}"
