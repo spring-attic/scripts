@@ -189,7 +189,10 @@ else
   echo -e "\n\nRetrieving versions from Maven for projects [${RELEASE_TRAIN_PROJECTS}]\n\n"
   for i in ${ARTIFACTS[@]}; do
       retrieve_version_from_maven ${i}
-      PROJECTS[${i}]=${RETRIEVED_VERSION}
+      # e.g. we got back ${spring-cloud-kubernetes.version} since there's no such property
+      if [[ "${RETRIEVED_VERSION}" != *"{"* ]]; then
+        PROJECTS[${i}]=${RETRIEVED_VERSION}
+      fi
   done
   echo "Continuing with the script"
 fi
@@ -197,6 +200,11 @@ fi
 echo -e "\n\n==========================================="
 echo "Release train version:"
 echo ${RELEASE_TRAIN}
+echo "Release train major:"
+version="$( echo "$RELEASE_TRAIN" | tr '[:upper:]' '[:lower:]')"
+IFS='.' read -r major minor <<< "${version}"
+RELEASE_TRAIN_MAJOR="${major}"
+echo ${RELEASE_TRAIN_MAJOR}
 
 echo -e "\nProjects versions:"
 for K in "${!PROJECTS[@]}"; do echo -e "${K} -> ${PROJECTS[$K]}"; done
@@ -231,7 +239,7 @@ done
 
 cd ${ROOT_FOLDER}
 echo "Building the docs with release train version [${RELEASE_TRAIN}]"
-./mvnw clean install -Pdocs,build -Dspring-cloud-release.version=${RELEASE_TRAIN} -Dspring-cloud.version=${RELEASE_TRAIN} -pl docs
+./mvnw clean install -Pdocs,build -Drelease-train-major=${RELEASE_TRAIN_MAJOR} -Dspring-cloud-release.version=${RELEASE_TRAIN} -Dspring-cloud.version=${RELEASE_TRAIN} -pl docs
 
 if [[ "${GH_PAGES}" == "yes" ]] ; then
   echo "Downloading gh-pages.sh from spring-cloud-build's master"

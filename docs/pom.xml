@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.cloud</groupId>
@@ -16,10 +16,11 @@
 	<version>1.0.0.BUILD-SNAPSHOT</version>
 	<properties>
 		<!-- Comma separated list of whitelisted branches -->
-		<docs.whitelisted.branches>1.0.x,Dalston,Edgware,Finchley</docs.whitelisted.branches>
+		<docs.whitelisted.branches>1.0.x,Dalston,Edgware,Finchley,Greenwich</docs.whitelisted.branches>
 		<main.basedir>${basedir}/..</main.basedir>
 		<docs.main>spring-cloud</docs.main>
 		<spring-cloud-release.version>Greenwich.BUILD-SNAPSHOT</spring-cloud-release.version>
+		<release-train-major>greenwich</release-train-major>
 		<spring-cloud-version>${spring-cloud-release.version}</spring-cloud-version>
 	</properties>
 	<dependencyManagement>
@@ -302,61 +303,7 @@
 			<artifactId>spring-cloud-function-task</artifactId>
 			<scope>compile</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-kubernetes-all</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-gcp-starter-vision</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-gcp-starter-trace</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-gcp-starter-storage</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-gcp-starter-sql-postgresql</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-gcp-starter-sql-mysql</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-gcp-starter-security-iap</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-gcp-starter-pubsub</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-gcp-starter-logging</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-gcp-starter-data-spanner</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-gcp-starter-data-datastore</artifactId>
-			<scope>compile</scope>
-		</dependency>
+		<!-- for the post finchley dependencies check the profiles section -->
 	</dependencies>
 	<build>
 		<plugins>
@@ -396,6 +343,117 @@
 		</plugins>
 	</build>
 	<profiles>
+		<profile>
+			<id>post-finchley</id>
+			<activation>
+				<property>
+					<name>release-train-major</name>
+					<value>!finchley</value>
+				</property>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>org.springframework.cloud</groupId>
+					<artifactId>spring-cloud-starter-kubernetes-all</artifactId>
+					<scope>compile</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.springframework.cloud</groupId>
+					<artifactId>spring-cloud-gcp-starter-vision</artifactId>
+					<scope>compile</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.springframework.cloud</groupId>
+					<artifactId>spring-cloud-gcp-starter-trace</artifactId>
+					<scope>compile</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.springframework.cloud</groupId>
+					<artifactId>spring-cloud-gcp-starter-storage</artifactId>
+					<scope>compile</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.springframework.cloud</groupId>
+					<artifactId>spring-cloud-gcp-starter-sql-postgresql</artifactId>
+					<scope>compile</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.springframework.cloud</groupId>
+					<artifactId>spring-cloud-gcp-starter-sql-mysql</artifactId>
+					<scope>compile</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.springframework.cloud</groupId>
+					<artifactId>spring-cloud-gcp-starter-security-iap</artifactId>
+					<scope>compile</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.springframework.cloud</groupId>
+					<artifactId>spring-cloud-gcp-starter-pubsub</artifactId>
+					<scope>compile</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.springframework.cloud</groupId>
+					<artifactId>spring-cloud-gcp-starter-logging</artifactId>
+					<scope>compile</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.springframework.cloud</groupId>
+					<artifactId>spring-cloud-gcp-starter-data-spanner</artifactId>
+					<scope>compile</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.springframework.cloud</groupId>
+					<artifactId>spring-cloud-gcp-starter-data-datastore</artifactId>
+					<scope>compile</scope>
+				</dependency>
+			</dependencies>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-resources-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>copy-asciidoc-for-post-finchley</id>
+								<phase>generate-resources</phase>
+								<goals>
+									<goal>copy-resources</goal>
+								</goals>
+								<configuration>
+									<resources>
+										<resource>
+											<directory>
+												${main.basedir}/gcp/src/main/asciidoc
+											</directory>
+											<includes>
+												<include>images/**</include>
+											</includes>
+											<excludes>
+												<exclude>*.sh</exclude>
+											</excludes>
+										</resource>
+										<resource>
+											<directory>
+												${main.basedir}/kubernetes/src/main/asciidoc
+											</directory>
+											<includes>
+												<include>images/**</include>
+											</includes>
+											<excludes>
+												<exclude>*.sh</exclude>
+											</excludes>
+										</resource>
+									</resources>
+									<outputDirectory>target/generated-docs
+									</outputDirectory>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
 		<profile>
 			<id>docs</id>
 			<build>
@@ -613,6 +671,27 @@
 									</resources>
 									<outputDirectory>target/generated-docs
 									</outputDirectory>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<artifactId>exec-maven-plugin</artifactId>
+						<groupId>org.codehaus.mojo</groupId>
+						<version>1.6.0</version>
+						<executions>
+							<execution>
+								<id>set-symbolic-link</id>
+								<phase>generate-resources</phase>
+								<goals>
+									<goal>exec</goal>
+								</goals>
+								<configuration>
+									<executable>ln</executable>
+									<!-- @formatter:off -->
+									<commandlineArgs>-fs ${project.basedir}/src/main/asciidoc/spring-cloud-${release-train-major}.adoc ${project.basedir}/src/main/asciidoc/spring-cloud.adoc
+									</commandlineArgs>
+									<!-- @formatter:on -->
 								</configuration>
 							</execution>
 						</executions>
