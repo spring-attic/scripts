@@ -18,7 +18,7 @@
 		<!-- Comma separated list of whitelisted branches -->
 		<docs.whitelisted.branches>1.0.x,Dalston,Edgware,Finchley,Greenwich</docs.whitelisted.branches>
 		<main.basedir>${basedir}/..</main.basedir>
-		<docs.main>spring-cloud</docs.main>
+		<docs.main>spring-cloud-${release-train-major}</docs.main>
 		<spring-cloud-release.version>Greenwich.BUILD-SNAPSHOT</spring-cloud-release.version>
 		<release-train-major>greenwich</release-train-major>
 		<spring-cloud-version>${spring-cloud-release.version}</spring-cloud-version>
@@ -671,27 +671,6 @@
 									</resources>
 									<outputDirectory>target/generated-docs
 									</outputDirectory>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-					<plugin>
-						<artifactId>exec-maven-plugin</artifactId>
-						<groupId>org.codehaus.mojo</groupId>
-						<version>1.6.0</version>
-						<executions>
-							<execution>
-								<id>set-symbolic-link</id>
-								<phase>generate-resources</phase>
-								<goals>
-									<goal>exec</goal>
-								</goals>
-								<configuration>
-									<executable>ln</executable>
-									<!-- @formatter:off -->
-									<commandlineArgs>-fs ${project.basedir}/src/main/asciidoc/spring-cloud-${release-train-major}.adoc ${project.basedir}/src/main/asciidoc/spring-cloud.adoc
-									</commandlineArgs>
-									<!-- @formatter:on -->
 								</configuration>
 							</execution>
 						</executions>
