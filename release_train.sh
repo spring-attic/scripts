@@ -258,7 +258,11 @@ for (( I=0; I<$len; I++ )); do
   git status
   if [[ "${INSTALL_TOO}" == "yes" ]]; then
     echo "Building [${projectName}] and skipping tests"
-    ./mvnw clean install -Pdocs,fast -DskipTests -T 4
+    if [[ -f scripts/build.sh ]]; then
+      ./scripts/build.sh -DskipTests -Pdocs,fast
+    else
+      ./mvnw clean install -Pdocs,fast -DskipTests -T 4
+    fi
   fi
   cd ${ROOT_FOLDER}
 done
