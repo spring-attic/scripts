@@ -18,7 +18,7 @@
 		<!-- Comma separated list of whitelisted branches -->
 		<docs.whitelisted.branches>1.0.x,Dalston,Edgware,Finchley,Greenwich</docs.whitelisted.branches>
 		<main.basedir>${basedir}/..</main.basedir>
-		<docs.main>spring-cloud-${release-train-major}</docs.main>
+		<docs.main>spring-cloud</docs.main>
 		<spring-cloud-release.version>Greenwich.BUILD-SNAPSHOT</spring-cloud-release.version>
 		<release-train-major>greenwich</release-train-major>
 		<spring-cloud-version>${spring-cloud-release.version}</spring-cloud-version>
