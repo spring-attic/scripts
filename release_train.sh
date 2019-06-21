@@ -6,12 +6,15 @@
 set -e
 
 declare -A PROJECTS
+declare -A PROJECTS_ORDER
 
 ROOT_FOLDER=$(pwd)
 SPRING_CLOUD_RELEASE_REPO=${SPRING_CLOUD_RELEASE_REPO:-git@github.com:spring-cloud/spring-cloud-release.git}
 SPRING_CLOUD_RELEASE_REPO_HTTPS=${SPRING_CLOUD_RELEASE_REPO_HTTPS:-https://github.com/spring-cloud-samples/scripts.git}
 MAVEN_PATH=${MAVEN_PATH:-}
-RELEASE_TRAIN_PROJECTS=${RELEASE_TRAIN_PROJECTS:-aws bus cloudfoundry commons contract config netflix openfeign security consul sleuth function stream task zookeeper vault gateway kubernetes gcp}
+# order matters!
+RELEASE_TRAIN_PROJECTS=${RELEASE_TRAIN_PROJECTS:-build commons function stream aws bus task config netflix cloudfoundry kubernetes openfeign consul gateway security sleuth zookeeper contract gcp vault}
+INSTALL_TOO=${INSTALL_TOO:-false}
 
 echo "Current folder is [${ROOT_FOLDER}]"
 
@@ -152,7 +155,7 @@ if [[ "${INTERACTIVE}" == "yes" ]] ; then
 
   echo -e "\nEnter the name of the release train"
   read RELEASE_TRAIN
-
+  iteration=0
   while :
   do
       echo -e "\nEnter the project name (pass the name as the project's folder is called)"
@@ -160,20 +163,25 @@ if [[ "${INTERACTIVE}" == "yes" ]] ; then
       echo "Enter the project version"
       read projectVersion
       PROJECTS[${projectName}]=${projectVersion}
+      PROJECTS_ORDER[${iteration}]=${projectName}
       echo "Press any key to provide another project version or 'q' to continue"
       read key
       if [[ ${key} = "q" ]]
       then
           break
       fi
+      iteration=$(( iteration + 1 ))
   done
 elif [[ "${VERSION}" != "" && -z "${RETRIEVE_VERSIONS}" ]] ; then
   RELEASE_TRAIN=${VERSION}
   echo "Parsing projects"
+  iteration=0
   IFS=',' read -ra TEMP <<< "$INPUT_PROJECTS"
   for i in "${TEMP[@]}"; do
     IFS=':' read -ra TEMP_2 <<< "$i"
     PROJECTS[${TEMP_2[0]}]=${TEMP_2[1]}
+    PROJECTS_ORDER[${iteration}]=${TEMP_2[0]}
+    iteration=$(( iteration + 1 ))
   done
 else
   RELEASE_TRAIN=${VERSION}
@@ -192,11 +200,14 @@ else
   git status
   ARTIFACTS=( ${RELEASE_TRAIN_PROJECTS} )
   echo -e "\n\nRetrieving versions from Maven for projects [${RELEASE_TRAIN_PROJECTS}]\n\n"
+  iteration=0
   for i in ${ARTIFACTS[@]}; do
       retrieve_version_from_maven ${i}
       # e.g. we got back ${spring-cloud-kubernetes.version} since there's no such property
       if [[ "${RETRIEVED_VERSION}" != *"{"* ]]; then
         PROJECTS[${i}]=${RETRIEVED_VERSION}
+        PROJECTS_ORDER[${iteration}]=${projectName}
+        iteration=$(( iteration + 1 ))
       fi
   done
   echo "Continuing with the script"
@@ -210,10 +221,15 @@ version="$( echo "$RELEASE_TRAIN" | tr '[:upper:]' '[:lower:]')"
 IFS='.' read -r major minor <<< "${version}"
 RELEASE_TRAIN_MAJOR="${major}"
 echo ${RELEASE_TRAIN_MAJOR}
-
 echo -e "\nProjects versions:"
-for K in "${!PROJECTS[@]}"; do echo -e "${K} -> ${PROJECTS[$K]}"; done
+len=${#PROJECTS_ORDER[@]}
+for (( I=0; I<$len; I++ )); do 
+  projectName="${PROJECTS_ORDER[$I]}"
+  projectVersion="${PROJECTS[$projectName]}"
+  echo -e "${projectName} -> ${projectVersion}"
+done
 echo -e "==========================================="
+echo -e "\nWill install projects with skipping tests? [${INSTALL_TOO}]"
 
 if [[ "${AUTO}" != "yes" ]] ; then
   echo -e "\nPress any key to continue or 'q' to quit"
@@ -229,18 +245,19 @@ fi
 cd ${ROOT_FOLDER}
 
 echo "For the given modules will enter their directory, pull the changes and check out the tag"
-for K in "${!PROJECTS[@]}"
-do
-  echo -e "\nChecking out tag [v${PROJECTS[$K]}] for project [${K}]"
-  git submodule update --init ${K} || echo "Sth went wrong - trying to continue"
-  cd ${ROOT_FOLDER}/${K}
+for (( I=0; I<$len; I++ )); do 
+  projectName="${PROJECTS_ORDER[$I]}"
+  projectVersion="${PROJECTS[$projectName]}"
+  echo -e "\nChecking out tag [v${projectVersion}] for project [${projectName}]"
+  git submodule update --init ${projectName} || echo "Sth went wrong - trying to continue"
+  cd ${ROOT_FOLDER}/${projectName}
   git fetch --tags
   echo "Removing all changes" && git reset --hard
-  git checkout v"${PROJECTS[$K]}" || (echo "Failed to check out v${PROJECTS[$K]} will try ${PROJECTS[$K]}" && git checkout "${PROJECTS[$K]}")
+  git checkout v"${projectVersion}" || (echo "Failed to check out v${projectVersion} will try ${projectVersion}" && git checkout "${projectVersion}")
   [[ -f .gitmodules ]] && git submodule update --init
   git status
-  if [[ "${INSTALL_TOO}" == "true" ]]; then
-    echo "Building [${K}] and skipping tests"
+  if [[ "${INSTALL_TOO}" == "yes" ]]; then
+    echo "Building [${projectName}] and skipping tests"
     ./mvnw clean install -Pdocs,fast -DskipTests -T 4
   fi
   cd ${ROOT_FOLDER}
