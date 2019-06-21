@@ -676,6 +676,27 @@
 						</executions>
 					</plugin>
 					<plugin>
+						<artifactId>exec-maven-plugin</artifactId>
+						<groupId>org.codehaus.mojo</groupId>
+						<version>1.6.0</version>
+						<executions>
+							<execution>
+								<id>set-symbolic-link</id>
+								<phase>generate-resources</phase>
+								<goals>
+									<goal>exec</goal>
+								</goals>
+								<configuration>
+									<executable>ln</executable>
+									<!-- @formatter:off -->
+									<commandlineArgs>-fs ${project.basedir}/src/main/asciidoc/spring-cloud-${release-train-major}.adoc ${project.basedir}/src/main/asciidoc/spring-cloud.adoc
+									</commandlineArgs>
+									<!-- @formatter:on -->
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-dependency-plugin</artifactId>
 					</plugin>
