@@ -67,6 +67,7 @@ You can use the following options:
 -a|--auto               - no user prompting will take place. Normally after all the parsing is done, before docs building you can check if versions are correct
 -g|--ghpages            - will also publish the docs to gh-pages of spring-cloud-static automatically
 -r|--retrieveversions   - will clone spring-cloud-release and take properties from there
+-n|--install            - will build project with skipping tests too
 
 EOF
 }
@@ -120,6 +121,9 @@ case ${key} in
     ;;
     -r|--retrieveversions)
     RETRIEVE_VERSIONS="yes"
+    ;;
+    -n|--install)
+    INSTALL_TOO="yes"
     ;;
     -h|--help)
     print_usage
@@ -235,6 +239,10 @@ do
   git checkout v"${PROJECTS[$K]}" || (echo "Failed to check out v${PROJECTS[$K]} will try ${PROJECTS[$K]}" && git checkout "${PROJECTS[$K]}")
   [[ -f .gitmodules ]] && git submodule update --init
   git status
+  if [[ "${INSTALL_TOO}" == "true" ]]; then
+    echo "Building [${K}] and skipping tests"
+    ./mvnw clean install -Pdocs,fast -DskipTests -T 4
+  fi
   cd ${ROOT_FOLDER}
 done
 
