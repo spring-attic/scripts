@@ -13,6 +13,8 @@ SPRING_CLOUD_RELEASE_REPO_HTTPS=${SPRING_CLOUD_RELEASE_REPO_HTTPS:-https://githu
 MAVEN_PATH=${MAVEN_PATH:-}
 RELEASE_TRAIN_PROJECTS=${RELEASE_TRAIN_PROJECTS:-aws bus cloudfoundry commons contract config netflix openfeign security consul sleuth function stream task zookeeper vault gateway}
 
+echo "Current folder is [${ROOT_FOLDER}]"
+
 # Adds the oauth token if present to the remote url
 function add_oauth_token_to_remote_url() {
     remote=`echo "${SPRING_CLOUD_RELEASE_REPO}" | sed -e 's/^git:/https:/'`
@@ -171,12 +173,12 @@ elif [[ "${VERSION}" != "" && -z "${RETRIEVE_VERSIONS}" ]] ; then
   done
 else
   RELEASE_TRAIN=${VERSION}
-  echo "Will attempt to retrieve versions from [${SPRING_CLOUD_RELEASE_REPO}]"
   mkdir -p ${ROOT_FOLDER}/target
   clonedStatic=${ROOT_FOLDER}/target/spring-cloud-release
+  echo "Will attempt to retrieve versions from [${SPRING_CLOUD_RELEASE_REPO}]. The repo will be cloned to [${clonedStatic}]"
   if [[ ! -e "${clonedStatic}/.git" ]]; then
       echo "Cloning Spring Cloud Release to target"
-      git clone ${SPRING_CLOUD_RELEASE_REPO} ${clonedStatic}
+      git clone "${SPRING_CLOUD_RELEASE_REPO}" "${clonedStatic}"
   else
       echo "Spring Cloud Release already cloned - will pull changes"
       cd ${clonedStatic} && git fetch
