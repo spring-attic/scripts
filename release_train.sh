@@ -230,7 +230,8 @@ len=${#PROJECTS_ORDER[@]}
 echo -e "\nProjects size: [${len}]"
 echo -e "Projects in order: [${PROJECTS_ORDER[*]}]"
 echo -e "\nProjects versions:"
-for (( I=0; I<len; I++ )); do 
+for (( I=0; I<len; I++ ))
+do 
   projectName="${PROJECTS_ORDER[$I]}"
   if [[ "${projectName}" == "" ]]; then
     echo "Couldn't find a project entry for a project with index [${I}]"
@@ -240,7 +241,7 @@ for (( I=0; I<len; I++ )); do
   echo -e "${projectName} -> ${projectVersion}"
 done
 echo -e "==========================================="
-echo -e "\nWill install projects with skipping tests? [${INSTALL_TOO}]"
+echo -e "\nInstall projects with skipping tests? [${INSTALL_TOO}]"
 
 if [[ "${AUTO}" != "yes" ]] ; then
   echo -e "\nPress any key to continue or 'q' to quit"
@@ -256,7 +257,8 @@ fi
 cd "${ROOT_FOLDER}"
 
 echo "For the given modules will enter their directory, pull the changes and check out the tag"
-for (( I=0; I<len; I++ )); do 
+for (( I=0; I<len; I++ ))
+do 
   projectName="${PROJECTS_ORDER[$I]}"
   if [[ "${projectName}" == "" ]]; then
     echo "Project with index [${I}] is empty, continuing"
@@ -280,6 +282,7 @@ for (( I=0; I<len; I++ )); do
     fi
   fi
   cd "${ROOT_FOLDER}"
+  echo "Done!"
 done
 
 cd "${ROOT_FOLDER}"
