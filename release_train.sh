@@ -229,6 +229,8 @@ echo "${RELEASE_TRAIN_MINOR}"
 len=${#PROJECTS_ORDER[@]}
 echo -e "\nProjects size: [${len}]"
 echo -e "Projects in order: [${PROJECTS_ORDER[*]}]"
+linksTable=""
+versionRootUrl="https://cloud.spring.io/spring-cloud-static"
 echo -e "\nProjects versions:"
 for (( I=0; I<len; I++ ))
 do 
@@ -237,6 +239,8 @@ do
     echo "Couldn't find a project entry for a project with index [${I}]"
   else
     projectVersion="${PROJECTS[$projectName]}"
+    fullProjectName="spring-cloud-${projectName}"
+    linksTable="${linksTable}|${fullProjectName}|${projectVersion}|${versionRootUrl}/${fullProjectName}/${projectVersion}/reference/html/[URL]"
   fi
   echo -e "${projectName} -> ${projectVersion}"
 done
@@ -286,7 +290,23 @@ do
 done
 
 cd "${ROOT_FOLDER}"
-echo "Building the docs with release train version [${RELEASE_TRAIN}]"
+
+pathToLinksTable=docs/src/main/asciidoc/_spring-cloud-"${RELEASE_TRAIN_MAJOR}"-table.adoc
+echo "Building the links table at [${pathToLinksTable}]"
+cat > "${pathToLinksTable}" <<EOL
+Below you can find links to the documentation of projects being part of this release train:
+
+|===
+| Project Name | Project Version | URL to the docs
+
+${linksTable}
+
+|===
+...
+EOL
+
+
+echo "Building the docs with release train version [${RELEASE_TRAIN}] with major [${RELEASE_TRAIN_MAJOR}]"
 ./mvnw clean install -Pdocs,build -Drelease-train-major="${RELEASE_TRAIN_MAJOR}" -Dspring-cloud-release.version="${RELEASE_TRAIN}" -Dspring-cloud.version="${RELEASE_TRAIN}" -pl docs
 
 if [[ "${GH_PAGES}" == "yes" ]] ; then
