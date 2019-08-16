@@ -302,7 +302,7 @@ Below you can find links to the documentation of projects being part of this rel
 ${linksTable}
 
 |===
-...
+
 EOL
 
 
