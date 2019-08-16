@@ -1,7 +1,5 @@
 = Spring Cloud
 
-Below you can find links to the documentation of projects being part of this release train:
-
 include::_spring-cloud-hoxton-table.adoc[]
 
 //
