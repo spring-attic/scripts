@@ -20,16 +20,16 @@ echo "Current folder is [${ROOT_FOLDER}]"
 
 # Adds the oauth token if present to the remote url
 function add_oauth_token_to_remote_url() {
-    remote=`echo "${SPRING_CLOUD_RELEASE_REPO}" | sed -e 's/^git:/https:/'`
+    remote="${SPRING_CLOUD_RELEASE_REPO//git:/https:}"
     echo "Current releaser repo [${remote}]"
     if [[ "${RELEASER_GIT_OAUTH_TOKEN}" != "" && ${remote} == *"@"* ]]; then
         echo "OAuth token found. Will use the HTTPS Spring Cloud Release repo with the token"
         remote="${SPRING_CLOUD_RELEASE_REPO_HTTPS}"
-        withToken=${remote/https:\/\//https://${RELEASER_GIT_OAUTH_TOKEN}@}
+        withToken="${remote/https:\/\//https://${RELEASER_GIT_OAUTH_TOKEN}@}"
         SPRING_CLOUD_RELEASE_REPO="${withToken}"
     elif [[ "${RELEASER_GIT_OAUTH_TOKEN}" != "" && ${remote} != *"@"* ]]; then
         echo "OAuth token found. Will reuse it to clone the code"
-        withToken=${remote/https:\/\//https://${RELEASER_GIT_OAUTH_TOKEN}@}
+        withToken="${remote/https:\/\//https://${RELEASER_GIT_OAUTH_TOKEN}@}"
         SPRING_CLOUD_RELEASE_REPO="${withToken}"
     else
         echo "No OAuth token found"
@@ -101,7 +101,7 @@ ______ _____ _____  _____
 
 EOF
 
-while [[ $# > 0 ]]
+while [[ $# -gt 0 ]]
 do
 key="$1"
 case ${key} in
@@ -154,18 +154,18 @@ if [[ "${INTERACTIVE}" == "yes" ]] ; then
   echo -e "have to provide the library versions\n"
 
   echo -e "\nEnter the name of the release train"
-  read RELEASE_TRAIN
+  read -r RELEASE_TRAIN
   iteration=0
   while :
   do
       echo -e "\nEnter the project name (pass the name as the project's folder is called)"
-      read projectName
+      read -r projectName
       echo "Enter the project version"
-      read projectVersion
-      PROJECTS[${projectName}]=${projectVersion}
-      PROJECTS_ORDER[${iteration}]=${projectName}
+      read -r projectVersion
+      PROJECTS[${projectName}]="${projectVersion}"
+      PROJECTS_ORDER[${iteration}]="${projectName}"
       echo "Press any key to provide another project version or 'q' to continue"
-      read key
+      read -r key
       if [[ ${key} = "q" ]]
       then
           break
@@ -185,29 +185,31 @@ elif [[ "${VERSION}" != "" && -z "${RETRIEVE_VERSIONS}" ]] ; then
   done
 else
   RELEASE_TRAIN=${VERSION}
-  mkdir -p ${ROOT_FOLDER}/target
-  clonedStatic=${ROOT_FOLDER}/target/spring-cloud-release
+  mkdir -p "${ROOT_FOLDER}/target"
+  clonedStatic="${ROOT_FOLDER}/target/spring-cloud-release"
   echo "Will attempt to retrieve versions from [${SPRING_CLOUD_RELEASE_REPO}]. The repo will be cloned to [${clonedStatic}]"
   if [[ ! -e "${clonedStatic}/.git" ]]; then
       echo "Cloning Spring Cloud Release to target"
       git clone "${SPRING_CLOUD_RELEASE_REPO}" "${clonedStatic}"
   else
       echo "Spring Cloud Release already cloned - will pull changes"
-      cd ${clonedStatic} && git fetch
+      cd "${clonedStatic}" && git fetch
   fi
-  cd ${clonedStatic}
+  cd "${clonedStatic}"
   git checkout v"${VERSION}"
   git status
   ARTIFACTS=( ${RELEASE_TRAIN_PROJECTS} )
   echo -e "\n\nRetrieving versions from Maven for projects [${RELEASE_TRAIN_PROJECTS}]\n\n"
   iteration=0
-  for i in ${ARTIFACTS[@]}; do
-      retrieve_version_from_maven ${i}
+  for i in "${ARTIFACTS[@]}"; do
+      retrieve_version_from_maven "${i}"
       # e.g. we got back ${spring-cloud-kubernetes.version} since there's no such property
       if [[ "${RETRIEVED_VERSION}" != *"{"* ]]; then
-        PROJECTS[${i}]=${RETRIEVED_VERSION}
-        PROJECTS_ORDER[${iteration}]=${projectName}
+        PROJECTS[${i}]="${RETRIEVED_VERSION}"
+        PROJECTS_ORDER[${iteration}]="${i}"
         iteration=$(( iteration + 1 ))
+      else
+        echo "Retrieved version was unresolved for [${i}], continuing with the iteration"
       fi
   done
   echo "Continuing with the script"
@@ -215,17 +217,26 @@ fi
 
 echo -e "\n\n==========================================="
 echo "Release train version:"
-echo ${RELEASE_TRAIN}
+echo "${RELEASE_TRAIN}"
 echo "Release train major:"
 version="$( echo "$RELEASE_TRAIN" | tr '[:upper:]' '[:lower:]')"
 IFS='.' read -r major minor <<< "${version}"
 RELEASE_TRAIN_MAJOR="${major}"
-echo ${RELEASE_TRAIN_MAJOR}
-echo -e "\nProjects versions:"
+RELEASE_TRAIN_MINOR="${minor}"
+echo "${RELEASE_TRAIN_MAJOR}"
+echo "Release train minor:"
+echo "${RELEASE_TRAIN_MINOR}"
 len=${#PROJECTS_ORDER[@]}
-for (( I=0; I<$len; I++ )); do 
+echo -e "\nProjects size: [${len}]"
+echo -e "Projects in order: [${PROJECTS_ORDER[*]}]"
+echo -e "\nProjects versions:"
+for (( I=0; I<len; I++ )); do 
   projectName="${PROJECTS_ORDER[$I]}"
-  projectVersion="${PROJECTS[$projectName]}"
+  if [[ "${projectName}" == "" ]]; then
+    echo "Couldn't find a project entry for a project with index [${I}]"
+  else
+    projectVersion="${PROJECTS[$projectName]}"
+  fi
   echo -e "${projectName} -> ${projectVersion}"
 done
 echo -e "==========================================="
@@ -233,7 +244,7 @@ echo -e "\nWill install projects with skipping tests? [${INSTALL_TOO}]"
 
 if [[ "${AUTO}" != "yes" ]] ; then
   echo -e "\nPress any key to continue or 'q' to quit"
-  read key
+  read -r key
   if [[ ${key} = "q" ]]
   then
       exit 1
@@ -242,15 +253,19 @@ else
   echo -e "\nAuto switch was turned on - continuing with modules updating"
 fi
 
-cd ${ROOT_FOLDER}
+cd "${ROOT_FOLDER}"
 
 echo "For the given modules will enter their directory, pull the changes and check out the tag"
-for (( I=0; I<$len; I++ )); do 
+for (( I=0; I<len; I++ )); do 
   projectName="${PROJECTS_ORDER[$I]}"
+  if [[ "${projectName}" == "" ]]; then
+    echo "Project with index [${I}] is empty, continuing"
+    continue
+  fi
   projectVersion="${PROJECTS[$projectName]}"
   echo -e "\nChecking out tag [v${projectVersion}] for project [${projectName}]"
-  git submodule update --init ${projectName} || echo "Sth went wrong - trying to continue"
-  cd ${ROOT_FOLDER}/${projectName}
+  git submodule update --init "${projectName}" || echo "Sth went wrong - trying to continue"
+  cd "${ROOT_FOLDER}/${projectName}"
   git fetch --tags
   echo "Removing all changes" && git reset --hard
   git checkout v"${projectVersion}" || (echo "Failed to check out v${projectVersion} will try ${projectVersion}" && git checkout "${projectVersion}")
@@ -264,16 +279,16 @@ for (( I=0; I<$len; I++ )); do
       ./mvnw clean install -Pdocs,fast -DskipTests -T 4
     fi
   fi
-  cd ${ROOT_FOLDER}
+  cd "${ROOT_FOLDER}"
 done
 
-cd ${ROOT_FOLDER}
+cd "${ROOT_FOLDER}"
 echo "Building the docs with release train version [${RELEASE_TRAIN}]"
-./mvnw clean install -Pdocs,build -Drelease-train-major=${RELEASE_TRAIN_MAJOR} -Dspring-cloud-release.version=${RELEASE_TRAIN} -Dspring-cloud.version=${RELEASE_TRAIN} -pl docs
+./mvnw clean install -Pdocs,build -Drelease-train-major="${RELEASE_TRAIN_MAJOR}" -Dspring-cloud-release.version="${RELEASE_TRAIN}" -Dspring-cloud.version="${RELEASE_TRAIN}" -pl docs
 
 if [[ "${GH_PAGES}" == "yes" ]] ; then
   echo "Downloading gh-pages.sh from spring-cloud-build's master"
   mkdir -p target
   curl https://raw.githubusercontent.com/spring-cloud/spring-cloud-build/master/docs/src/main/asciidoc/ghpages.sh -o target/gh-pages.sh && chmod +x target/gh-pages.sh
-  ./target/gh-pages.sh --version ${RELEASE_TRAIN} --releasetrain --clone
+  ./target/gh-pages.sh --version "${RELEASE_TRAIN}" --releasetrain --clone
 fi
