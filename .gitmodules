@@ -66,7 +66,7 @@
 	url = git@github.com:spring-cloud/spring-cloud-zookeeper
 [submodule "sleuth"]
 	path = sleuth
-	url = git@github.com:spring-cloud-incubator/spring-cloud-sleuth
+	url = git@github.com:spring-cloud/spring-cloud-sleuth
 [submodule "stream"]
 	path = stream
 	url = git@github.com:spring-cloud/spring-cloud-stream-starters.git
