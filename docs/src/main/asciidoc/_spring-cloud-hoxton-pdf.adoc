@@ -67,7 +67,7 @@ include::{basedir}/security/docs/src/main/asciidoc/spring-cloud-security.adoc[le
 include::{basedir}/cloudfoundry/docs/src/main/asciidoc/spring-cloud-cloudfoundry.adoc[leveloffset=+1]
 
 :project-root: {basedir}/contract
-include::{basedir}/contract/docs/src/main/asciidoc/spring-cloud-contract.adoc[leveloffset=+1]
+include::{basedir}/contract/docs/src/main/asciidoc/spring-cloud-contract.pdfadoc[leveloffset=+1]
 
 :project-root: {basedir}/vault
 include::{basedir}/vault/docs/src/main/asciidoc/spring-cloud-vault.adoc[leveloffset=+1]
@@ -89,4 +89,4 @@ include::{basedir}/circuitbreaker/docs/src/main/asciidoc/spring-cloud-circuitbre
 
 = Appendix: Compendium of Configuration Properties
 
-include::configprops.adoc[leveloffset=+1]
+include::_configprops.adoc[leveloffset=+1]

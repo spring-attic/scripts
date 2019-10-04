@@ -1,6 +1,8 @@
 = Spring Cloud
 :basedir: {project-root}
 :stream_basedir: {basedir}
+:project-full-name: Spring Cloud
+:project-name: spring-cloud
 :toc: left
 
 Spring Cloud provides tools for developers to quickly build some of
@@ -27,6 +29,19 @@ and extensibility mechanism to cover others.
 * Load balancing
 * Circuit Breakers
 * Distributed messaging
+
+[[cloud-documentation-about]]
+== About the Documentation
+
+The {project-full-name} reference guide is available as
+
+* {docs-url}/reference/html[Multi-page HTML]
+* {docs-url}/reference/htmlsingle[Single-page HTML]
+* {docs-url}/reference/pdf/{project-name}.pdf[PDF]
+
+Copies of this document may be made for your own use and for distribution to others,
+provided that you do not charge any fee for such copies and further provided that each
+copy contains this Copyright Notice, whether distributed in print or electronically.
 
 :project-root: {basedir}/commons
 include::{basedir}/commons/docs/src/main/asciidoc/spring-cloud-commons.adoc[]
@@ -67,7 +82,7 @@ include::{basedir}/security/docs/src/main/asciidoc/spring-cloud-security.adoc[]
 include::{basedir}/cloudfoundry/docs/src/main/asciidoc/spring-cloud-cloudfoundry.adoc[]
 
 :project-root: {basedir}/contract
-include::{basedir}/contract/docs/src/main/asciidoc/spring-cloud-contract.adoc[]
+include::{basedir}/contract/docs/src/main/asciidoc/index.htmladoc[]
 
 :project-root: {basedir}/vault
 include::{basedir}/vault/docs/src/main/asciidoc/spring-cloud-vault.adoc[]
@@ -89,4 +104,4 @@ include::{basedir}/circuitbreaker/docs/src/main/asciidoc/spring-cloud-circuitbre
 
 = Appendix: Compendium of Configuration Properties
 
-include::configprops.adoc[]
+include::_configprops.adoc[]
