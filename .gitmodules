@@ -103,3 +103,6 @@
 [submodule "gcp"]
 	path = gcp
 	url = git@github.com:spring-cloud/spring-cloud-gcp.git
+[submodule "circuitbreaker"]
+	path = circuitbreaker
+	url = git@github.com:spring-cloud/spring-cloud-circuitbreaker.git

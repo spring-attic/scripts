@@ -1,0 +1,92 @@
+= Spring Cloud
+:basedir: {project-root}
+:stream_basedir: {basedir}
+:toc: left
+
+Spring Cloud provides tools for developers to quickly build some of
+the common patterns in distributed systems (e.g. configuration
+management, service discovery, circuit breakers, intelligent routing,
+micro-proxy, control bus). Coordination of
+distributed systems leads to boiler plate patterns, and using Spring
+Cloud developers can quickly stand up services and applications that
+implement those patterns. They will work well in any distributed
+environment, including the developer's own laptop, bare metal data
+centres, and managed platforms such as Cloud Foundry.
+
+Version: {spring-cloud-version}
+
+== Features
+
+Spring Cloud focuses on providing good out of box experience for typical use cases
+and extensibility mechanism to cover others.
+
+* Distributed/versioned configuration
+* Service registration and discovery
+* Routing
+* Service-to-service calls
+* Load balancing
+* Circuit Breakers
+* Distributed messaging
+
+:project-root: {basedir}/commons
+include::{basedir}/commons/docs/src/main/asciidoc/spring-cloud-commons.adoc[leveloffset=+1]
+
+:project-root: {basedir}/config
+include::{basedir}/config/docs/src/main/asciidoc/spring-cloud-config.adoc[leveloffset=+1]
+
+:project-root: {basedir}/netflix
+include::{basedir}/netflix/docs/src/main/asciidoc/spring-cloud-netflix.adoc[leveloffset=+1]
+
+:project-root: {basedir}/openfeign
+include::{basedir}/openfeign/docs/src/main/asciidoc/spring-cloud-openfeign.adoc[leveloffset=+1]
+
+= Spring Cloud Stream
+:stream-docs-basedir: {stream_basedir}/stream/spring-cloud-stream-docs
+:project-root: {basedir}/stream
+include::{basedir}/stream/spring-cloud-stream-docs/src/main/asciidoc/spring-cloud-stream-aggregate.adoc[leveloffset=+1]
+
+:project-root: {basedir}/bus
+include::{basedir}/bus/docs/src/main/asciidoc/spring-cloud-bus.adoc[leveloffset=+1]
+
+:project-root: {basedir}/sleuth
+include::{basedir}/sleuth/docs/src/main/asciidoc/spring-cloud-sleuth.adoc[leveloffset=+1]
+
+:project-root: {basedir}/consul
+include::{basedir}/consul/docs/src/main/asciidoc/spring-cloud-consul.adoc[leveloffset=+1]
+
+:project-root: {basedir}/zookeeper
+include::{basedir}/zookeeper/docs/src/main/asciidoc/spring-cloud-zookeeper.adoc[leveloffset=+1]
+
+:project-root: {basedir}/cli
+include::{basedir}/cli/docs/src/main/asciidoc/spring-cloud-cli.adoc[leveloffset=+1]
+
+:project-root: {basedir}/security
+include::{basedir}/security/docs/src/main/asciidoc/spring-cloud-security.adoc[leveloffset=+1]
+
+:project-root: {basedir}/cloudfoundry
+include::{basedir}/cloudfoundry/docs/src/main/asciidoc/spring-cloud-cloudfoundry.adoc[leveloffset=+1]
+
+:project-root: {basedir}/contract
+include::{basedir}/contract/docs/src/main/asciidoc/spring-cloud-contract.adoc[leveloffset=+1]
+
+:project-root: {basedir}/vault
+include::{basedir}/vault/docs/src/main/asciidoc/spring-cloud-vault.adoc[leveloffset=+1]
+
+:project-root: {basedir}/gateway
+include::{basedir}/gateway/docs/src/main/asciidoc/spring-cloud-gateway.adoc[leveloffset=+1]
+
+:project-root: {basedir}/function
+include::{basedir}/function/docs/src/main/asciidoc/spring-cloud-function.adoc[leveloffset=+1]
+
+:project-root: {basedir}/kubernetes
+include::{basedir}/kubernetes/docs/src/main/asciidoc/spring-cloud-kubernetes.adoc[leveloffset=+1]
+
+:project-root: {basedir}/gcp
+include::{basedir}/gcp/docs/src/main/asciidoc/spring-cloud-gcp.adoc[leveloffset=+1]
+
+:project-root: {basedir}/circuitbreaker
+include::{basedir}/circuitbreaker/docs/src/main/asciidoc/spring-cloud-circuitbreaker.adoc[leveloffset=+1]
+7
+= Appendix: Compendium of Configuration Properties
+
+include::configprops.adoc[leveloffset=+1]
