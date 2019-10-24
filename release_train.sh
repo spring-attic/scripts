@@ -13,7 +13,7 @@ SPRING_CLOUD_RELEASE_REPO=${SPRING_CLOUD_RELEASE_REPO:-git@github.com:spring-clo
 SPRING_CLOUD_RELEASE_REPO_HTTPS=${SPRING_CLOUD_RELEASE_REPO_HTTPS:-https://github.com/spring-cloud/spring-cloud-release.git}
 MAVEN_PATH=${MAVEN_PATH:-}
 # order matters!
-RELEASE_TRAIN_PROJECTS=${RELEASE_TRAIN_PROJECTS:-build commons function stream aws bus task config netflix cloudfoundry kubernetes openfeign consul gateway security sleuth zookeeper contract gcp vault}
+RELEASE_TRAIN_PROJECTS=${RELEASE_TRAIN_PROJECTS:-build commons function stream aws bus task config netflix circuitbreaker cloudfoundry kubernetes openfeign consul gateway security sleuth zookeeper contract gcp vault}
 INSTALL_TOO=${INSTALL_TOO:-false}
 
 echo "Current folder is [${ROOT_FOLDER}]"
