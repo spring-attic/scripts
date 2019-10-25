@@ -13,7 +13,7 @@ SPRING_CLOUD_RELEASE_REPO=${SPRING_CLOUD_RELEASE_REPO:-git@github.com:spring-clo
 SPRING_CLOUD_RELEASE_REPO_HTTPS=${SPRING_CLOUD_RELEASE_REPO_HTTPS:-https://github.com/spring-cloud/spring-cloud-release.git}
 MAVEN_PATH=${MAVEN_PATH:-}
 # order matters!
-RELEASE_TRAIN_PROJECTS=${RELEASE_TRAIN_PROJECTS:-build commons function stream aws bus task config netflix circuitbreaker cloudfoundry kubernetes openfeign consul gateway security sleuth zookeeper contract gcp vault}
+RELEASE_TRAIN_PROJECTS=${RELEASE_TRAIN_PROJECTS:-build commons function stream aws bus task config netflix circuitbreaker cloudfoundry kubernetes openfeign consul gateway security sleuth zookeeper contract gcp vault cli}
 INSTALL_TOO=${INSTALL_TOO:-false}
 
 echo "Current folder is [${ROOT_FOLDER}]"
@@ -280,9 +280,9 @@ do
   if [[ "${INSTALL_TOO}" == "yes" ]]; then
     echo "Building [${projectName}] and skipping tests"
     if [[ -f scripts/build.sh ]]; then
-      ./scripts/build.sh -DskipTests -Pdocs,fast
+      ./scripts/build.sh -DskipTests -Pdocs,fast -Ddisable.checks=true
     else
-      ./mvnw clean install -Pdocs,fast -DskipTests -T 4
+      ./mvnw clean install -Pdocs,fast -DskipTests -T 4 -Ddisable.checks=true
     fi
   fi
   cd "${ROOT_FOLDER}"
@@ -307,7 +307,9 @@ EOL
 
 
 echo "Building the docs with release train version [${RELEASE_TRAIN}] with major [${RELEASE_TRAIN_MAJOR}]"
-./mvnw clean install -Pdocs,build -Drelease-train-major="${RELEASE_TRAIN_MAJOR}" -Dspring-cloud-release.version="${RELEASE_TRAIN}" -Dspring-cloud.version="${RELEASE_TRAIN}" -pl docs
+echo "Build command [./mvnw clean install -Pdocs,build -Drelease-train-major="${RELEASE_TRAIN_MAJOR}" -Dspring-cloud-release.version="${RELEASE_TRAIN}" -Dspring-cloud.version="${RELEASE_TRAIN}" -pl docs -Ddisable.checks=true]"
+./mvnw clean install -Pdocs,build -Drelease-train-major="${RELEASE_TRAIN_MAJOR}" -Dspring-cloud-release.version="${RELEASE_TRAIN}" -Dspring-cloud.version="${RELEASE_TRAIN}" -pl docs -Ddisable.checks=true
+
 
 if [[ "${GH_PAGES}" == "yes" ]] ; then
   echo "Downloading gh-pages.sh from spring-cloud-build's master"
