@@ -133,9 +133,8 @@ case ${key} in
     exit 0
     ;;
     *)
-    echo "Invalid option: [$1]"
+    echo "Invalid option: [$1], I guess you know what you're doing. Printing usage in case it might be helpful."
     print_usage
-    exit 1
     ;;
 esac
 shift # past argument or value
