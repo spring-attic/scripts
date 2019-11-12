@@ -15,10 +15,16 @@ MAVEN_PATH=${MAVEN_PATH:-}
 # order matters!
 RELEASE_TRAIN_PROJECTS=${RELEASE_TRAIN_PROJECTS:-build commons function stream aws bus task config netflix circuitbreaker cloudfoundry kubernetes openfeign consul gateway security sleuth zookeeper contract gcp vault cli}
 INSTALL_TOO=${INSTALL_TOO:-false}
+GIT_BIN="${GIT_BIN:-git}"
+export GITHUB_REPO_USERNAME_ENV="${GITHUB_REPO_USERNAME_ENV:-GITHUB_REPO_USERNAME}"
+export GITHUB_REPO_PASSWORD_ENV="${GITHUB_REPO_PASSWORD_ENV:-GITHUB_REPO_PASSWORD}"
+REPO_USER="${!GITHUB_REPO_USERNAME_ENV}"
+REPO_PASS="${!GITHUB_REPO_PASSWORD_ENV}"
+PREFIX_WITH_TOKEN=""
 
 echo "Current folder is [${ROOT_FOLDER}]"
 
-# Adds the oauth token if present to the remote url
+# Adds the oauth token if present to the remote url of Spring Cloud Release repo
 function add_oauth_token_to_remote_url() {
     remote="${SPRING_CLOUD_RELEASE_REPO//git:/https:}"
     echo "Current releaser repo [${remote}]"
@@ -26,15 +32,51 @@ function add_oauth_token_to_remote_url() {
         echo "OAuth token found. Will use the HTTPS Spring Cloud Release repo with the token"
         remote="${SPRING_CLOUD_RELEASE_REPO_HTTPS}"
         withToken="${remote/https:\/\//https://${RELEASER_GIT_OAUTH_TOKEN}@}"
+        PREFIX_WITH_TOKEN="https://${RELEASER_GIT_OAUTH_TOKEN}@"
         SPRING_CLOUD_RELEASE_REPO="${withToken}"
     elif [[ "${RELEASER_GIT_OAUTH_TOKEN}" != "" && ${remote} != *"@"* ]]; then
         echo "OAuth token found. Will reuse it to clone the code"
         withToken="${remote/https:\/\//https://${RELEASER_GIT_OAUTH_TOKEN}@}"
+        PREFIX_WITH_TOKEN="https://${RELEASER_GIT_OAUTH_TOKEN}@"
         SPRING_CLOUD_RELEASE_REPO="${withToken}"
     else
         echo "No OAuth token found"
+        PREFIX_WITH_TOKEN=""
     fi
 }
+
+# Adds the oauth token if present to the remote url
+function add_oauth_token_to_current_remote_url() {
+    local remote
+    remote="$( "${GIT_BIN}" config remote.origin.url | sed -e 's/^git:/https:/' )"
+    echo "Current remote [${remote}]"
+    if [[ ${remote} != *".git" ]]; then
+        echo "Remote doesn't end with [.git]"
+        remote="${remote}.git"
+        echo "Remote with [.git] suffix: [${remote}]"
+    fi
+    if [[ "${REPO_USER}" != "" && ${remote} != *"@"* ]]; then
+        withUserAndPass=${remote/https:\/\//https://${REPO_USER}:${REPO_PASS}@}
+        echo "Username and password found. Will reuse it to push the code to [${withUserAndPass}]"
+        "${GIT_BIN}" remote set-url --push origin "${withUserAndPass}"
+    elif [[ "${RELEASER_GIT_OAUTH_TOKEN}" != "" && ${remote} != *"@"* ]]; then
+        withToken=${remote/https:\/\//https://${RELEASER_GIT_OAUTH_TOKEN}@}
+        echo "OAuth token found but no @ char present in the origin url. Will reuse it to push the code to [${withToken}]"
+        "${GIT_BIN}" remote set-url --push origin "${withToken}"
+    elif [[ "${RELEASER_GIT_OAUTH_TOKEN}" != "" ]]; then
+        withToken=${remote//git@github.com:/https://${RELEASER_GIT_OAUTH_TOKEN}@github.com/}
+        echo "OAuth token found with @ char present in the origin url. Will reuse it to push the code to [${withToken}]"
+        "${GIT_BIN}" remote set-url --push origin "${withToken}"
+    else
+        echo "No OAuth token found. Will push to [${remote}]"
+        "${GIT_BIN}" remote set-url --push origin "${remote}"
+    fi
+}
+
+export -f add_oauth_token_to_current_remote_url
+
+echo "Current folder is [${ROOT_FOLDER}]"
+
 add_oauth_token_to_remote_url
 
 if [ -e "${ROOT_FOLDER}/mvnw" ]; then
@@ -44,11 +86,11 @@ else
 fi
 
 # Retrieves from spring-cloud-dependencies module the version of a
-function retrieve_version_from_maven() {
-  RETRIEVED_VERSION=$("${MAVEN_EXEC}" -q \
-        -Dexec.executable="echo" \
-        -Dexec.args="\${spring-cloud-${1}.version}" \
-        org.codehaus.mojo:exec-maven-plugin:1.3.1:exec \
+function retrieve_version_from_madd_oauth_token_to_current_remote_urlaven() {
+  RETRIEVED_VERSION=$("${MAVEN_Eadd_oauth_token_to_current_remote_urlXEC}" -q \
+        -Dexec.executable="echo"add_oauth_token_to_current_remote_url \
+        -Dexec.args="\${spring-cadd_oauth_token_to_current_remote_urlloud-${1}.version}" \
+        org.codehaus.mojo:exec-madd_oauth_token_to_current_remote_urlaven-plugin:1.3.1:exec \
         -pl spring-cloud-dependencies | sed '$!d' )
     echo "Extracted version for project [$1] from Maven build is [${RETRIEVED_VERSION}]"
 }
@@ -263,6 +305,11 @@ fi
 
 cd "${ROOT_FOLDER}"
 
+if [[ "${PREFIX_WITH_TOKEN}" != "" ]]; then
+  echo "Updating git submodules to contain changed URLs"
+  sed -i "s/git@github.com:/https:\/\/${RELEASER_GIT_OAUTH_TOKEN}@github.com\//g" .gitmodules
+fi
+
 echo "For the given modules will enter their directory, pull the changes and check out the tag"
 for (( I=0; I<len; I++ ))
 do 
@@ -273,6 +320,9 @@ do
   fi
   projectVersion="${PROJECTS[$projectName]}"
   echo -e "\nChecking out tag [v${projectVersion}] for project [${projectName}]"
+  pushd "${projectName}"
+    add_oauth_token_to_current_remote_url
+  popd
   git submodule update --init "${projectName}" || echo "Sth went wrong - trying to continue"
   cd "${ROOT_FOLDER}/${projectName}"
   git fetch --tags
