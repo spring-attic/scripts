@@ -648,9 +648,9 @@
 									<goal>exec</goal>
 								</goals>
 								<configuration>
-									<executable>ln</executable>
+									<executable>bash</executable>
 									<!-- @formatter:off -->
-									<commandlineArgs>-fs ${project.basedir}/src/main/asciidoc/_spring-cloud-${release-train-major}.adoc ${project.basedir}/src/main/asciidoc/spring-cloud.adoc
+									<commandlineArgs>-c 'rm ${project.basedir}/src/main/asciidoc/spring-cloud.adoc &amp;&amp; cp -f ${project.basedir}/src/main/asciidoc/_spring-cloud-${release-train-major}.adoc ${project.basedir}/src/main/asciidoc/spring-cloud.adoc'
 									</commandlineArgs>
 									<!-- @formatter:on -->
 								</configuration>

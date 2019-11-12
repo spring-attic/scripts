@@ -95,6 +95,7 @@
 |spring.cloud.bus.id | application | The identifier for this application instance.
 |spring.cloud.bus.refresh.enabled | true | Flag to switch off refresh events (default on).
 |spring.cloud.bus.trace.enabled | false | Flag to switch on tracing of acks (default off).
+|spring.cloud.circuitbreaker.hystrix.enabled | true | Enables auto-configuration of the Hystrix Spring Cloud CircuitBreaker API implementation.
 |spring.cloud.cloudfoundry.discovery.default-server-port | 80 | Port to use when no port is defined by ribbon.
 |spring.cloud.cloudfoundry.discovery.enabled | true | Flag to indicate that discovery is enabled.
 |spring.cloud.cloudfoundry.discovery.heartbeat-frequency | 5000 | Frequency in milliseconds of poll for heart beat. The client will poll on this frequency and broadcast a list of service ids.
@@ -144,6 +145,7 @@
 |spring.cloud.config.server.default-label |  | Default repository label when incoming requests do not have a specific label.
 |spring.cloud.config.server.default-profile | default | Default application profile when incoming requests do not have a specific one.
 |spring.cloud.config.server.encrypt.enabled | true | Enable decryption of environment properties before sending to client.
+|spring.cloud.config.server.encrypt.plain-text-encrypt | false | Enable decryption of environment properties served by plain text endpoint {@link org.springframework.cloud.config.server.resource.ResourceController}.
 |spring.cloud.config.server.git.basedir |  | Base directory for local working copy of repository.
 |spring.cloud.config.server.git.clone-on-start | false | Flag to indicate that the repository should be cloned on startup (not on demand). Generally leads to slower startup but faster first query.
 |spring.cloud.config.server.git.default-label |  | The default label to be used with the remote repository.
@@ -617,6 +619,7 @@
 |spring.cloud.stream.function.definition |  | Definition of functions to bind. If several functions need to be composed into one, use pipes (e.g., 'fooFunc\|barFunc')
 |spring.cloud.stream.instance-count | 1 | The number of deployed instances of an application. Default: 1. NOTE: Could also be managed per individual binding "spring.cloud.stream.bindings.foo.consumer.instance-count" where 'foo' is the name of the binding.
 |spring.cloud.stream.instance-index | 0 | The instance id of the application: a number from 0 to instanceCount-1. Used for partitioning and with Kafka. NOTE: Could also be managed per individual binding "spring.cloud.stream.bindings.foo.consumer.instance-index" where 'foo' is the name of the binding.
+|spring.cloud.stream.instance-index-list |  | A list of instance id's from 0 to instanceCount-1. Used for partitioning and with Kafka. NOTE: Could also be managed per individual binding "spring.cloud.stream.bindings.foo.consumer.instance-index-list" where 'foo' is the name of the binding. This setting will override the one set in 'spring.cloud.stream.instance-index'
 |spring.cloud.stream.integration.message-handler-not-propagated-headers |  | Message header names that will NOT be copied from the inbound message.
 |spring.cloud.stream.kafka.binder.auto-add-partitions | false | 
 |spring.cloud.stream.kafka.binder.auto-create-topics | true | 
@@ -859,7 +862,7 @@
 |spring.sleuth.feign.processor.enabled | true | Enable post processor that wraps Feign Context in its tracing representations.
 |spring.sleuth.grpc.enabled | true | Enable span information propagation when using GRPC.
 |spring.sleuth.http.enabled | true | 
-|spring.sleuth.http.legacy.enabled | false | Enables the legacy Sleuth setup.
+|spring.sleuth.http.legacy.enabled | false | 
 |spring.sleuth.hystrix.strategy.enabled | true | Enable custom HystrixConcurrencyStrategy that wraps all Callable instances into their Sleuth representative - the TraceCallable.
 |spring.sleuth.hystrix.strategy.passthrough | false | When enabled the tracing information is passed to the Hystrix execution threads but spans are not created for each execution.
 |spring.sleuth.integration.enabled | true | Enable Spring Integration sleuth instrumentation.
@@ -882,8 +885,10 @@
 |spring.sleuth.propagation-keys |  | List of fields that are referenced the same in-process as it is on the wire. For example, the name "x-vcap-request-id" would be set as-is including the prefix. <p> Note: {@code fieldName} will be implicitly lower-cased. @see brave.propagation.ExtraFieldPropagation.FactoryBuilder#addField(String)
 |spring.sleuth.propagation.tag.enabled | true | Enables a {@link TagPropagationFinishedSpanHandler} that adds extra propagated fields to span tags.
 |spring.sleuth.propagation.tag.whitelisted-keys |  | A list of keys to be put from extra propagation fields to span tags.
-|spring.sleuth.reactor.enabled.enabled | true | When true enables instrumentation for reactor.
+|spring.sleuth.reactor.decorate-on-each | true | When true decorates on each operator, will be less performing, but logging will always contain the tracing entries in each operator. When false decorates on last operator, will be more performing, but logging might not always contain the tracing entries.
+|spring.sleuth.reactor.enabled | true | When true enables instrumentation for reactor.
 |spring.sleuth.redis.enabled | true | Enable span information propagation when using Redis.
+|spring.sleuth.redis.remote-service-name | redis | Service name for the remote Redis endpoint.
 |spring.sleuth.rxjava.schedulers.hook.enabled | true | Enable support for RxJava via RxJavaSchedulersHook.
 |spring.sleuth.rxjava.schedulers.ignoredthreads | [HystrixMetricPoller, ^RxComputation.*$] | Thread names for which spans will not be sampled.
 |spring.sleuth.sampler.probability |  | Probability of requests that should be sampled. E.g. 1.0 - 100% requests should be sampled. The precision is whole-numbers only (i.e. there's no support for 0.1% of the traces).

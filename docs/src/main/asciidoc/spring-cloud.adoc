@@ -1,1 +1,8 @@
-/home/marcin/repo/spring-cloud-scripts/docs/src/main/asciidoc/_spring-cloud-hoxton.adoc
+= Spring Cloud
+
+include::_spring-cloud-hoxton-table.adoc[]
+
+//
+//= Appendix: Compendium of Configuration Properties
+//
+//include::configprops.adoc[]
