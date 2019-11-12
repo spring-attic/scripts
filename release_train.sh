@@ -133,7 +133,11 @@ case ${key} in
     exit 0
     ;;
     *)
-    echo "Invalid option: [$1], I guess you know what you're doing. Printing usage in case it might be helpful."
+    pickedOption="$1"
+    if [[ "${pickedOption}" == *"gpg"* || "${pickedOption}" == *"SONATYPE"* ]]; then
+      pickedOption="***"
+    fi
+    echo "Invalid option: [$pickedOption], I guess you know what you're doing. Printing usage in case it might be helpful."
     print_usage
     ;;
 esac
