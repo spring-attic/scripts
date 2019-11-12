@@ -134,7 +134,7 @@ case ${key} in
     ;;
     *)
     pickedOption="$1"
-    if [[ "${pickedOption}" == *"gpg"* || "${pickedOption}" == *"SONATYPE"* ]]; then
+    if [[ "${pickedOption}" == *"gpg"* || "${pickedOption}" == *"SONATYPE"* || "${pickedOption}" == *"pass"* ]]; then
       pickedOption="***"
     fi
     echo "Invalid option: [$pickedOption], I guess you know what you're doing. Printing usage in case it might be helpful."
