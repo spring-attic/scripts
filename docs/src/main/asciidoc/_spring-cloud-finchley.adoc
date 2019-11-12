@@ -64,4 +64,4 @@ include::{basedir}/function/docs/src/main/asciidoc/spring-cloud-function.adoc[]
 
 = Appendix: Compendium of Configuration Properties
 
-include::configprops.adoc[]
+include::_spring-cloud-finchley_configprops.adoc[]

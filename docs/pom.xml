@@ -23,6 +23,7 @@
 		<release-train-major>hoxton</release-train-major>
 		<spring-cloud-version>${spring-cloud-release.version}</spring-cloud-version>
 		<exec-maven-plugin.version>1.6.0</exec-maven-plugin.version>
+		<configprops.path>${project.basedir}/src/main/asciidoc/_spring-cloud-${release-train-major}-configprops.adoc</configprops.path>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
@@ -357,7 +358,12 @@
 				</dependency>
 				<dependency>
 					<groupId>org.springframework.cloud</groupId>
-					<artifactId>spring-cloud-gcp-starter-data-datastore</artifactId>
+					<artifactId>spring-cloud-starter-circuitbreaker-reactor-resilience4j</artifactId>
+					<scope>compile</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.springframework.cloud</groupId>
+					<artifactId>spring-cloud-starter-circuitbreaker-resilience4j</artifactId>
 					<scope>compile</scope>
 				</dependency>
 			</dependencies>
@@ -630,7 +636,7 @@
 											</excludes>
 										</resource>
 									</resources>
-									<outputDirectory>target/generated-docs
+									<outputDirectory>target/refdocs
 									</outputDirectory>
 								</configuration>
 							</execution>
@@ -648,9 +654,9 @@
 									<goal>exec</goal>
 								</goals>
 								<configuration>
-									<executable>ln</executable>
+									<executable>${project.basedir}/src/main/asciidoc/symbolic_links.sh</executable>
 									<!-- @formatter:off -->
-									<commandlineArgs>-fs ${project.basedir}/src/main/asciidoc/_spring-cloud-${release-train-major}.adoc ${project.basedir}/src/main/asciidoc/spring-cloud.adoc
+									<commandlineArgs>${project.basedir} ${release-train-major}
 									</commandlineArgs>
 									<!-- @formatter:on -->
 								</configuration>

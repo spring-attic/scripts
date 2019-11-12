@@ -13,7 +13,7 @@ SPRING_CLOUD_RELEASE_REPO=${SPRING_CLOUD_RELEASE_REPO:-git@github.com:spring-clo
 SPRING_CLOUD_RELEASE_REPO_HTTPS=${SPRING_CLOUD_RELEASE_REPO_HTTPS:-https://github.com/spring-cloud/spring-cloud-release.git}
 MAVEN_PATH=${MAVEN_PATH:-}
 # order matters!
-RELEASE_TRAIN_PROJECTS=${RELEASE_TRAIN_PROJECTS:-build commons function stream aws bus task config netflix circuitbreaker cloudfoundry kubernetes openfeign consul gateway security sleuth zookeeper contract gcp vault cli}
+RELEASE_TRAIN_PROJECTS=${RELEASE_TRAIN_PROJECTS:-build commons function stream aws bus task config netflix cloudfoundry kubernetes openfeign consul gateway security sleuth zookeeper contract gcp vault circuitbreaker cli}
 INSTALL_TOO=${INSTALL_TOO:-false}
 GIT_BIN="${GIT_BIN:-git}"
 export GITHUB_REPO_USERNAME_ENV="${GITHUB_REPO_USERNAME_ENV:-GITHUB_REPO_USERNAME}"
@@ -274,8 +274,10 @@ echo "${RELEASE_TRAIN_MINOR}"
 len=${#PROJECTS_ORDER[@]}
 echo -e "\nProjects size: [${len}]"
 echo -e "Projects in order: [${PROJECTS_ORDER[*]}]"
-linksTable=""
-versionRootUrl="https://cloud.spring.io/spring-cloud-static"
+pathToAttributesTable="docs/src/main/asciidoc/_spring-cloud-${RELEASE_TRAIN_MAJOR}-attributes.adoc"
+pathToVersionsTable="docs/src/main/asciidoc/_spring-cloud-${RELEASE_TRAIN_MAJOR}-versions.adoc"
+rm -rf "${pathToAttributesTable}"
+rm -rf "${pathToVersionsTable}"
 echo -e "\nProjects versions:"
 for (( I=0; I<len; I++ ))
 do 
@@ -285,11 +287,15 @@ do
   else
     projectVersion="${PROJECTS[$projectName]}"
     fullProjectName="spring-cloud-${projectName}"
-    linksTable="${linksTable}|${fullProjectName}|${projectVersion}|${versionRootUrl}/${fullProjectName}/${projectVersion}/reference/html/[URL]"
+    attribute=":${fullProjectName}-version: ${projectVersion}"
+    echo "${attribute}" >> "${pathToAttributesTable}"
+    echo "|${fullProjectName}|${projectVersion}" >> "${pathToVersionsTable}"
   fi
   echo -e "${projectName} -> ${projectVersion}"
 done
 echo -e "==========================================="
+echo "Built release train attributes under [${pathToAttributesTable}]"
+echo "Built release train versions under [${pathToVersionsTable}]"
 echo -e "\nInstall projects with skipping tests? [${INSTALL_TOO}]"
 
 if [[ "${AUTO}" != "yes" ]] ; then
@@ -344,22 +350,14 @@ done
 
 cd "${ROOT_FOLDER}"
 
-pathToLinksTable=docs/src/main/asciidoc/_spring-cloud-"${RELEASE_TRAIN_MAJOR}"-table.adoc
-echo "Building the links table at [${pathToLinksTable}]"
-cat > "${pathToLinksTable}" <<EOL
-Below you can find links to the documentation of projects being part of this release train:
-
-|===
-| Project Name | Project Version | URL to the docs
-
-${linksTable}
-
-|===
-
-EOL
-
-
 echo "Building the docs with release train version [${RELEASE_TRAIN}] with major [${RELEASE_TRAIN_MAJOR}]"
+
+echo "Updating the docs module version [pushd docs && ../mvnw versions:set -DnewVersion='${RELEASE_TRAIN}' -DgenerateBackupPoms=false && popd]"
+
+pushd docs
+  ../mvnw versions:set -DnewVersion="${RELEASE_TRAIN}" -DgenerateBackupPoms=false
+popd
+
 echo "Build command [./mvnw clean install -Pdocs,build -Drelease-train-major="${RELEASE_TRAIN_MAJOR}" -Dspring-cloud-release.version="${RELEASE_TRAIN}" -Dspring-cloud.version="${RELEASE_TRAIN}" -pl docs -Ddisable.checks=true]"
 ./mvnw clean install -Pdocs,build -Drelease-train-major="${RELEASE_TRAIN_MAJOR}" -Dspring-cloud-release.version="${RELEASE_TRAIN}" -Dspring-cloud.version="${RELEASE_TRAIN}" -pl docs -Ddisable.checks=true
 

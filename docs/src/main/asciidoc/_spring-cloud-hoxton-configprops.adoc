@@ -1,5 +1,6 @@
 |===
 |Name | Default | Description
+
 |aws.paramstore.default-context | application | 
 |aws.paramstore.enabled | true | Is AWS Parameter Store support enabled.
 |aws.paramstore.fail-fast | true | Throw exceptions during config lookup if true, otherwise, log warnings.
@@ -70,6 +71,7 @@
 |management.metrics.export.cloudwatch.step |  | 
 |maven.checksum-policy |  | 
 |maven.connect-timeout |  | 
+|maven.enable-repository-listener |  | 
 |maven.local-repository |  | 
 |maven.offline |  | 
 |maven.proxy |  | 
@@ -93,6 +95,7 @@
 |spring.cloud.bus.id | application | The identifier for this application instance.
 |spring.cloud.bus.refresh.enabled | true | Flag to switch off refresh events (default on).
 |spring.cloud.bus.trace.enabled | false | Flag to switch on tracing of acks (default off).
+|spring.cloud.circuitbreaker.hystrix.enabled | true | Enables auto-configuration of the Hystrix Spring Cloud CircuitBreaker API implementation.
 |spring.cloud.cloudfoundry.discovery.default-server-port | 80 | Port to use when no port is defined by ribbon.
 |spring.cloud.cloudfoundry.discovery.enabled | true | Flag to indicate that discovery is enabled.
 |spring.cloud.cloudfoundry.discovery.heartbeat-frequency | 5000 | Frequency in milliseconds of poll for heart beat. The client will poll on this frequency and broadcast a list of service ids.
@@ -142,6 +145,7 @@
 |spring.cloud.config.server.default-label |  | Default repository label when incoming requests do not have a specific label.
 |spring.cloud.config.server.default-profile | default | Default application profile when incoming requests do not have a specific one.
 |spring.cloud.config.server.encrypt.enabled | true | Enable decryption of environment properties before sending to client.
+|spring.cloud.config.server.encrypt.plain-text-encrypt | false | Enable decryption of environment properties served by plain text endpoint {@link org.springframework.cloud.config.server.resource.ResourceController}.
 |spring.cloud.config.server.git.basedir |  | Base directory for local working copy of repository.
 |spring.cloud.config.server.git.clone-on-start | false | Flag to indicate that the repository should be cloned on startup (not on demand). Generally leads to slower startup but faster first query.
 |spring.cloud.config.server.git.default-label |  | The default label to be used with the remote repository.
@@ -165,7 +169,7 @@
 |spring.cloud.config.server.git.timeout | 5 | Timeout (in seconds) for obtaining HTTP or SSH connection (if applicable), defaults to 5 seconds.
 |spring.cloud.config.server.git.uri |  | URI of remote repository.
 |spring.cloud.config.server.git.username |  | Username for authentication with remote repository.
-|spring.cloud.config.server.health.environment-repository |  | 
+|spring.cloud.config.server.health.repositories |  | 
 |spring.cloud.config.server.jdbc.order | 0 | 
 |spring.cloud.config.server.jdbc.sql | SELECT KEY, VALUE from PROPERTIES where APPLICATION=? and PROFILE=? and LABEL=? | SQL used to query database for keys and values.
 |spring.cloud.config.server.native.add-label-locations | true | Flag to determine whether label locations should be added.
@@ -217,6 +221,7 @@
 |spring.cloud.consul.discovery.acl-token |  | 
 |spring.cloud.consul.discovery.catalog-services-watch-delay | 1000 | The delay between calls to watch consul catalog in millis, default is 1000.
 |spring.cloud.consul.discovery.catalog-services-watch-timeout | 2 | The number of seconds to block while watching consul catalog, default is 2.
+|spring.cloud.consul.discovery.consistency-mode |  | Consistency mode for health service request.
 |spring.cloud.consul.discovery.datacenters |  | Map of serviceId's -> datacenter to query for in server list. This allows looking up services in another datacenters.
 |spring.cloud.consul.discovery.default-query-tag |  | Tag to query for in service list if one is not listed in serverListQueryTags.
 |spring.cloud.consul.discovery.default-zone-metadata-name | zone | Service instance zone comes from metadata. This allows changing the metadata tag name.
@@ -235,6 +240,7 @@
 |spring.cloud.consul.discovery.heartbeat.ttl-unit | s | 
 |spring.cloud.consul.discovery.heartbeat.ttl-value | 30 | 
 |spring.cloud.consul.discovery.hostname |  | Hostname to use when accessing server.
+|spring.cloud.consul.discovery.include-hostname-in-instance-id | false | Whether hostname is included into the default instance id when registering service.
 |spring.cloud.consul.discovery.instance-group |  | Service instance group.
 |spring.cloud.consul.discovery.instance-id |  | Unique service instance id.
 |spring.cloud.consul.discovery.instance-zone |  | Service instance zone.
@@ -280,10 +286,9 @@
 |spring.cloud.discovery.enabled | true | Enables discovery client health indicators.
 |spring.cloud.features.enabled | true | Enables the features endpoint.
 |spring.cloud.function.compile |  | Configuration for function bodies, which will be compiled. The key in the map is the function name and the value is a map containing a key "lambda" which is the body to compile, and optionally a "type" (defaults to "function"). Can also contain "inputType" and "outputType" in case it is ambiguous.
-|spring.cloud.function.definition |  | Name (e.g., 'foo') or composition instruction (e.g., 'foo\|bar') used to resolve default function especially for cases where there is more then once function available in catalog.
+|spring.cloud.function.definition |  | Definition of the function to be used. This could be function name (e.g., 'myFunction') or function composition definition (e.g., 'myFunction\|yourFunction')
 |spring.cloud.function.imports |  | Configuration for a set of files containing function bodies, which will be imported and compiled. The key in the map is the function name and the value is another map, containing a "location" of the file to compile and (optionally) a "type" (defaults to "function").
-|spring.cloud.function.routing.enabled | false | Enables RoutingFunction which delegates incoming request to a function named via function.name header
-|spring.cloud.function.scan.packages | functions | Triggers scanning within the specified base packages for any class that is assignable to java.util.function.Function. For each detected Function class, a bean instance will be added to the context.
+|spring.cloud.function.routing-expression |  | SpEL expression which should result in function definition (e.g., function name or composition instruction). NOTE: SpEL evaluation context's root object is the input argument (e.g., Message).
 |spring.cloud.function.task.consumer |  | 
 |spring.cloud.function.task.function |  | 
 |spring.cloud.function.task.supplier |  | 
@@ -314,8 +319,8 @@
 |spring.cloud.gateway.enabled | true | Enables gateway functionality.
 |spring.cloud.gateway.filter.remove-hop-by-hop.headers |  | 
 |spring.cloud.gateway.filter.remove-hop-by-hop.order |  | 
-|spring.cloud.gateway.filter.request-rate-limiter.default-key-resolver |  | 
-|spring.cloud.gateway.filter.request-rate-limiter.default-rate-limiter |  | 
+|spring.cloud.gateway.filter.request-rate-limiter.deny-empty-key | true | Switch to deny requests if the Key Resolver returns an empty key, defaults to true.
+|spring.cloud.gateway.filter.request-rate-limiter.empty-key-status-code |  | HttpStatus to return when denyEmptyKey is true, defaults to FORBIDDEN.
 |spring.cloud.gateway.filter.secure-headers.content-security-policy | default-src 'self' https:; font-src 'self' https: data:; img-src 'self' https: data:; object-src 'none'; script-src https:; style-src 'self' https: 'unsafe-inline' | 
 |spring.cloud.gateway.filter.secure-headers.content-type-options | nosniff | 
 |spring.cloud.gateway.filter.secure-headers.disable |  | 
@@ -357,6 +362,7 @@
 |spring.cloud.gateway.httpserver.wiretap | false | Enables wiretap debugging for Netty HttpServer.
 |spring.cloud.gateway.loadbalancer.use404 | false | 
 |spring.cloud.gateway.metrics.enabled | true | Enables the collection of metrics data.
+|spring.cloud.gateway.metrics.tags |  | Tags map that added to metrics.
 |spring.cloud.gateway.proxy.headers |  | Fixed header values that will be added to all downstream requests.
 |spring.cloud.gateway.proxy.sensitive |  | A set of sensitive header names that will not be sent downstream by default.
 |spring.cloud.gateway.redis-rate-limiter.burst-capacity-header | X-RateLimit-Burst-Capacity | The name of the header that returns the burst capacity configuration.
@@ -379,17 +385,26 @@
 |spring.cloud.gateway.x-forwarded.prefix-enabled | true | If X-Forwarded-Prefix is enabled.
 |spring.cloud.gateway.x-forwarded.proto-append | true | If appending X-Forwarded-Proto as a list is enabled.
 |spring.cloud.gateway.x-forwarded.proto-enabled | true | If X-Forwarded-Proto is enabled.
-|spring.cloud.gcp.bigquery.credentials.default-scopes |  | 
+|spring.cloud.gcp.bigquery.credentials.encoded-key |  | 
+|spring.cloud.gcp.bigquery.credentials.location |  | 
+|spring.cloud.gcp.bigquery.credentials.scopes |  | 
+|spring.cloud.gcp.bigquery.dataset-name |  | Name of the BigQuery dataset to use.
 |spring.cloud.gcp.bigquery.enabled | true | Auto-configure Google Cloud BigQuery components.
-|spring.cloud.gcp.bigquery.project-id |  | 
-|spring.cloud.gcp.config.credentials.default-scopes |  | 
+|spring.cloud.gcp.bigquery.project-id |  | Overrides the GCP project ID specified in the Core module to use for BigQuery.
+|spring.cloud.gcp.config.credentials.encoded-key |  | 
+|spring.cloud.gcp.config.credentials.location |  | 
+|spring.cloud.gcp.config.credentials.scopes |  | 
 |spring.cloud.gcp.config.enabled | false | Enables Spring Cloud GCP Config.
 |spring.cloud.gcp.config.name |  | Name of the application.
 |spring.cloud.gcp.config.profile |  | Comma-delimited string of profiles under which the app is running. Gets its default value from the {@code spring.profiles.active} property, falling back on the {@code spring.profiles.default} property.
 |spring.cloud.gcp.config.project-id |  | Overrides the GCP project ID specified in the Core module.
 |spring.cloud.gcp.config.timeout-millis | 60000 | Timeout for Google Runtime Configuration API calls.
-|spring.cloud.gcp.credentials.default-scopes |  | 
-|spring.cloud.gcp.datastore.credentials.default-scopes |  | 
+|spring.cloud.gcp.credentials.encoded-key |  | 
+|spring.cloud.gcp.credentials.location |  | 
+|spring.cloud.gcp.credentials.scopes |  | 
+|spring.cloud.gcp.datastore.credentials.encoded-key |  | 
+|spring.cloud.gcp.datastore.credentials.location |  | 
+|spring.cloud.gcp.datastore.credentials.scopes |  | 
 |spring.cloud.gcp.datastore.emulator-host |  | @deprecated use <code>spring.cloud.gcp.datastore.host</code> instead. @see #host
 |spring.cloud.gcp.datastore.emulator.consistency | 0.9 | Consistency to use creating the Datastore server instance. Default: {@code 0.9}
 |spring.cloud.gcp.datastore.emulator.enabled | false | If enabled the Datastore client will connect to an local datastore emulator.
@@ -398,12 +413,17 @@
 |spring.cloud.gcp.datastore.host |  | The host and port of a Datastore emulator as the following example: localhost:8081.
 |spring.cloud.gcp.datastore.namespace |  | 
 |spring.cloud.gcp.datastore.project-id |  | 
-|spring.cloud.gcp.firestore.credentials.default-scopes |  | 
+|spring.cloud.gcp.firestore.credentials.encoded-key |  | 
+|spring.cloud.gcp.firestore.credentials.location |  | 
+|spring.cloud.gcp.firestore.credentials.scopes |  | 
 |spring.cloud.gcp.firestore.enabled | true | Auto-configure Google Cloud Firestore components.
+|spring.cloud.gcp.firestore.host-port | firestore.googleapis.com:443 | The host and port of the Firestore emulator service; can be overridden to specify an emulator.
 |spring.cloud.gcp.firestore.project-id |  | 
 |spring.cloud.gcp.logging.enabled | true | Auto-configure Google Cloud Stackdriver logging for Spring MVC.
 |spring.cloud.gcp.project-id |  | GCP project ID where services are running.
-|spring.cloud.gcp.pubsub.credentials.default-scopes |  | 
+|spring.cloud.gcp.pubsub.credentials.encoded-key |  | 
+|spring.cloud.gcp.pubsub.credentials.location |  | 
+|spring.cloud.gcp.pubsub.credentials.scopes |  | 
 |spring.cloud.gcp.pubsub.emulator-host |  | The host and port of the local running emulator. If provided, this will setup the client to connect against a running pub/sub emulator.
 |spring.cloud.gcp.pubsub.enabled | true | Auto-configure Google Cloud Pub/Sub components.
 |spring.cloud.gcp.pubsub.keep-alive-interval-minutes | 5 | How often to ping the server to keep the channel alive.
@@ -450,9 +470,12 @@
 |spring.cloud.gcp.security.iap.issuer | https://cloud.google.com/iap | JWK issuer to verify.
 |spring.cloud.gcp.security.iap.registry | https://www.gstatic.com/iap/verify/public_key-jwk | Link to JWK public key registry.
 |spring.cloud.gcp.spanner.create-interleaved-table-ddl-on-delete-cascade | true | 
-|spring.cloud.gcp.spanner.credentials.default-scopes |  | 
+|spring.cloud.gcp.spanner.credentials.encoded-key |  | 
+|spring.cloud.gcp.spanner.credentials.location |  | 
+|spring.cloud.gcp.spanner.credentials.scopes |  | 
 |spring.cloud.gcp.spanner.database |  | 
 |spring.cloud.gcp.spanner.enabled | true | Auto-configure Google Cloud Spanner components.
+|spring.cloud.gcp.spanner.fail-if-pool-exhausted | false | 
 |spring.cloud.gcp.spanner.instance-id |  | 
 |spring.cloud.gcp.spanner.keep-alive-interval-minutes | -1 | 
 |spring.cloud.gcp.spanner.max-idle-sessions | -1 | 
@@ -467,11 +490,15 @@
 |spring.cloud.gcp.sql.enabled | true | Auto-configure Google Cloud SQL support components.
 |spring.cloud.gcp.sql.instance-connection-name |  | Cloud SQL instance connection name. [GCP_PROJECT_ID]:[INSTANCE_REGION]:[INSTANCE_NAME].
 |spring.cloud.gcp.storage.auto-create-files |  | 
-|spring.cloud.gcp.storage.credentials.default-scopes |  | 
+|spring.cloud.gcp.storage.credentials.encoded-key |  | 
+|spring.cloud.gcp.storage.credentials.location |  | 
+|spring.cloud.gcp.storage.credentials.scopes |  | 
 |spring.cloud.gcp.storage.enabled | true | Auto-configure Google Cloud Storage components.
 |spring.cloud.gcp.trace.authority |  | HTTP/2 authority the channel claims to be connecting to.
 |spring.cloud.gcp.trace.compression |  | Compression to use for the call.
-|spring.cloud.gcp.trace.credentials.default-scopes |  | 
+|spring.cloud.gcp.trace.credentials.encoded-key |  | 
+|spring.cloud.gcp.trace.credentials.location |  | 
+|spring.cloud.gcp.trace.credentials.scopes |  | 
 |spring.cloud.gcp.trace.deadline-ms |  | Call deadline.
 |spring.cloud.gcp.trace.enabled | true | Auto-configure Google Cloud Stackdriver tracing components.
 |spring.cloud.gcp.trace.max-inbound-size |  | Maximum size for an inbound message.
@@ -480,7 +507,9 @@
 |spring.cloud.gcp.trace.num-executor-threads | 4 | Number of threads to be used by the Trace executor.
 |spring.cloud.gcp.trace.project-id |  | Overrides the GCP project ID specified in the Core module.
 |spring.cloud.gcp.trace.wait-for-ready |  | Waits for the channel to be ready in case of a transient failure. Defaults to failing fast in that case.
-|spring.cloud.gcp.vision.credentials.default-scopes |  | 
+|spring.cloud.gcp.vision.credentials.encoded-key |  | 
+|spring.cloud.gcp.vision.credentials.location |  | 
+|spring.cloud.gcp.vision.credentials.scopes |  | 
 |spring.cloud.gcp.vision.enabled | true | Auto-configure Google Cloud Vision components.
 |spring.cloud.gcp.vision.executor-threads-count | 1 | Number of threads used to poll for the completion of Document OCR operations.
 |spring.cloud.gcp.vision.json-output-batch-size | 20 | Number of document pages to include in each JSON output file.
@@ -542,6 +571,19 @@
 |spring.cloud.kubernetes.config.namespace |  | 
 |spring.cloud.kubernetes.config.paths |  | 
 |spring.cloud.kubernetes.config.sources |  | 
+|spring.cloud.kubernetes.discovery.all-namespaces | false | If discovering all namespaces.
+|spring.cloud.kubernetes.discovery.enabled | true | If Kubernetes Discovery is enabled.
+|spring.cloud.kubernetes.discovery.filter |  | SpEL expression to filter services AFTER they have been retrieved from the Kubernetes API server.
+|spring.cloud.kubernetes.discovery.known-secure-ports |  | Set the port numbers that are considered secure and use HTTPS.
+|spring.cloud.kubernetes.discovery.metadata.add-annotations | true | When set, the Kubernetes annotations of the services will be included as metadata of the returned ServiceInstance.
+|spring.cloud.kubernetes.discovery.metadata.add-labels | true | When set, the Kubernetes labels of the services will be included as metadata of the returned ServiceInstance.
+|spring.cloud.kubernetes.discovery.metadata.add-ports | true | When set, any named Kubernetes service ports will be included as metadata of the returned ServiceInstance.
+|spring.cloud.kubernetes.discovery.metadata.annotations-prefix |  | When addAnnotations is set, then this will be used as a prefix to the key names in the metadata map.
+|spring.cloud.kubernetes.discovery.metadata.labels-prefix |  | When addLabels is set, then this will be used as a prefix to the key names in the metadata map.
+|spring.cloud.kubernetes.discovery.metadata.ports-prefix | port. | When addPorts is set, then this will be used as a prefix to the key names in the metadata map.
+|spring.cloud.kubernetes.discovery.primary-port-name |  | If set then the port with a given name is used as primary when multiple ports are defined for a service.
+|spring.cloud.kubernetes.discovery.service-labels |  | If set, then only the services matching these labels will be fetched from the Kubernetes API server.
+|spring.cloud.kubernetes.discovery.service-name | unknown | The service name of the local instance.
 |spring.cloud.kubernetes.reload.enabled | false | Enables the Kubernetes configuration reload on change.
 |spring.cloud.kubernetes.reload.max-wait-for-restart | 2s | If Restart or Shutdown strategies are used, Spring Cloud Kubernetes waits a random amount of time before restarting. This is done in order to avoid having all instances of the same application restart at the same time. This property configures the maximum of amount of wait time from the moment the signal is received that a restart is needed until the moment the restart is actually triggered
 |spring.cloud.kubernetes.reload.mode |  | Sets the detection mode for Kubernetes configuration reload.
@@ -560,6 +602,7 @@
 |spring.cloud.kubernetes.secrets.paths |  | 
 |spring.cloud.kubernetes.secrets.sources |  | 
 |spring.cloud.loadbalancer.retry.enabled | true | 
+|spring.cloud.loadbalancer.ribbon.enabled | true | Causes `RibbonLoadBalancerClient` to be used by default.
 |spring.cloud.refresh.enabled | true | Enables autoconfiguration for the refresh scope and associated features.
 |spring.cloud.refresh.extra-refreshable | true | Additional class names for beans to post process into refresh scope.
 |spring.cloud.service-registry.auto-registration.enabled | true | Whether service auto-registration is enabled. Defaults to true.
@@ -572,66 +615,106 @@
 |spring.cloud.stream.default-binder |  | The name of the binder to use by all bindings in the event multiple binders available (e.g., 'rabbit').
 |spring.cloud.stream.dynamic-destinations | [] | A list of destinations that can be bound dynamically. If set, only listed destinations can be bound.
 |spring.cloud.stream.function.batch-mode | false | 
-|spring.cloud.stream.function.definition |  | Definition of functions to bind. If several functions need to be composed into one, use pipes (e.g., 'fooFunc\\|barFunc')
-|spring.cloud.stream.function.input-bindings |  | 
-|spring.cloud.stream.function.output-bindings |  | 
+|spring.cloud.stream.function.bindings |  | 
+|spring.cloud.stream.function.definition |  | Definition of functions to bind. If several functions need to be composed into one, use pipes (e.g., 'fooFunc\|barFunc')
 |spring.cloud.stream.instance-count | 1 | The number of deployed instances of an application. Default: 1. NOTE: Could also be managed per individual binding "spring.cloud.stream.bindings.foo.consumer.instance-count" where 'foo' is the name of the binding.
 |spring.cloud.stream.instance-index | 0 | The instance id of the application: a number from 0 to instanceCount-1. Used for partitioning and with Kafka. NOTE: Could also be managed per individual binding "spring.cloud.stream.bindings.foo.consumer.instance-index" where 'foo' is the name of the binding.
+|spring.cloud.stream.instance-index-list |  | A list of instance id's from 0 to instanceCount-1. Used for partitioning and with Kafka. NOTE: Could also be managed per individual binding "spring.cloud.stream.bindings.foo.consumer.instance-index-list" where 'foo' is the name of the binding. This setting will override the one set in 'spring.cloud.stream.instance-index'
 |spring.cloud.stream.integration.message-handler-not-propagated-headers |  | Message header names that will NOT be copied from the inbound message.
-|spring.cloud.stream.kafka.binder.kafka-properties |  | 
+|spring.cloud.stream.kafka.binder.auto-add-partitions | false | 
+|spring.cloud.stream.kafka.binder.auto-create-topics | true | 
+|spring.cloud.stream.kafka.binder.brokers | [localhost] | 
+|spring.cloud.stream.kafka.binder.configuration |  | Arbitrary kafka properties that apply to both producers and consumers.
+|spring.cloud.stream.kafka.binder.consumer-properties |  | Arbitrary kafka consumer properties.
+|spring.cloud.stream.kafka.binder.header-mapper-bean-name |  | The bean name of a custom header mapper to use instead of a {@link org.springframework.kafka.support.DefaultKafkaHeaderMapper}.
+|spring.cloud.stream.kafka.binder.headers | [] | 
+|spring.cloud.stream.kafka.binder.health-timeout | 60 | Time to wait to get partition information in seconds; default 60.
+|spring.cloud.stream.kafka.binder.jaas |  | 
+|spring.cloud.stream.kafka.binder.min-partition-count | 1 | 
+|spring.cloud.stream.kafka.binder.producer-properties |  | Arbitrary kafka producer properties.
+|spring.cloud.stream.kafka.binder.replication-factor | 1 | 
+|spring.cloud.stream.kafka.binder.required-acks | 1 | 
+|spring.cloud.stream.kafka.binder.transaction.producer.batch-timeout |  | 
+|spring.cloud.stream.kafka.binder.transaction.producer.buffer-size |  | 
+|spring.cloud.stream.kafka.binder.transaction.producer.compression-type |  | 
+|spring.cloud.stream.kafka.binder.transaction.producer.configuration |  | 
+|spring.cloud.stream.kafka.binder.transaction.producer.error-channel-enabled |  | 
+|spring.cloud.stream.kafka.binder.transaction.producer.header-mode |  | 
+|spring.cloud.stream.kafka.binder.transaction.producer.header-patterns |  | 
+|spring.cloud.stream.kafka.binder.transaction.producer.message-key-expression |  | 
+|spring.cloud.stream.kafka.binder.transaction.producer.partition-count |  | 
+|spring.cloud.stream.kafka.binder.transaction.producer.partition-key-expression |  | 
+|spring.cloud.stream.kafka.binder.transaction.producer.partition-key-extractor-name |  | 
+|spring.cloud.stream.kafka.binder.transaction.producer.partition-selector-expression |  | 
+|spring.cloud.stream.kafka.binder.transaction.producer.partition-selector-name |  | 
+|spring.cloud.stream.kafka.binder.transaction.producer.required-groups |  | 
+|spring.cloud.stream.kafka.binder.transaction.producer.sync |  | 
+|spring.cloud.stream.kafka.binder.transaction.producer.topic |  | 
+|spring.cloud.stream.kafka.binder.transaction.producer.use-native-encoding |  | 
+|spring.cloud.stream.kafka.binder.transaction.transaction-id-prefix |  | 
 |spring.cloud.stream.kafka.bindings |  | 
-|spring.cloud.stream.kafka.streams.binder.kafka-properties |  | 
+|spring.cloud.stream.kafka.streams.binder.application-id |  | 
+|spring.cloud.stream.kafka.streams.binder.auto-add-partitions |  | 
+|spring.cloud.stream.kafka.streams.binder.auto-create-topics |  | 
+|spring.cloud.stream.kafka.streams.binder.brokers |  | 
+|spring.cloud.stream.kafka.streams.binder.configuration |  | 
+|spring.cloud.stream.kafka.streams.binder.consumer-properties |  | 
+|spring.cloud.stream.kafka.streams.binder.functions |  | 
+|spring.cloud.stream.kafka.streams.binder.header-mapper-bean-name |  | 
+|spring.cloud.stream.kafka.streams.binder.headers |  | 
+|spring.cloud.stream.kafka.streams.binder.health-timeout |  | 
+|spring.cloud.stream.kafka.streams.binder.jaas |  | 
+|spring.cloud.stream.kafka.streams.binder.min-partition-count |  | 
+|spring.cloud.stream.kafka.streams.binder.producer-properties |  | 
+|spring.cloud.stream.kafka.streams.binder.replication-factor |  | 
+|spring.cloud.stream.kafka.streams.binder.required-acks |  | 
+|spring.cloud.stream.kafka.streams.binder.serde-error |  | {@link org.apache.kafka.streams.errors.DeserializationExceptionHandler} to use when there is a Serde error. {@link KafkaStreamsBinderConfigurationProperties.SerdeError} values are used to provide the exception handler on consumer binding.
+|spring.cloud.stream.kafka.streams.binder.state-store-retry.backoff-period | 1000 | 
+|spring.cloud.stream.kafka.streams.binder.state-store-retry.max-attempts | 1 | 
 |spring.cloud.stream.kafka.streams.bindings |  | 
-|spring.cloud.stream.kafka.streams.time-window.advance-by | 0 | 
-|spring.cloud.stream.kafka.streams.time-window.length | 0 | 
 |spring.cloud.stream.metrics.export-properties |  | List of properties that are going to be appended to each message. This gets populate by onApplicationEvent, once the context refreshes to avoid overhead of doing per message basis.
 |spring.cloud.stream.metrics.key |  | The name of the metric being emitted. Should be an unique value per application. Defaults to: ${spring.application.name:${vcap.application.name:${spring.config.name:application}}}.
 |spring.cloud.stream.metrics.meter-filter |  | Pattern to control the 'meters' one wants to capture. By default all 'meters' will be captured. For example, 'spring.integration.*' will only capture metric information for meters whose name starts with 'spring.integration'.
 |spring.cloud.stream.metrics.properties |  | Application properties that should be added to the metrics payload For example: `spring.application**`.
 |spring.cloud.stream.metrics.schedule-interval | 60s | Interval expressed as Duration for scheduling metrics snapshots publishing. Defaults to 60 seconds
 |spring.cloud.stream.override-cloud-connectors | false | This property is only applicable when the cloud profile is active and Spring Cloud Connectors are provided with the application. If the property is false (the default), the binder detects a suitable bound service (for example, a RabbitMQ service bound in Cloud Foundry for the RabbitMQ binder) and uses it for creating connections (usually through Spring Cloud Connectors). When set to true, this property instructs binders to completely ignore the bound services and rely on Spring Boot properties (for example, relying on the spring.rabbitmq.* properties provided in the environment for the RabbitMQ binder). The typical usage of this property is to be nested in a customized environment when connecting to multiple systems.
+|spring.cloud.stream.poller.fixed-delay | 1000 | Fixed delay for default poller.
+|spring.cloud.stream.poller.max-messages-per-poll | 1 | Maximum messages per poll for the default poller.
 |spring.cloud.stream.rabbit.binder.admin-addresses | [] | Urls for management plugins; only needed for queue affinity.
 |spring.cloud.stream.rabbit.binder.admin-adresses |  | 
 |spring.cloud.stream.rabbit.binder.compression-level | 0 | Compression level for compressed bindings; see 'java.util.zip.Deflator'.
 |spring.cloud.stream.rabbit.binder.connection-name-prefix |  | Prefix for connection names from this binder.
 |spring.cloud.stream.rabbit.binder.nodes | [] | Cluster member node names; only needed for queue affinity.
 |spring.cloud.stream.rabbit.bindings |  | 
-|spring.cloud.stream.schema-registry-client.cached | false | 
-|spring.cloud.stream.schema-registry-client.endpoint |  | 
-|spring.cloud.stream.schema.avro.dynamic-schema-generation-enabled | false | 
-|spring.cloud.stream.schema.avro.prefix | vnd | 
-|spring.cloud.stream.schema.avro.reader-schema |  | 
-|spring.cloud.stream.schema.avro.schema-imports |  | A list of files or directories that should be loaded first thus making them importable by subsequent schemas. Note that imported files should not reference each other. @parameter
-|spring.cloud.stream.schema.avro.schema-locations |  | The source directory of Apache Avro schema. This schema is used by this converter. If this schema depends on other schemas consider defining those those dependent ones in the {@link #schemaImports} @parameter
-|spring.cloud.stream.schema.server.allow-schema-deletion | false | Boolean flag to enable/disable schema deletion.
-|spring.cloud.stream.schema.server.path |  | Prefix for configuration resource paths (default is empty). Useful when embedding in another application when you don't want to change the context path or servlet path.
-|spring.cloud.task.batch.command-line-runner-order | 0 | The order for the {@code CommandLineRunner} used to run batch jobs when {@code spring.cloud.task.batch.fail-on-job-failure=true}.  Defaults to 0 (same as the {@link org.springframework.boot.autoconfigure.batch.JobLauncherCommandLineRunner}).
-|spring.cloud.task.batch.events.chunk-order |  | Properties for chunk listener order
+|spring.cloud.stream.sendto.destination | none | The name of the header used to determine the name of the output destination
+|spring.cloud.task.batch.command-line-runner-order | 0 | The order for the {@code CommandLineRunner} used to run batch jobs when {@code spring.cloud.task.batch.fail-on-job-failure=true}. Defaults to 0 (same as the {@link org.springframework.boot.autoconfigure.batch.JobLauncherCommandLineRunner}).
+|spring.cloud.task.batch.events.chunk-order |  | Establishes the default {@link Ordered} precedence for {@link org.springframework.batch.core.ChunkListener}.
 |spring.cloud.task.batch.events.chunk.enabled | true | This property is used to determine if a task should listen for batch chunk events.
 |spring.cloud.task.batch.events.enabled | true | This property is used to determine if a task should listen for batch events.
-|spring.cloud.task.batch.events.item-process-order |  | Properties for itemProcess listener order
+|spring.cloud.task.batch.events.item-process-order |  | Establishes the default {@link Ordered} precedence for {@link org.springframework.batch.core.ItemProcessListener}.
 |spring.cloud.task.batch.events.item-process.enabled | true | This property is used to determine if a task should listen for batch item processed events.
-|spring.cloud.task.batch.events.item-read-order |  | Properties for itemRead listener order
+|spring.cloud.task.batch.events.item-read-order |  | Establishes the default {@link Ordered} precedence for {@link org.springframework.batch.core.ItemReadListener}.
 |spring.cloud.task.batch.events.item-read.enabled | true | This property is used to determine if a task should listen for batch item read events.
-|spring.cloud.task.batch.events.item-write-order |  | Properties for itemWrite listener order
+|spring.cloud.task.batch.events.item-write-order |  | Establishes the default {@link Ordered} precedence for {@link org.springframework.batch.core.ItemWriteListener}.
 |spring.cloud.task.batch.events.item-write.enabled | true | This property is used to determine if a task should listen for batch item write events.
-|spring.cloud.task.batch.events.job-execution-order |  | Properties for jobExecution listener order
+|spring.cloud.task.batch.events.job-execution-order |  | Establishes the default {@link Ordered} precedence for {@link org.springframework.batch.core.JobExecutionListener}.
 |spring.cloud.task.batch.events.job-execution.enabled | true | This property is used to determine if a task should listen for batch job execution events.
-|spring.cloud.task.batch.events.skip-order |  | Properties for skip listener order
+|spring.cloud.task.batch.events.skip-order |  | Establishes the default {@link Ordered} precedence for {@link org.springframework.batch.core.SkipListener}.
 |spring.cloud.task.batch.events.skip.enabled | true | This property is used to determine if a task should listen for batch skip events.
-|spring.cloud.task.batch.events.step-execution-order |  | Properties for stepExecution listener order
+|spring.cloud.task.batch.events.step-execution-order |  | Establishes the default {@link Ordered} precedence for {@link org.springframework.batch.core.StepExecutionListener}.
 |spring.cloud.task.batch.events.step-execution.enabled | true | This property is used to determine if a task should listen for batch step execution events.
 |spring.cloud.task.batch.fail-on-job-failure | false | This property is used to determine if a task app should return with a non zero exit code if a batch job fails.
-|spring.cloud.task.batch.fail-on-job-failure-poll-interval | 5000 | Fixed delay in milliseconds that Spring Cloud Task will wait when checking if {@link org.springframework.batch.core.JobExecution}s have completed, when spring.cloud.task.batch.failOnJobFailure is set to true.  Defaults to 5000.
-|spring.cloud.task.batch.job-names |  | Comma-separated list of job names to execute on startup (for instance, `job1,job2`). By default, all Jobs found in the context are executed.
+|spring.cloud.task.batch.fail-on-job-failure-poll-interval | 5000 | Fixed delay in milliseconds that Spring Cloud Task will wait when checking if {@link org.springframework.batch.core.JobExecution}s have completed, when spring.cloud.task.batch.failOnJobFailure is set to true. Defaults to 5000.
+|spring.cloud.task.batch.job-names |  | Comma-separated list of job names to execute on startup (for instance, `job1,job2`). By default, all Jobs found in the context are executed. @deprecated use spring.batch.job.names instead of spring.cloud.task.batch.jobNames.
 |spring.cloud.task.batch.listener.enabled | true | This property is used to determine if a task will be linked to the batch jobs that are run.
-|spring.cloud.task.closecontext-enabled | false | When set to true the context is closed at the end of the task.  Else the context remains open.
+|spring.cloud.task.closecontext-enabled | false | When set to true the context is closed at the end of the task. Else the context remains open.
 |spring.cloud.task.events.enabled | true | This property is used to determine if a task app should emit task events.
 |spring.cloud.task.executionid |  | An id that will be used by the task when updating the task execution.
 |spring.cloud.task.external-execution-id |  | An id that can be associated with a task.
+|spring.cloud.task.initialize-enabled |  | If set to true then tables are initialized. If set to false tables are not initialized. Defaults to null. The requirement for it to be defaulted to null is so that we can support the <code>spring.cloud.task.initialize.enable</code> until it is removed.
 |spring.cloud.task.parent-execution-id |  | The id of the parent task execution id that launched this task execution. Defaults to null if task execution had no parent.
 |spring.cloud.task.single-instance-enabled | false | This property is used to determine if a task will execute if another task with the same app name is running.
-|spring.cloud.task.single-instance-lock-check-interval | 500 | Declares the  time (in millis) that a task execution will wait between checks. Default time is: 500 millis.
+|spring.cloud.task.single-instance-lock-check-interval | 500 | Declares the time (in millis) that a task execution will wait between checks. Default time is: 500 millis.
 |spring.cloud.task.single-instance-lock-ttl |  | Declares the maximum amount of time (in millis) that a task execution can hold a lock to prevent another task from executing with a specific task name when the single-instance-enabled is set to true. Default time is: Integer.MAX_VALUE.
 |spring.cloud.task.table-prefix | TASK_ | The prefix to append to the table names created by Spring Cloud Task.
 |spring.cloud.util.enabled | true | Enables creation of Spring Cloud utility beans.
@@ -721,6 +804,11 @@
 |spring.cloud.vault.mysql.password-property | spring.datasource.password | Target property for the obtained username.
 |spring.cloud.vault.mysql.role |  | Role name for credentials.
 |spring.cloud.vault.mysql.username-property | spring.datasource.username | Target property for the obtained username.
+|spring.cloud.vault.namespace |  | Vault namespace (requires Vault Enterprise).
+|spring.cloud.vault.pcf.instance-certificate |  | Path to the instance certificate (PEM). Defaults to {@code CF_INSTANCE_CERT} env variable.
+|spring.cloud.vault.pcf.instance-key |  | Path to the instance key (PEM). Defaults to {@code CF_INSTANCE_KEY} env variable.
+|spring.cloud.vault.pcf.pcf-path | pcf | Mount path of the Kubernetes authentication backend.
+|spring.cloud.vault.pcf.role |  | Name of the role against which the login is being attempted.
 |spring.cloud.vault.port | 8200 | Vault server port.
 |spring.cloud.vault.postgresql.backend | postgresql | postgresql backend path.
 |spring.cloud.vault.postgresql.enabled | false | Enable postgresql backend usage.
@@ -764,8 +852,6 @@
 |spring.cloud.zookeeper.max-retries | 10 | Max number of times to retry.
 |spring.cloud.zookeeper.max-sleep-ms | 500 | Max time in ms to sleep on each retry.
 |spring.cloud.zookeeper.prefix |  | Common prefix that will be applied to all Zookeeper dependencies' paths.
-|spring.integration.poller.fixed-delay | 1000 | Fixed delay for default poller.
-|spring.integration.poller.max-messages-per-poll | 1 | Maximum messages per poll for the default poller.
 |spring.sleuth.annotation.enabled | true | 
 |spring.sleuth.async.configurer.enabled | true | Enable default AsyncConfigurer.
 |spring.sleuth.async.enabled | true | Enable instrumenting async related components so that the tracing information is passed between threads.
@@ -788,18 +874,21 @@
 |spring.sleuth.log.slf4j.enabled | true | Enable a {@link Slf4jScopeDecorator} that prints tracing information in the logs.
 |spring.sleuth.log.slf4j.whitelisted-mdc-keys |  | A list of keys to be put from baggage to MDC.
 |spring.sleuth.messaging.enabled | false | Should messaging be turned on.
-|spring.sleuth.messaging.jms.enabled | false | 
+|spring.sleuth.messaging.jms.enabled | true | Enable tracing of JMS.
 |spring.sleuth.messaging.jms.remote-service-name | jms | 
-|spring.sleuth.messaging.kafka.enabled | false | 
+|spring.sleuth.messaging.kafka.enabled | true | Enable tracing of Kafka.
+|spring.sleuth.messaging.kafka.mapper.enabled | true | Enable DefaultKafkaHeaderMapper tracing for Kafka.
 |spring.sleuth.messaging.kafka.remote-service-name | kafka | 
-|spring.sleuth.messaging.rabbit.enabled | false | 
+|spring.sleuth.messaging.rabbit.enabled | true | Enable tracing of RabbitMQ.
 |spring.sleuth.messaging.rabbit.remote-service-name | rabbitmq | 
 |spring.sleuth.opentracing.enabled | true | 
 |spring.sleuth.propagation-keys |  | List of fields that are referenced the same in-process as it is on the wire. For example, the name "x-vcap-request-id" would be set as-is including the prefix. <p> Note: {@code fieldName} will be implicitly lower-cased. @see brave.propagation.ExtraFieldPropagation.FactoryBuilder#addField(String)
 |spring.sleuth.propagation.tag.enabled | true | Enables a {@link TagPropagationFinishedSpanHandler} that adds extra propagated fields to span tags.
 |spring.sleuth.propagation.tag.whitelisted-keys |  | A list of keys to be put from extra propagation fields to span tags.
-|spring.sleuth.reactor.enabled.enabled | true | When true enables instrumentation for reactor.
+|spring.sleuth.reactor.decorate-on-each | true | When true decorates on each operator, will be less performing, but logging will always contain the tracing entries in each operator. When false decorates on last operator, will be more performing, but logging might not always contain the tracing entries.
+|spring.sleuth.reactor.enabled | true | When true enables instrumentation for reactor.
 |spring.sleuth.redis.enabled | true | Enable span information propagation when using Redis.
+|spring.sleuth.redis.remote-service-name | redis | Service name for the remote Redis endpoint.
 |spring.sleuth.rxjava.schedulers.hook.enabled | true | Enable support for RxJava via RxJavaSchedulersHook.
 |spring.sleuth.rxjava.schedulers.ignoredthreads | [HystrixMetricPoller, ^RxComputation.*$] | Thread names for which spans will not be sampled.
 |spring.sleuth.sampler.probability |  | Probability of requests that should be sampled. E.g. 1.0 - 100% requests should be sampled. The precision is whole-numbers only (i.e. there's no support for 0.1% of the traces).
@@ -828,6 +917,7 @@
 |spring.zipkin.kafka.topic | zipkin | Name of the Kafka topic where spans should be sent to Zipkin.
 |spring.zipkin.locator.discovery.enabled | false | Enabling of locating the host name via service discovery.
 |spring.zipkin.message-timeout | 1 | Timeout in seconds before pending spans will be sent in batches to Zipkin.
+|spring.zipkin.rabbitmq.addresses |  | Addresses of the RabbitMQ brokers used to send spans to Zipkin
 |spring.zipkin.rabbitmq.queue | zipkin | Name of the RabbitMQ queue where spans should be sent to Zipkin.
 |spring.zipkin.sender.type |  | Means of sending spans to Zipkin.
 |spring.zipkin.service.name |  | The name of the service, from which the Span was sent via HTTP, that should appear in Zipkin.
@@ -849,6 +939,9 @@
 |stubrunner.ids | [] | The ids of the stubs to run in "ivy" notation ([groupId]:artifactId:[version]:[classifier][:port]). {@code groupId}, {@code classifier}, {@code version} and {@code port} can be optional.
 |stubrunner.ids-to-service-ids |  | Mapping of Ivy notation based ids to serviceIds inside your application. Example "a:b" -> "myService" "artifactId" -> "myOtherService"
 |stubrunner.integration.enabled | true | Whether to enable Stub Runner integration with Spring Integration.
+|stubrunner.jms.enabled | true | Whether to enable Stub Runner integration with Spring JMS.
+|stubrunner.kafka.enabled | true | Whether to enable Stub Runner integration with Spring Kafka.
+|stubrunner.kafka.initializer.enabled | true | Whether to allow Stub Runner to take care of polling for messages instead of the KafkaStubMessages component. The latter should be used only on the producer side.
 |stubrunner.mappings-output-folder |  | Dumps the mappings of each HTTP server to the selected folder.
 |stubrunner.max-port | 15000 | Max value of a port for the automatically started WireMock server.
 |stubrunner.min-port | 10000 | Min value of a port for the automatically started WireMock server.
@@ -868,7 +961,5 @@
 |wiremock.server.port | 8080 | 
 |wiremock.server.port-dynamic | false | 
 |wiremock.server.stubs | [] | 
-
-
 
 |===
