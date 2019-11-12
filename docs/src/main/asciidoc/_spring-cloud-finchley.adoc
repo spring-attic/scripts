@@ -1,7 +1,7 @@
 = Spring Cloud
+include::_attributes.adoc[]
 :stream_basedir: ../../../../..
 :basedir: ../../../..
-:toc: left
 
 Spring Cloud provides tools for developers to quickly build some of
 the common patterns in distributed systems (e.g. configuration

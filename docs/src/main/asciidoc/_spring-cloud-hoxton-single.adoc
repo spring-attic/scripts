@@ -1,10 +1,12 @@
 = Spring Cloud
+
+include::_attributes.adoc[]
 include::_spring-cloud-hoxton-attributes.adoc[]
+
 :basedir: {project-root}
 :stream_basedir: {basedir}
 :project-full-name: Spring Cloud
 :project-name: spring-cloud
-:toc: left
 
 Spring Cloud provides tools for developers to quickly build some of
 the common patterns in distributed systems (e.g. configuration
@@ -16,7 +18,9 @@ implement those patterns. They will work well in any distributed
 environment, including the developer's own laptop, bare metal data
 centres, and managed platforms such as Cloud Foundry.
 
-Version: {spring-cloud-version}
+Release Train Version: *{spring-cloud-version}*
+
+Supported Boot Version: *{spring-boot-version}*
 
 == Features
 

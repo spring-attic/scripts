@@ -21,6 +21,7 @@ export GITHUB_REPO_PASSWORD_ENV="${GITHUB_REPO_PASSWORD_ENV:-GITHUB_REPO_PASSWOR
 REPO_USER="${!GITHUB_REPO_USERNAME_ENV}"
 REPO_PASS="${!GITHUB_REPO_PASSWORD_ENV}"
 PREFIX_WITH_TOKEN=""
+export BOOT_VERSION="${BOOT_VERSION:-}"
 
 echo "Current folder is [${ROOT_FOLDER}]"
 
@@ -86,12 +87,21 @@ else
 fi
 
 # Retrieves from spring-cloud-dependencies module the version of a
-function retrieve_version_from_madd_oauth_token_to_current_remote_urlaven() {
-  RETRIEVED_VERSION=$("${MAVEN_Eadd_oauth_token_to_current_remote_urlXEC}" -q \
-        -Dexec.executable="echo"add_oauth_token_to_current_remote_url \
-        -Dexec.args="\${spring-cadd_oauth_token_to_current_remote_urlloud-${1}.version}" \
-        org.codehaus.mojo:exec-madd_oauth_token_to_current_remote_urlaven-plugin:1.3.1:exec \
+function retrieve_version_from_maven() {
+  RETRIEVED_VERSION=$("${MAVEN_EXEC}" -q \
+        -Dexec.executable="echo" \
+        -Dexec.args="\${spring-cloud-${1}.version}" \
+        org.codehaus.mojo:exec-maven-plugin:1.3.1:exec \
         -pl spring-cloud-dependencies | sed '$!d' )
+    echo "Extracted version for project [$1] from Maven build is [${RETRIEVED_VERSION}]"
+}
+
+function retrieve_boot_version_from_maven() {
+  RETRIEVED_VERSION=$("${MAVEN_EXEC}" -q \
+        -Dexec.executable="echo" \
+        -Dexec.args="\${project.parent.version}" \
+        org.codehaus.mojo:exec-maven-plugin:1.3.1:exec \
+        -pl spring-cloud-starter-parent | sed '$!d' )
     echo "Extracted version for project [$1] from Maven build is [${RETRIEVED_VERSION}]"
 }
 
@@ -257,6 +267,9 @@ else
         echo "Retrieved version was unresolved for [${i}], continuing with the iteration"
       fi
   done
+  echo "Retrieving Boot version"
+  retrieve_boot_version_from_maven
+  BOOT_VERSION="${RETRIEVED_VERSION}"
   echo "Continuing with the script"
 fi
 
@@ -276,9 +289,13 @@ echo -e "\nProjects size: [${len}]"
 echo -e "Projects in order: [${PROJECTS_ORDER[*]}]"
 pathToAttributesTable="docs/src/main/asciidoc/_spring-cloud-${RELEASE_TRAIN_MAJOR}-attributes.adoc"
 pathToVersionsTable="docs/src/main/asciidoc/_spring-cloud-${RELEASE_TRAIN_MAJOR}-versions.adoc"
+pathToLinks="docs/src/main/asciidoc/_spring-cloud-${RELEASE_TRAIN_MAJOR}-links.adoc"
 rm -rf "${pathToAttributesTable}"
 rm -rf "${pathToVersionsTable}"
+rm -rf "${pathToLinks}"
 echo -e "\nProjects versions:"
+echo "spring-boot -> ${BOOT_VERSION}"
+echo ":spring-boot-version: ${BOOT_VERSION}" >> "${pathToAttributesTable}"
 for (( I=0; I<len; I++ ))
 do 
   projectName="${PROJECTS_ORDER[$I]}"
@@ -290,12 +307,25 @@ do
     attribute=":${fullProjectName}-version: ${projectVersion}"
     echo "${attribute}" >> "${pathToAttributesTable}"
     echo "|${fullProjectName}|${projectVersion}" >> "${pathToVersionsTable}"
+    docsUrl=""
+    if [[ "${fullProjectName}" == *"task"* ]]; then
+       docsUrl="https://docs.spring.io/spring-cloud-task/docs/${projectVersion}/reference/"
+    elif [[ "${fullProjectName}" == *"stream"* ]]; then
+      # since spring cloud stream's documentation URL has nothing to do with the version, will try
+      # assume that it has the same version as spring cloud function
+      projectVersion="${PROJECTS['function']}"
+      docsUrl="https://cloud.spring.io/spring-cloud-static/${fullProjectName}/${projectVersion}/reference/html/"
+    else
+       docsUrl="https://cloud.spring.io/spring-cloud-static/${fullProjectName}/${projectVersion}/reference/html/"
+    fi
+    echo "${docsUrl}[${fullProjectName}] :: ${fullProjectName} Reference Documentation, version ${projectVersion}" >> "${pathToLinks}"
   fi
   echo -e "${projectName} -> ${projectVersion}"
 done
 echo -e "==========================================="
 echo "Built release train attributes under [${pathToAttributesTable}]"
 echo "Built release train versions under [${pathToVersionsTable}]"
+echo "Built links under [${pathToLinks}]"
 echo -e "\nInstall projects with skipping tests? [${INSTALL_TOO}]"
 
 if [[ "${AUTO}" != "yes" ]] ; then
@@ -355,14 +385,14 @@ echo "Building the docs with release train version [${RELEASE_TRAIN}] with major
 echo "Updating the docs module version [pushd docs && ../mvnw versions:set -DnewVersion='${RELEASE_TRAIN}' -DgenerateBackupPoms=false && popd]"
 
 pushd docs
-  ../mvnw versions:set -DnewVersion="${RELEASE_TRAIN}" -DgenerateBackupPoms=false
+  ../mvnw versions:set -DnewVersion="${RELEASE_TRAIN}" -DgenerateBackupPoms=false -DartifactId=spring-cloud-samples-docs -DprocessDependencies=false -DprocessParent=false -DupdateMatchingVersions=false
 popd
 
 echo "Build command [./mvnw clean install -Pdocs,build -Drelease-train-major="${RELEASE_TRAIN_MAJOR}" -Dspring-cloud-release.version="${RELEASE_TRAIN}" -Dspring-cloud.version="${RELEASE_TRAIN}" -pl docs -Ddisable.checks=true]"
 ./mvnw clean install -Pdocs,build -Drelease-train-major="${RELEASE_TRAIN_MAJOR}" -Dspring-cloud-release.version="${RELEASE_TRAIN}" -Dspring-cloud.version="${RELEASE_TRAIN}" -pl docs -Ddisable.checks=true
 
 
-if [[ "${GH_PAGES}" == "yes" ]] ; then
+if [[ "${GH_PAGES}" == "yes" ]]; then
   echo "Downloading gh-pages.sh from spring-cloud-build's master"
   mkdir -p target
   curl https://raw.githubusercontent.com/spring-cloud/spring-cloud-build/master/docs/src/main/asciidoc/ghpages.sh -o target/gh-pages.sh && chmod +x target/gh-pages.sh

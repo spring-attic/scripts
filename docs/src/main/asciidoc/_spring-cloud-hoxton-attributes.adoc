@@ -1,3 +1,4 @@
+:spring-boot-version: 2.2.1.RELEASE
 :spring-cloud-build-version: 2.2.0.RC2
 :spring-cloud-commons-version: 2.2.0.RC2
 :spring-cloud-function-version: 3.0.0.RC2
