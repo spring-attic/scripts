@@ -95,6 +95,7 @@
 |spring.cloud.bus.id | application | The identifier for this application instance.
 |spring.cloud.bus.refresh.enabled | true | Flag to switch off refresh events (default on).
 |spring.cloud.bus.trace.enabled | false | Flag to switch on tracing of acks (default off).
+|spring.cloud.circuitbreaker.hystrix.enabled | true | Enables auto-configuration of the Hystrix Spring Cloud CircuitBreaker API implementation.
 |spring.cloud.cloudfoundry.discovery.default-server-port | 80 | Port to use when no port is defined by ribbon.
 |spring.cloud.cloudfoundry.discovery.enabled | true | Flag to indicate that discovery is enabled.
 |spring.cloud.cloudfoundry.discovery.heartbeat-frequency | 5000 | Frequency in milliseconds of poll for heart beat. The client will poll on this frequency and broadcast a list of service ids.
@@ -144,6 +145,7 @@
 |spring.cloud.config.server.default-label |  | Default repository label when incoming requests do not have a specific label.
 |spring.cloud.config.server.default-profile | default | Default application profile when incoming requests do not have a specific one.
 |spring.cloud.config.server.encrypt.enabled | true | Enable decryption of environment properties before sending to client.
+|spring.cloud.config.server.encrypt.plain-text-encrypt | false | Enable decryption of environment properties served by plain text endpoint {@link org.springframework.cloud.config.server.resource.ResourceController}.
 |spring.cloud.config.server.git.basedir |  | Base directory for local working copy of repository.
 |spring.cloud.config.server.git.clone-on-start | false | Flag to indicate that the repository should be cloned on startup (not on demand). Generally leads to slower startup but faster first query.
 |spring.cloud.config.server.git.default-label |  | The default label to be used with the remote repository.
@@ -613,13 +615,43 @@
 |spring.cloud.stream.default-binder |  | The name of the binder to use by all bindings in the event multiple binders available (e.g., 'rabbit').
 |spring.cloud.stream.dynamic-destinations | [] | A list of destinations that can be bound dynamically. If set, only listed destinations can be bound.
 |spring.cloud.stream.function.batch-mode | false | 
-|spring.cloud.stream.function.definition |  | Definition of functions to bind. If several functions need to be composed into one, use pipes (e.g., 'fooFunc\\|barFunc')
-|spring.cloud.stream.function.input-bindings |  | 
-|spring.cloud.stream.function.output-bindings |  | 
+|spring.cloud.stream.function.bindings |  | 
+|spring.cloud.stream.function.definition |  | Definition of functions to bind. If several functions need to be composed into one, use pipes (e.g., 'fooFunc\|barFunc')
 |spring.cloud.stream.instance-count | 1 | The number of deployed instances of an application. Default: 1. NOTE: Could also be managed per individual binding "spring.cloud.stream.bindings.foo.consumer.instance-count" where 'foo' is the name of the binding.
 |spring.cloud.stream.instance-index | 0 | The instance id of the application: a number from 0 to instanceCount-1. Used for partitioning and with Kafka. NOTE: Could also be managed per individual binding "spring.cloud.stream.bindings.foo.consumer.instance-index" where 'foo' is the name of the binding.
+|spring.cloud.stream.instance-index-list |  | A list of instance id's from 0 to instanceCount-1. Used for partitioning and with Kafka. NOTE: Could also be managed per individual binding "spring.cloud.stream.bindings.foo.consumer.instance-index-list" where 'foo' is the name of the binding. This setting will override the one set in 'spring.cloud.stream.instance-index'
 |spring.cloud.stream.integration.message-handler-not-propagated-headers |  | Message header names that will NOT be copied from the inbound message.
-|spring.cloud.stream.kafka.binder.kafka-properties |  | 
+|spring.cloud.stream.kafka.binder.auto-add-partitions | false | 
+|spring.cloud.stream.kafka.binder.auto-create-topics | true | 
+|spring.cloud.stream.kafka.binder.brokers | [localhost] | 
+|spring.cloud.stream.kafka.binder.configuration |  | Arbitrary kafka properties that apply to both producers and consumers.
+|spring.cloud.stream.kafka.binder.consumer-properties |  | Arbitrary kafka consumer properties.
+|spring.cloud.stream.kafka.binder.header-mapper-bean-name |  | The bean name of a custom header mapper to use instead of a {@link org.springframework.kafka.support.DefaultKafkaHeaderMapper}.
+|spring.cloud.stream.kafka.binder.headers | [] | 
+|spring.cloud.stream.kafka.binder.health-timeout | 60 | Time to wait to get partition information in seconds; default 60.
+|spring.cloud.stream.kafka.binder.jaas |  | 
+|spring.cloud.stream.kafka.binder.min-partition-count | 1 | 
+|spring.cloud.stream.kafka.binder.producer-properties |  | Arbitrary kafka producer properties.
+|spring.cloud.stream.kafka.binder.replication-factor | 1 | 
+|spring.cloud.stream.kafka.binder.required-acks | 1 | 
+|spring.cloud.stream.kafka.binder.transaction.producer.batch-timeout |  | 
+|spring.cloud.stream.kafka.binder.transaction.producer.buffer-size |  | 
+|spring.cloud.stream.kafka.binder.transaction.producer.compression-type |  | 
+|spring.cloud.stream.kafka.binder.transaction.producer.configuration |  | 
+|spring.cloud.stream.kafka.binder.transaction.producer.error-channel-enabled |  | 
+|spring.cloud.stream.kafka.binder.transaction.producer.header-mode |  | 
+|spring.cloud.stream.kafka.binder.transaction.producer.header-patterns |  | 
+|spring.cloud.stream.kafka.binder.transaction.producer.message-key-expression |  | 
+|spring.cloud.stream.kafka.binder.transaction.producer.partition-count |  | 
+|spring.cloud.stream.kafka.binder.transaction.producer.partition-key-expression |  | 
+|spring.cloud.stream.kafka.binder.transaction.producer.partition-key-extractor-name |  | 
+|spring.cloud.stream.kafka.binder.transaction.producer.partition-selector-expression |  | 
+|spring.cloud.stream.kafka.binder.transaction.producer.partition-selector-name |  | 
+|spring.cloud.stream.kafka.binder.transaction.producer.required-groups |  | 
+|spring.cloud.stream.kafka.binder.transaction.producer.sync |  | 
+|spring.cloud.stream.kafka.binder.transaction.producer.topic |  | 
+|spring.cloud.stream.kafka.binder.transaction.producer.use-native-encoding |  | 
+|spring.cloud.stream.kafka.binder.transaction.transaction-id-prefix |  | 
 |spring.cloud.stream.kafka.bindings |  | 
 |spring.cloud.stream.kafka.streams.binder.application-id |  | 
 |spring.cloud.stream.kafka.streams.binder.auto-add-partitions |  | 
@@ -627,52 +659,34 @@
 |spring.cloud.stream.kafka.streams.binder.brokers |  | 
 |spring.cloud.stream.kafka.streams.binder.configuration |  | 
 |spring.cloud.stream.kafka.streams.binder.consumer-properties |  | 
-|spring.cloud.stream.kafka.streams.binder.fetch-size |  | 
 |spring.cloud.stream.kafka.streams.binder.functions |  | 
 |spring.cloud.stream.kafka.streams.binder.header-mapper-bean-name |  | 
 |spring.cloud.stream.kafka.streams.binder.headers |  | 
 |spring.cloud.stream.kafka.streams.binder.health-timeout |  | 
 |spring.cloud.stream.kafka.streams.binder.jaas |  | 
-|spring.cloud.stream.kafka.streams.binder.max-wait |  | 
 |spring.cloud.stream.kafka.streams.binder.min-partition-count |  | 
-|spring.cloud.stream.kafka.streams.binder.offset-update-count |  | 
-|spring.cloud.stream.kafka.streams.binder.offset-update-shutdown-timeout |  | 
-|spring.cloud.stream.kafka.streams.binder.offset-update-time-window |  | 
 |spring.cloud.stream.kafka.streams.binder.producer-properties |  | 
-|spring.cloud.stream.kafka.streams.binder.queue-size |  | 
 |spring.cloud.stream.kafka.streams.binder.replication-factor |  | 
 |spring.cloud.stream.kafka.streams.binder.required-acks |  | 
 |spring.cloud.stream.kafka.streams.binder.serde-error |  | {@link org.apache.kafka.streams.errors.DeserializationExceptionHandler} to use when there is a Serde error. {@link KafkaStreamsBinderConfigurationProperties.SerdeError} values are used to provide the exception handler on consumer binding.
-|spring.cloud.stream.kafka.streams.binder.socket-buffer-size |  | 
 |spring.cloud.stream.kafka.streams.binder.state-store-retry.backoff-period | 1000 | 
 |spring.cloud.stream.kafka.streams.binder.state-store-retry.max-attempts | 1 | 
-|spring.cloud.stream.kafka.streams.binder.zk-connection-timeout |  | 
-|spring.cloud.stream.kafka.streams.binder.zk-nodes |  | 
-|spring.cloud.stream.kafka.streams.binder.zk-session-timeout |  | 
 |spring.cloud.stream.kafka.streams.bindings |  | 
-|spring.cloud.stream.kafka.streams.time-window.advance-by | 0 | 
-|spring.cloud.stream.kafka.streams.time-window.length | 0 | 
 |spring.cloud.stream.metrics.export-properties |  | List of properties that are going to be appended to each message. This gets populate by onApplicationEvent, once the context refreshes to avoid overhead of doing per message basis.
 |spring.cloud.stream.metrics.key |  | The name of the metric being emitted. Should be an unique value per application. Defaults to: ${spring.application.name:${vcap.application.name:${spring.config.name:application}}}.
 |spring.cloud.stream.metrics.meter-filter |  | Pattern to control the 'meters' one wants to capture. By default all 'meters' will be captured. For example, 'spring.integration.*' will only capture metric information for meters whose name starts with 'spring.integration'.
 |spring.cloud.stream.metrics.properties |  | Application properties that should be added to the metrics payload For example: `spring.application**`.
 |spring.cloud.stream.metrics.schedule-interval | 60s | Interval expressed as Duration for scheduling metrics snapshots publishing. Defaults to 60 seconds
 |spring.cloud.stream.override-cloud-connectors | false | This property is only applicable when the cloud profile is active and Spring Cloud Connectors are provided with the application. If the property is false (the default), the binder detects a suitable bound service (for example, a RabbitMQ service bound in Cloud Foundry for the RabbitMQ binder) and uses it for creating connections (usually through Spring Cloud Connectors). When set to true, this property instructs binders to completely ignore the bound services and rely on Spring Boot properties (for example, relying on the spring.rabbitmq.* properties provided in the environment for the RabbitMQ binder). The typical usage of this property is to be nested in a customized environment when connecting to multiple systems.
+|spring.cloud.stream.poller.fixed-delay | 1000 | Fixed delay for default poller.
+|spring.cloud.stream.poller.max-messages-per-poll | 1 | Maximum messages per poll for the default poller.
 |spring.cloud.stream.rabbit.binder.admin-addresses | [] | Urls for management plugins; only needed for queue affinity.
 |spring.cloud.stream.rabbit.binder.admin-adresses |  | 
 |spring.cloud.stream.rabbit.binder.compression-level | 0 | Compression level for compressed bindings; see 'java.util.zip.Deflator'.
 |spring.cloud.stream.rabbit.binder.connection-name-prefix |  | Prefix for connection names from this binder.
 |spring.cloud.stream.rabbit.binder.nodes | [] | Cluster member node names; only needed for queue affinity.
 |spring.cloud.stream.rabbit.bindings |  | 
-|spring.cloud.stream.schema-registry-client.cached | false | 
-|spring.cloud.stream.schema-registry-client.endpoint |  | 
-|spring.cloud.stream.schema.avro.dynamic-schema-generation-enabled | false | 
-|spring.cloud.stream.schema.avro.prefix | vnd | 
-|spring.cloud.stream.schema.avro.reader-schema |  | 
-|spring.cloud.stream.schema.avro.schema-imports |  | A list of files or directories that should be loaded first thus making them importable by subsequent schemas. Note that imported files should not reference each other. @parameter
-|spring.cloud.stream.schema.avro.schema-locations |  | The source directory of Apache Avro schema. This schema is used by this converter. If this schema depends on other schemas consider defining those those dependent ones in the {@link #schemaImports} @parameter
-|spring.cloud.stream.schema.server.allow-schema-deletion | false | Boolean flag to enable/disable schema deletion.
-|spring.cloud.stream.schema.server.path |  | Prefix for configuration resource paths (default is empty). Useful when embedding in another application when you don't want to change the context path or servlet path.
+|spring.cloud.stream.sendto.destination | none | The name of the header used to determine the name of the output destination
 |spring.cloud.task.batch.command-line-runner-order | 0 | The order for the {@code CommandLineRunner} used to run batch jobs when {@code spring.cloud.task.batch.fail-on-job-failure=true}. Defaults to 0 (same as the {@link org.springframework.boot.autoconfigure.batch.JobLauncherCommandLineRunner}).
 |spring.cloud.task.batch.events.chunk-order |  | Establishes the default {@link Ordered} precedence for {@link org.springframework.batch.core.ChunkListener}.
 |spring.cloud.task.batch.events.chunk.enabled | true | This property is used to determine if a task should listen for batch chunk events.
@@ -691,7 +705,7 @@
 |spring.cloud.task.batch.events.step-execution.enabled | true | This property is used to determine if a task should listen for batch step execution events.
 |spring.cloud.task.batch.fail-on-job-failure | false | This property is used to determine if a task app should return with a non zero exit code if a batch job fails.
 |spring.cloud.task.batch.fail-on-job-failure-poll-interval | 5000 | Fixed delay in milliseconds that Spring Cloud Task will wait when checking if {@link org.springframework.batch.core.JobExecution}s have completed, when spring.cloud.task.batch.failOnJobFailure is set to true. Defaults to 5000.
-|spring.cloud.task.batch.job-names |  | Comma-separated list of job names to execute on startup (for instance, `job1,job2`). By default, all Jobs found in the context are executed.
+|spring.cloud.task.batch.job-names |  | Comma-separated list of job names to execute on startup (for instance, `job1,job2`). By default, all Jobs found in the context are executed. @deprecated use spring.batch.job.names instead of spring.cloud.task.batch.jobNames.
 |spring.cloud.task.batch.listener.enabled | true | This property is used to determine if a task will be linked to the batch jobs that are run.
 |spring.cloud.task.closecontext-enabled | false | When set to true the context is closed at the end of the task. Else the context remains open.
 |spring.cloud.task.events.enabled | true | This property is used to determine if a task app should emit task events.
@@ -838,8 +852,6 @@
 |spring.cloud.zookeeper.max-retries | 10 | Max number of times to retry.
 |spring.cloud.zookeeper.max-sleep-ms | 500 | Max time in ms to sleep on each retry.
 |spring.cloud.zookeeper.prefix |  | Common prefix that will be applied to all Zookeeper dependencies' paths.
-|spring.integration.poller.fixed-delay | 1000 | Fixed delay for default poller.
-|spring.integration.poller.max-messages-per-poll | 1 | Maximum messages per poll for the default poller.
 |spring.sleuth.annotation.enabled | true | 
 |spring.sleuth.async.configurer.enabled | true | Enable default AsyncConfigurer.
 |spring.sleuth.async.enabled | true | Enable instrumenting async related components so that the tracing information is passed between threads.
@@ -850,7 +862,7 @@
 |spring.sleuth.feign.processor.enabled | true | Enable post processor that wraps Feign Context in its tracing representations.
 |spring.sleuth.grpc.enabled | true | Enable span information propagation when using GRPC.
 |spring.sleuth.http.enabled | true | 
-|spring.sleuth.http.legacy.enabled | false | Enables the legacy Sleuth setup.
+|spring.sleuth.http.legacy.enabled | false | 
 |spring.sleuth.hystrix.strategy.enabled | true | Enable custom HystrixConcurrencyStrategy that wraps all Callable instances into their Sleuth representative - the TraceCallable.
 |spring.sleuth.hystrix.strategy.passthrough | false | When enabled the tracing information is passed to the Hystrix execution threads but spans are not created for each execution.
 |spring.sleuth.integration.enabled | true | Enable Spring Integration sleuth instrumentation.
@@ -873,8 +885,10 @@
 |spring.sleuth.propagation-keys |  | List of fields that are referenced the same in-process as it is on the wire. For example, the name "x-vcap-request-id" would be set as-is including the prefix. <p> Note: {@code fieldName} will be implicitly lower-cased. @see brave.propagation.ExtraFieldPropagation.FactoryBuilder#addField(String)
 |spring.sleuth.propagation.tag.enabled | true | Enables a {@link TagPropagationFinishedSpanHandler} that adds extra propagated fields to span tags.
 |spring.sleuth.propagation.tag.whitelisted-keys |  | A list of keys to be put from extra propagation fields to span tags.
-|spring.sleuth.reactor.enabled.enabled | true | When true enables instrumentation for reactor.
+|spring.sleuth.reactor.decorate-on-each | true | When true decorates on each operator, will be less performing, but logging will always contain the tracing entries in each operator. When false decorates on last operator, will be more performing, but logging might not always contain the tracing entries.
+|spring.sleuth.reactor.enabled | true | When true enables instrumentation for reactor.
 |spring.sleuth.redis.enabled | true | Enable span information propagation when using Redis.
+|spring.sleuth.redis.remote-service-name | redis | Service name for the remote Redis endpoint.
 |spring.sleuth.rxjava.schedulers.hook.enabled | true | Enable support for RxJava via RxJavaSchedulersHook.
 |spring.sleuth.rxjava.schedulers.ignoredthreads | [HystrixMetricPoller, ^RxComputation.*$] | Thread names for which spans will not be sampled.
 |spring.sleuth.sampler.probability |  | Probability of requests that should be sampled. E.g. 1.0 - 100% requests should be sampled. The precision is whole-numbers only (i.e. there's no support for 0.1% of the traces).

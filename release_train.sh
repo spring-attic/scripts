@@ -15,10 +15,16 @@ MAVEN_PATH=${MAVEN_PATH:-}
 # order matters!
 RELEASE_TRAIN_PROJECTS=${RELEASE_TRAIN_PROJECTS:-build commons function stream aws bus task config netflix cloudfoundry kubernetes openfeign consul gateway security sleuth zookeeper contract gcp vault circuitbreaker cli}
 INSTALL_TOO=${INSTALL_TOO:-false}
+GIT_BIN="${GIT_BIN:-git}"
+export GITHUB_REPO_USERNAME_ENV="${GITHUB_REPO_USERNAME_ENV:-GITHUB_REPO_USERNAME}"
+export GITHUB_REPO_PASSWORD_ENV="${GITHUB_REPO_PASSWORD_ENV:-GITHUB_REPO_PASSWORD}"
+REPO_USER="${!GITHUB_REPO_USERNAME_ENV}"
+REPO_PASS="${!GITHUB_REPO_PASSWORD_ENV}"
+PREFIX_WITH_TOKEN=""
 
 echo "Current folder is [${ROOT_FOLDER}]"
 
-# Adds the oauth token if present to the remote url
+# Adds the oauth token if present to the remote url of Spring Cloud Release repo
 function add_oauth_token_to_remote_url() {
     remote="${SPRING_CLOUD_RELEASE_REPO//git:/https:}"
     echo "Current releaser repo [${remote}]"
@@ -26,15 +32,51 @@ function add_oauth_token_to_remote_url() {
         echo "OAuth token found. Will use the HTTPS Spring Cloud Release repo with the token"
         remote="${SPRING_CLOUD_RELEASE_REPO_HTTPS}"
         withToken="${remote/https:\/\//https://${RELEASER_GIT_OAUTH_TOKEN}@}"
+        PREFIX_WITH_TOKEN="https://${RELEASER_GIT_OAUTH_TOKEN}@"
         SPRING_CLOUD_RELEASE_REPO="${withToken}"
     elif [[ "${RELEASER_GIT_OAUTH_TOKEN}" != "" && ${remote} != *"@"* ]]; then
         echo "OAuth token found. Will reuse it to clone the code"
         withToken="${remote/https:\/\//https://${RELEASER_GIT_OAUTH_TOKEN}@}"
+        PREFIX_WITH_TOKEN="https://${RELEASER_GIT_OAUTH_TOKEN}@"
         SPRING_CLOUD_RELEASE_REPO="${withToken}"
     else
         echo "No OAuth token found"
+        PREFIX_WITH_TOKEN=""
     fi
 }
+
+# Adds the oauth token if present to the remote url
+function add_oauth_token_to_current_remote_url() {
+    local remote
+    remote="$( "${GIT_BIN}" config remote.origin.url | sed -e 's/^git:/https:/' )"
+    echo "Current remote [${remote}]"
+    if [[ ${remote} != *".git" ]]; then
+        echo "Remote doesn't end with [.git]"
+        remote="${remote}.git"
+        echo "Remote with [.git] suffix: [${remote}]"
+    fi
+    if [[ "${REPO_USER}" != "" && ${remote} != *"@"* ]]; then
+        withUserAndPass=${remote/https:\/\//https://${REPO_USER}:${REPO_PASS}@}
+        echo "Username and password found. Will reuse it to push the code to [${withUserAndPass}]"
+        "${GIT_BIN}" remote set-url --push origin "${withUserAndPass}"
+    elif [[ "${RELEASER_GIT_OAUTH_TOKEN}" != "" && ${remote} != *"@"* ]]; then
+        withToken=${remote/https:\/\//https://${RELEASER_GIT_OAUTH_TOKEN}@}
+        echo "OAuth token found but no @ char present in the origin url. Will reuse it to push the code to [${withToken}]"
+        "${GIT_BIN}" remote set-url --push origin "${withToken}"
+    elif [[ "${RELEASER_GIT_OAUTH_TOKEN}" != "" ]]; then
+        withToken=${remote//git@github.com:/https://${RELEASER_GIT_OAUTH_TOKEN}@github.com/}
+        echo "OAuth token found with @ char present in the origin url. Will reuse it to push the code to [${withToken}]"
+        "${GIT_BIN}" remote set-url --push origin "${withToken}"
+    else
+        echo "No OAuth token found. Will push to [${remote}]"
+        "${GIT_BIN}" remote set-url --push origin "${remote}"
+    fi
+}
+
+export -f add_oauth_token_to_current_remote_url
+
+echo "Current folder is [${ROOT_FOLDER}]"
+
 add_oauth_token_to_remote_url
 
 if [ -e "${ROOT_FOLDER}/mvnw" ]; then
@@ -44,11 +86,11 @@ else
 fi
 
 # Retrieves from spring-cloud-dependencies module the version of a
-function retrieve_version_from_maven() {
-  RETRIEVED_VERSION=$("${MAVEN_EXEC}" -q \
-        -Dexec.executable="echo" \
-        -Dexec.args="\${spring-cloud-${1}.version}" \
-        org.codehaus.mojo:exec-maven-plugin:1.3.1:exec \
+function retrieve_version_from_madd_oauth_token_to_current_remote_urlaven() {
+  RETRIEVED_VERSION=$("${MAVEN_Eadd_oauth_token_to_current_remote_urlXEC}" -q \
+        -Dexec.executable="echo"add_oauth_token_to_current_remote_url \
+        -Dexec.args="\${spring-cadd_oauth_token_to_current_remote_urlloud-${1}.version}" \
+        org.codehaus.mojo:exec-madd_oauth_token_to_current_remote_urlaven-plugin:1.3.1:exec \
         -pl spring-cloud-dependencies | sed '$!d' )
     echo "Extracted version for project [$1] from Maven build is [${RETRIEVED_VERSION}]"
 }
@@ -133,9 +175,12 @@ case ${key} in
     exit 0
     ;;
     *)
-    echo "Invalid option: [$1]"
+    pickedOption="$1"
+    if [[ "${pickedOption}" == *"gpg"* || "${pickedOption}" == *"SONATYPE"* || "${pickedOption}" == *"pass"* ]]; then
+      pickedOption="***"
+    fi
+    echo "Invalid option: [$pickedOption], I guess you know what you're doing. Printing usage in case it might be helpful."
     print_usage
-    exit 1
     ;;
 esac
 shift # past argument or value
@@ -229,8 +274,10 @@ echo "${RELEASE_TRAIN_MINOR}"
 len=${#PROJECTS_ORDER[@]}
 echo -e "\nProjects size: [${len}]"
 echo -e "Projects in order: [${PROJECTS_ORDER[*]}]"
-linksTable=""
-versionRootUrl="https://cloud.spring.io/spring-cloud-static"
+pathToAttributesTable="docs/src/main/asciidoc/_spring-cloud-${RELEASE_TRAIN_MAJOR}-attributes.adoc"
+pathToVersionsTable="docs/src/main/asciidoc/_spring-cloud-${RELEASE_TRAIN_MAJOR}-versions.adoc"
+rm -rf "${pathToAttributesTable}"
+rm -rf "${pathToVersionsTable}"
 echo -e "\nProjects versions:"
 for (( I=0; I<len; I++ ))
 do 
@@ -240,11 +287,15 @@ do
   else
     projectVersion="${PROJECTS[$projectName]}"
     fullProjectName="spring-cloud-${projectName}"
-    linksTable="${linksTable}|${fullProjectName}|${projectVersion}|${versionRootUrl}/${fullProjectName}/${projectVersion}/reference/html/[URL]"
+    attribute=":${fullProjectName}-version: ${projectVersion}"
+    echo "${attribute}" >> "${pathToAttributesTable}"
+    echo "|${fullProjectName}|${projectVersion}" >> "${pathToVersionsTable}"
   fi
   echo -e "${projectName} -> ${projectVersion}"
 done
 echo -e "==========================================="
+echo "Built release train attributes under [${pathToAttributesTable}]"
+echo "Built release train versions under [${pathToVersionsTable}]"
 echo -e "\nInstall projects with skipping tests? [${INSTALL_TOO}]"
 
 if [[ "${AUTO}" != "yes" ]] ; then
@@ -260,6 +311,11 @@ fi
 
 cd "${ROOT_FOLDER}"
 
+if [[ "${PREFIX_WITH_TOKEN}" != "" ]]; then
+  echo "Updating git submodules to contain changed URLs"
+  sed -i "s/git@github.com:/https:\/\/${RELEASER_GIT_OAUTH_TOKEN}@github.com\//g" .gitmodules
+fi
+
 echo "For the given modules will enter their directory, pull the changes and check out the tag"
 for (( I=0; I<len; I++ ))
 do 
@@ -270,6 +326,9 @@ do
   fi
   projectVersion="${PROJECTS[$projectName]}"
   echo -e "\nChecking out tag [v${projectVersion}] for project [${projectName}]"
+  pushd "${projectName}"
+    add_oauth_token_to_current_remote_url
+  popd
   git submodule update --init "${projectName}" || echo "Sth went wrong - trying to continue"
   cd "${ROOT_FOLDER}/${projectName}"
   git fetch --tags
@@ -280,9 +339,9 @@ do
   if [[ "${INSTALL_TOO}" == "yes" ]]; then
     echo "Building [${projectName}] and skipping tests"
     if [[ -f scripts/build.sh ]]; then
-      ./scripts/build.sh -DskipTests -Pdocs,fast
+      ./scripts/build.sh -DskipTests -Pdocs,fast -Ddisable.checks=true
     else
-      ./mvnw clean install -Pdocs,fast -DskipTests -T 4
+      ./mvnw clean install -Pdocs,fast -DskipTests -T 4 -Ddisable.checks=true
     fi
   fi
   cd "${ROOT_FOLDER}"
@@ -291,23 +350,17 @@ done
 
 cd "${ROOT_FOLDER}"
 
-# pathToLinksTable=docs/src/main/asciidoc/_spring-cloud-"${RELEASE_TRAIN_MAJOR}"-table.adoc
-# echo "Building the links table at [${pathToLinksTable}]"
-# cat > "${pathToLinksTable}" <<EOL
-# Below you can find links to the documentation of projects being part of this release train:
-
-# |===
-# | Project Name | Project Version | URL to the docs
-
-# ${linksTable}
-
-# |===
-
-# EOL
-
-
 echo "Building the docs with release train version [${RELEASE_TRAIN}] with major [${RELEASE_TRAIN_MAJOR}]"
-./mvnw clean install -Pdocs,build -Drelease-train-major="${RELEASE_TRAIN_MAJOR}" -Dspring-cloud-release.version="${RELEASE_TRAIN}" -Dspring-cloud.version="${RELEASE_TRAIN}" -pl docs
+
+echo "Updating the docs module version [pushd docs && ../mvnw versions:set -DnewVersion='${RELEASE_TRAIN}' -DgenerateBackupPoms=false && popd]"
+
+pushd docs
+  ../mvnw versions:set -DnewVersion="${RELEASE_TRAIN}" -DgenerateBackupPoms=false
+popd
+
+echo "Build command [./mvnw clean install -Pdocs,build -Drelease-train-major="${RELEASE_TRAIN_MAJOR}" -Dspring-cloud-release.version="${RELEASE_TRAIN}" -Dspring-cloud.version="${RELEASE_TRAIN}" -pl docs -Ddisable.checks=true]"
+./mvnw clean install -Pdocs,build -Drelease-train-major="${RELEASE_TRAIN_MAJOR}" -Dspring-cloud-release.version="${RELEASE_TRAIN}" -Dspring-cloud.version="${RELEASE_TRAIN}" -pl docs -Ddisable.checks=true
+
 
 if [[ "${GH_PAGES}" == "yes" ]] ; then
   echo "Downloading gh-pages.sh from spring-cloud-build's master"

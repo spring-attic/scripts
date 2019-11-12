@@ -1,1 +1,1 @@
-include::_  spring-cloud-finchley.adoc[]
+include::_spring-cloud-finchley.adoc[]
