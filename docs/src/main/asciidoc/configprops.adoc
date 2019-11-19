@@ -70,6 +70,7 @@
 |management.metrics.export.cloudwatch.step |  | 
 |maven.checksum-policy |  | 
 |maven.connect-timeout |  | 
+|maven.enable-repository-listener |  | 
 |maven.local-repository |  | 
 |maven.offline |  | 
 |maven.proxy |  | 
@@ -330,6 +331,8 @@
 |spring.cloud.gateway.httpclient.ssl.handshake-timeout-millis |  | 
 |spring.cloud.gateway.httpclient.ssl.trusted-x509-certificates |  | Trusted certificates for verifying the remote endpoint's certificate.
 |spring.cloud.gateway.httpclient.ssl.use-insecure-trust-manager | false | Installs the netty InsecureTrustManagerFactory. This is insecure and not suitable for production.
+|spring.cloud.gateway.httpclient.wiretap | false | Enables wiretap debugging for Netty HttpClient.
+|spring.cloud.gateway.httpserver.wiretap | false | Enables wiretap debugging for Netty HttpServer.
 |spring.cloud.gateway.loadbalancer.use404 | false | 
 |spring.cloud.gateway.metrics.enabled | true | Enables the collection of metrics data.
 |spring.cloud.gateway.proxy.headers |  | Fixed header values that will be added to all downstream requests.
@@ -449,6 +452,7 @@
 |spring.cloud.gcp.trace.enabled | true | Auto-configure Google Cloud Stackdriver tracing components.
 |spring.cloud.gcp.trace.max-inbound-size |  | Maximum size for an inbound message.
 |spring.cloud.gcp.trace.max-outbound-size |  | Maximum size for an outbound message.
+|spring.cloud.gcp.trace.message-timeout |  | Timeout in seconds before pending spans will be sent in batches to GCP Stackdriver Trace.
 |spring.cloud.gcp.trace.num-executor-threads | 4 | Number of threads to be used by the Trace executor.
 |spring.cloud.gcp.trace.project-id |  | Overrides the GCP project ID specified in the Core module.
 |spring.cloud.gcp.trace.wait-for-ready |  | Waits for the channel to be ready in case of a transient failure. Defaults to failing fast in that case.
@@ -818,7 +822,8 @@
 |spring.sleuth.propagation-keys |  | List of fields that are referenced the same in-process as it is on the wire. For example, the name "x-vcap-request-id" would be set as-is including the prefix. <p> Note: {@code fieldName} will be implicitly lower-cased. @see brave.propagation.ExtraFieldPropagation.FactoryBuilder#addField(String)
 |spring.sleuth.propagation.tag.enabled | true | Enables a {@link TagPropagationFinishedSpanHandler} that adds extra propagated fields to span tags.
 |spring.sleuth.propagation.tag.whitelisted-keys |  | A list of keys to be put from extra propagation fields to span tags.
-|spring.sleuth.reactor.enabled.enabled | true | When true enables instrumentation for reactor.
+|spring.sleuth.reactor.decorate-on-each | true | When true decorates on each operator, will be less performing, but logging will always contain the tracing entries in each operator. When false decorates on last operator, will be more performing, but logging might not always contain the tracing entries.
+|spring.sleuth.reactor.enabled | true | When true enables instrumentation for reactor.
 |spring.sleuth.rxjava.schedulers.hook.enabled | true | Enable support for RxJava via RxJavaSchedulersHook.
 |spring.sleuth.rxjava.schedulers.ignoredthreads | [HystrixMetricPoller, ^RxComputation.*$] | Thread names for which spans will not be sampled.
 |spring.sleuth.sampler.probability | 0.1 | Probability of requests that should be sampled. E.g. 1.0 - 100% requests should be sampled. The precision is whole-numbers only (i.e. there's no support for 0.1% of the traces).

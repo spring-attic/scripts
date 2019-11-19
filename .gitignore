@@ -15,3 +15,5 @@ bin
 *.sw*
 *.iml
 .idea
+.factorypath
+circuitbreaker

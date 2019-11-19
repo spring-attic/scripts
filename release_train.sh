@@ -289,7 +289,6 @@ echo -e "\nProjects size: [${len}]"
 echo -e "Projects in order: [${PROJECTS_ORDER[*]}]"
 echo -e "\nProjects versions:"
 echo "spring-boot -> ${BOOT_VERSION}"
-echo ":spring-boot-version: ${BOOT_VERSION}" >> "${pathToAttributesTable}"
 for (( I=0; I<len; I++ ))
 do 
   projectName="${PROJECTS_ORDER[$I]}"
@@ -331,9 +330,11 @@ do
   fi
   projectVersion="${PROJECTS[$projectName]}"
   echo -e "\nChecking out tag [v${projectVersion}] for project [${projectName}]"
-  cd "${projectName}"
-    add_oauth_token_to_current_remote_url
-  cd ..
+  if [[ -f "${projectName}" ]]; then
+    cd "${projectName}"
+      add_oauth_token_to_current_remote_url
+    cd ..
+  fi
   git submodule update --init "${projectName}" || echo "Sth went wrong - trying to continue"
   cd "${ROOT_FOLDER}/${projectName}"
   git fetch --tags
