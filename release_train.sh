@@ -356,9 +356,9 @@ do
   fi
   projectVersion="${PROJECTS[$projectName]}"
   echo -e "\nChecking out tag [v${projectVersion}] for project [${projectName}]"
-  pushd "${projectName}"
+  cd "${projectName}"
     add_oauth_token_to_current_remote_url
-  popd
+  cd ..
   git submodule update --init "${projectName}" || echo "Sth went wrong - trying to continue"
   cd "${ROOT_FOLDER}/${projectName}"
   git fetch --tags
@@ -382,11 +382,11 @@ cd "${ROOT_FOLDER}"
 
 echo "Building the docs with release train version [${RELEASE_TRAIN}] with major [${RELEASE_TRAIN_MAJOR}]"
 
-echo "Updating the docs module version [pushd docs && ../mvnw versions:set -DnewVersion='${RELEASE_TRAIN}' -DgenerateBackupPoms=false && popd]"
+echo "Updating the docs module version [cd docs && ../mvnw versions:set -DnewVersion='${RELEASE_TRAIN}' -DgenerateBackupPoms=false && cd ..]"
 
-pushd docs
+cd docs
   ../mvnw versions:set -DnewVersion="${RELEASE_TRAIN}" -DgenerateBackupPoms=false -DartifactId=spring-cloud-samples-docs -DprocessDependencies=false -DprocessParent=false -DupdateMatchingVersions=false
-popd
+cd ..
 
 echo "Build command [./mvnw clean install -Pdocs,build -Drelease-train-major="${RELEASE_TRAIN_MAJOR}" -Dspring-cloud-release.version="${RELEASE_TRAIN}" -Dspring-cloud.version="${RELEASE_TRAIN}" -pl docs -Ddisable.checks=true]"
 ./mvnw clean install -Pdocs,build -Drelease-train-major="${RELEASE_TRAIN_MAJOR}" -Dspring-cloud-release.version="${RELEASE_TRAIN}" -Dspring-cloud.version="${RELEASE_TRAIN}" -pl docs -Ddisable.checks=true
