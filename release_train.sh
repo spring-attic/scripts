@@ -350,8 +350,8 @@ echo "For the given modules will enter their directory, pull the changes and che
 for (( I=0; I<len; I++ ))
 do 
   projectName="${PROJECTS_ORDER[$I]}"
-  if [[ "${projectName}" == "" ]]; then
-    echo "Project with index [${I}] is empty, continuing"
+  if [[ "${projectName}" == "" ||  ! -d "${projectName}" ]]; then
+    echo "Project with index [${I}] is empty or the directory doesn't exist, continuing"
     continue
   fi
   projectVersion="${PROJECTS[$projectName]}"
