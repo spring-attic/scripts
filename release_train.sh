@@ -346,6 +346,9 @@ if [[ "${PREFIX_WITH_TOKEN}" != "" ]]; then
   sed -i "s/git@github.com:/https:\/\/${RELEASER_GIT_OAUTH_TOKEN}@github.com\//g" .gitmodules
 fi
 
+echo "Initilizing all submodules"
+git submodule init
+
 echo "For the given modules will enter their directory, pull the changes and check out the tag"
 for (( I=0; I<len; I++ ))
 do 
