@@ -348,6 +348,7 @@ fi
 
 echo "Initilizing all submodules"
 git submodule init
+git submodule update
 
 echo "For the given modules will enter their directory, pull the changes and check out the tag"
 for (( I=0; I<len; I++ ))
