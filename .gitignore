@@ -18,3 +18,5 @@ bin
 .vscode
 .factorypath
 *.log
+# You have to be explicit about adding changes to gitmodules
+.gitmodules
