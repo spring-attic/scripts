@@ -16,11 +16,11 @@
 	<version>1.0.0.BUILD-SNAPSHOT</version>
 	<properties>
 		<!-- Comma separated list of whitelisted branches -->
-		<docs.whitelisted.branches>1.0.x,Dalston,Edgware,Finchley,Greenwich</docs.whitelisted.branches>
+		<docs.whitelisted.branches>1.0.x,Dalston,Edgware,Finchley,Greenwich,Hoxton</docs.whitelisted.branches>
 		<main.basedir>${basedir}/..</main.basedir>
 		<docs.main>spring-cloud</docs.main>
-		<spring-cloud-release.version>Hoxton.BUILD-SNAPSHOT</spring-cloud-release.version>
-		<release-train-major>hoxton</release-train-major>
+		<spring-cloud-release.version>2020-1.BUILD-SNAPSHOT</spring-cloud-release.version>
+		<release-train-major>2020-1</release-train-major>
 		<spring-cloud-version>${spring-cloud-release.version}</spring-cloud-version>
 		<exec-maven-plugin.version>1.6.0</exec-maven-plugin.version>
 		<configprops.path>${project.basedir}/src/main/asciidoc/_spring-cloud-${release-train-major}-configprops.adoc</configprops.path>
@@ -58,31 +58,6 @@
 			<artifactId>spring-cloud-config-server</artifactId>
 			<scope>compile</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-aws</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-aws-jdbc</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-aws-messaging</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-aws-parameter-store-config</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		<!--<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-aws-secrets-manager-config</artifactId>
-			<scope>compile</scope>
-		</dependency>-->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-security</artifactId>
@@ -253,11 +228,6 @@
 			<artifactId>spring-cloud-function-adapter-azure</artifactId>
 			<scope>compile</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-function-task</artifactId>
-			<scope>compile</scope>
-		</dependency>
 		<!-- for the post finchley dependencies check the profiles section -->
 	</dependencies>
 	<profiles>
@@ -313,51 +283,6 @@
 				</dependency>
 				<dependency>
 					<groupId>org.springframework.cloud</groupId>
-					<artifactId>spring-cloud-gcp-starter-vision</artifactId>
-					<scope>compile</scope>
-				</dependency>
-				<dependency>
-					<groupId>org.springframework.cloud</groupId>
-					<artifactId>spring-cloud-gcp-starter-trace</artifactId>
-					<scope>compile</scope>
-				</dependency>
-				<dependency>
-					<groupId>org.springframework.cloud</groupId>
-					<artifactId>spring-cloud-gcp-starter-storage</artifactId>
-					<scope>compile</scope>
-				</dependency>
-				<dependency>
-					<groupId>org.springframework.cloud</groupId>
-					<artifactId>spring-cloud-gcp-starter-sql-postgresql</artifactId>
-					<scope>compile</scope>
-				</dependency>
-				<dependency>
-					<groupId>org.springframework.cloud</groupId>
-					<artifactId>spring-cloud-gcp-starter-sql-mysql</artifactId>
-					<scope>compile</scope>
-				</dependency>
-				<dependency>
-					<groupId>org.springframework.cloud</groupId>
-					<artifactId>spring-cloud-gcp-starter-security-iap</artifactId>
-					<scope>compile</scope>
-				</dependency>
-				<dependency>
-					<groupId>org.springframework.cloud</groupId>
-					<artifactId>spring-cloud-gcp-starter-pubsub</artifactId>
-					<scope>compile</scope>
-				</dependency>
-				<dependency>
-					<groupId>org.springframework.cloud</groupId>
-					<artifactId>spring-cloud-gcp-starter-logging</artifactId>
-					<scope>compile</scope>
-				</dependency>
-				<dependency>
-					<groupId>org.springframework.cloud</groupId>
-					<artifactId>spring-cloud-gcp-starter-data-spanner</artifactId>
-					<scope>compile</scope>
-				</dependency>
-				<dependency>
-					<groupId>org.springframework.cloud</groupId>
 					<artifactId>spring-cloud-starter-circuitbreaker-reactor-resilience4j</artifactId>
 					<scope>compile</scope>
 				</dependency>
@@ -381,17 +306,6 @@
 								</goals>
 								<configuration>
 									<resources>
-										<resource>
-											<directory>
-												${main.basedir}/gcp/src/main/asciidoc
-											</directory>
-											<includes>
-												<include>images/**</include>
-											</includes>
-											<excludes>
-												<exclude>*.sh</exclude>
-											</excludes>
-										</resource>
 										<resource>
 											<directory>
 												${main.basedir}/kubernetes/src/main/asciidoc
@@ -420,6 +334,9 @@
 					<plugin>
 						<groupId>pl.project13.maven</groupId>
 						<artifactId>git-commit-id-plugin</artifactId>
+						<configuration>
+<!--							<useNativeGit>true</useNativeGit>-->
+						</configuration>
 					</plugin>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
@@ -437,17 +354,6 @@
 								</goals>
 								<configuration>
 									<resources>
-										<resource>
-											<directory>
-												${main.basedir}/aws/src/main/asciidoc
-											</directory>
-											<includes>
-												<include>images/**</include>
-											</includes>
-											<excludes>
-												<exclude>*.sh</exclude>
-											</excludes>
-										</resource>
 										<resource>
 											<directory>
 												${main.basedir}/bus/src/main/asciidoc

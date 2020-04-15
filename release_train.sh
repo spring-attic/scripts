@@ -13,7 +13,7 @@ SPRING_CLOUD_RELEASE_REPO=${SPRING_CLOUD_RELEASE_REPO:-git@github.com:spring-clo
 SPRING_CLOUD_RELEASE_REPO_HTTPS=${SPRING_CLOUD_RELEASE_REPO_HTTPS:-https://github.com/spring-cloud/spring-cloud-release.git}
 MAVEN_PATH=${MAVEN_PATH:-}
 # order matters!
-RELEASE_TRAIN_PROJECTS=${RELEASE_TRAIN_PROJECTS:-build commons function stream aws bus task config netflix cloudfoundry kubernetes openfeign consul gateway security sleuth zookeeper contract gcp vault circuitbreaker cli}
+RELEASE_TRAIN_PROJECTS=${RELEASE_TRAIN_PROJECTS:-build commons function stream bus task config netflix cloudfoundry kubernetes openfeign consul gateway security sleuth zookeeper contract vault circuitbreaker cli}
 INSTALL_TOO=${INSTALL_TOO:-false}
 GIT_BIN="${GIT_BIN:-git}"
 export GITHUB_REPO_USERNAME_ENV="${GITHUB_REPO_USERNAME_ENV:-GITHUB_REPO_USERNAME}"
