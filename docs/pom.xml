@@ -13,7 +13,7 @@
 	<packaging>jar</packaging>
 	<name>Spring Cloud Samples Docs</name>
 	<description>Spring Samples Docs</description>
-	<version>1.0.0.BUILD-SNAPSHOT</version>
+	<version>2020-1.M1</version>
 	<properties>
 		<!-- Comma separated list of whitelisted branches -->
 		<docs.whitelisted.branches>1.0.x,Dalston,Edgware,Finchley,Greenwich,Hoxton</docs.whitelisted.branches>
