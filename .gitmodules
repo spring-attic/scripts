@@ -85,12 +85,6 @@
 [submodule "stream-core"]
 	path = stream-core
 	url = git@github.com:spring-cloud/spring-cloud-stream.git
-[submodule "stream-binder-rabbit"]
-	path = stream-binder-rabbit
-	url = git@github.com:spring-cloud/spring-cloud-stream-binder-rabbit
-[submodule "stream-binder-kafka"]
-	path = stream-binder-kafka
-	url = git@github.com:spring-cloud/spring-cloud-stream-binder-kafka
 [submodule "vault"]
 	path = vault
 	url = git@github.com:spring-cloud/spring-cloud-vault.git
@@ -112,3 +106,9 @@
 [submodule "circuitbreaker"]
 	path = circuitbreaker
 	url = git@github.com:spring-cloud/spring-cloud-circuitbreaker.git
+[submodule "stream-binder-kafka"]
+	path = stream-binder-kafka
+	url = git@github.com:spring-cloud/spring-cloud-stream-binder-kafka
+[submodule "stream-binder-rabbit"]
+	path = stream-binder-rabbit
+	url = git@github.com:spring-cloud/spring-cloud-stream-binder-rabbit

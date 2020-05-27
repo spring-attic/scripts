@@ -23,6 +23,8 @@ REPO_PASS="${!GITHUB_REPO_PASSWORD_ENV}"
 PREFIX_WITH_TOKEN=""
 export BOOT_VERSION="${BOOT_VERSION:-}"
 
+trap "{ git checkout .gitmodules; }" EXIT
+
 echo "Current folder is [${ROOT_FOLDER}]"
 
 # Adds the oauth token if present to the remote url of Spring Cloud Release repo
@@ -103,6 +105,28 @@ function retrieve_boot_version_from_maven() {
         org.codehaus.mojo:exec-maven-plugin:1.3.1:exec \
         -pl spring-cloud-starter-parent | sed '$!d' )
     echo "Extracted version for project [$1] from Maven build is [${RETRIEVED_VERSION}]"
+}
+
+function guess_branch_from_version() {
+  local version="${1}"
+   if [[ "${version}" != *"SNAPSHOT" ]]; then
+    local success="false"
+    git checkout v"${version}" && success="true" || success="false"
+    if [[ "${success}" == "true" ]]; then
+      echo "v${version}"
+    else
+      echo "${version}"
+    fi
+  else
+    potentialBranch="$( echo "${version%.*}.x" )"
+    local success="false"
+    git checkout "${potentialBranch}" && success="true" || success="false"
+    if [[ "${success}" == "true" ]]; then
+      echo "${potentialBranch}"
+    else
+      echo "master"
+    fi
+  fi
 }
 
 # Prints the usage
@@ -255,19 +279,8 @@ else
       cd "${clonedBom}" && git fetch
   fi
   cd "${clonedBom}"
-  if [[ "${RELEASE_TRAIN}" != *"SNAPSHOT" ]]; then
-    echo "Checking out tag [v${VERSION}]"
-    git checkout v"${VERSION}"
-  else
-    # 2020.0.0-SNAPSHOT
-    # branch 2020.0.x
-    # 2020.0. -> 7 letters
-    git checkout master && git pull origin master
-    echo "Working with snapshots"
-    potentialBranch="${VERSION%.*}.x"
-    echo "Trying to checkout branch [${potentialBranch}]"
-    git checkout "${potentialBranch}" || echo "Failed to checkout the branch - will assume master"
-  fi
+  branchToCheckout="$( guess_branch_from_version "${VERSION}")"
+  git checkout "${branchToCheckout}" && git pull origin "${branchToCheckout}"
   git status
   ARTIFACTS=( ${RELEASE_TRAIN_PROJECTS} )
   echo -e "\n\nRetrieving versions from Maven for projects [${RELEASE_TRAIN_PROJECTS}]\n\n"
@@ -317,7 +330,7 @@ echo -e "\nProjects versions:"
 echo "spring-boot -> ${BOOT_VERSION}"
 echo ":spring-boot-version: ${BOOT_VERSION}" >> "${pathToAttributesTable}"
 for (( I=0; I<len; I++ ))
-do 
+do
   projectName="${PROJECTS_ORDER[$I]}"
   if [[ "${projectName}" == "" ]]; then
     echo "Couldn't find a project entry for a project with index [${I}]"
@@ -367,8 +380,9 @@ git submodule update
 
 echo "For the given modules will enter their directory, pull the changes and check out the tag"
 for (( I=0; I<len; I++ ))
-do 
+do
   projectName="${PROJECTS_ORDER[$I]}"
+  echo "Processing project [${projectName}]"
   if [[ "${projectName}" == "" ||  ! -d "${projectName}" ]]; then
     echo "Project with index [${I}] is empty or the directory doesn't exist, continuing"
     continue
@@ -382,7 +396,8 @@ do
   cd "${ROOT_FOLDER}/${projectName}"
   git fetch --tags
   echo "Removing all changes" && git reset --hard
-  git checkout v"${projectVersion}" || (echo "Failed to check out v${projectVersion} will try ${projectVersion}" && git checkout "${projectVersion}")
+  branchToCheckout="$( guess_branch_from_version "${VERSION}")"
+  git checkout "${branchToCheckout}" && git pull origin "${branchToCheckout}"
   [[ -f .gitmodules ]] && git submodule update --init
   git status
   if [[ "${INSTALL_TOO}" == "yes" ]]; then
