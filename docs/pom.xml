@@ -15,15 +15,14 @@
 	<description>Spring Cloud Release Train Docs</description>
 	<version>2020.0.0-SNAPSHOT</version>
 	<properties>
-		<!-- Comma separated list of whitelisted branches -->
-		<docs.whitelisted.branches>1.0.x,Dalston,Edgware,Finchley,Greenwich,Hoxton</docs.whitelisted.branches>
 		<main.basedir>${basedir}/..</main.basedir>
 		<docs.main>spring-cloud</docs.main>
 		<spring-cloud-release.version>2020.0.0-SNAPSHOT</spring-cloud-release.version>
-		<release-train-major>2020.0</release-train-major>
+		<spring-cloud-for-docs.version>2020-0</spring-cloud-for-docs.version>
 		<spring-cloud-version>${spring-cloud-release.version}</spring-cloud-version>
 		<exec-maven-plugin.version>1.6.0</exec-maven-plugin.version>
-		<configprops.path>${project.basedir}/src/main/asciidoc/_spring-cloud-${release-train-major}-configprops.adoc</configprops.path>
+		<configprops.path>${project.basedir}/src/main/asciidoc/_spring-cloud-${spring-cloud-for-docs.version}-configprops.adoc</configprops.path>
+		<upload-docs-zip.phase>deploy</upload-docs-zip.phase>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
@@ -479,6 +478,7 @@
 						<executions>
 							<execution>
 								<id>set-symbolic-link</id>
+								<!-- We'll add symbolic links ones the generation is done, otherwise the rendering will take place twice -->
 								<phase>generate-resources</phase>
 								<goals>
 									<goal>exec</goal>
@@ -486,7 +486,7 @@
 								<configuration>
 									<executable>${project.basedir}/src/main/asciidoc/symbolic_links.sh</executable>
 									<!-- @formatter:off -->
-									<commandlineArgs>${project.basedir} ${version}
+									<commandlineArgs>${project.basedir} ${spring-cloud-for-docs.version}
 									</commandlineArgs>
 									<!-- @formatter:on -->
 								</configuration>

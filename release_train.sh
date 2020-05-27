@@ -311,7 +311,7 @@ IFS='.' read -r major minor patch <<< "${version}"
 RELEASE_TRAIN_MAJOR="${major}"
 RELEASE_TRAIN_MINOR="${minor}"
 RELEASE_TRAIN_PATCH="${patch}"
-VERSION_WITH_NO_DOTS="${version//./-}"
+VERSION_WITH_NO_DOTS="${major}-${minor}"
 echo "${RELEASE_TRAIN_MAJOR}"
 echo "Release train minor:"
 echo "${RELEASE_TRAIN_MINOR}"
@@ -396,7 +396,7 @@ do
   cd "${ROOT_FOLDER}/${projectName}"
   git fetch --tags
   echo "Removing all changes" && git reset --hard
-  branchToCheckout="$( guess_branch_from_version "${VERSION}")"
+  branchToCheckout="$( guess_branch_from_version "${projectVersion}")"
   git checkout "${branchToCheckout}" && git pull origin "${branchToCheckout}"
   [[ -f .gitmodules ]] && git submodule update --init
   git status
@@ -416,15 +416,14 @@ cd "${ROOT_FOLDER}"
 
 echo "Building the docs with release train version [${RELEASE_TRAIN}] with major [${RELEASE_TRAIN_MAJOR}]"
 
-echo "Updating the docs module version [cd docs && ../mvnw versions:set -DnewVersion='${RELEASE_TRAIN}' -DgenerateBackupPoms=false && cd ..]"
+echo "Updating the docs module version [cd docs && .../mvnw versions:set -DnewVersion="${RELEASE_TRAIN}" -DgenerateBackupPoms=false -DartifactId=spring-cloud-docs -DprocessDependencies=false -DprocessParent=false -DupdateMatchingVersions=false && cd ..]"
 
 cd docs
-  ../mvnw versions:set -DnewVersion="${RELEASE_TRAIN}" -DgenerateBackupPoms=false -DartifactId=spring-cloud-samples-docs -DprocessDependencies=false -DprocessParent=false -DupdateMatchingVersions=false
+  ../mvnw versions:set -DnewVersion="${RELEASE_TRAIN}" -DgenerateBackupPoms=false -DartifactId=spring-cloud-docs -DprocessDependencies=false -DprocessParent=false -DupdateMatchingVersions=false
 cd ..
 
-echo "Build command [./mvnw clean install -Pdocs,build -Drelease-train-major=${RELEASE_TRAIN_MAJOR} -Drelease-train-minor=${RELEASE_TRAIN_MINOR} -Dspring-cloud-release.version=${RELEASE_TRAIN} -Dspring-cloud.version=${RELEASE_TRAIN} -pl docs -Ddisable.checks=true]"
-./mvnw clean install -Pdocs,build -Drelease-train-major="${RELEASE_TRAIN_MAJOR}" -Drelease-train-minor="${RELEASE_TRAIN_MINOR}" -Dspring-cloud-release.version="${RELEASE_TRAIN}" -Dspring-cloud.version="${RELEASE_TRAIN}" -pl docs -Ddisable.checks=true
-
+echo "Build command [./mvnw clean install -Pdocs,build -Drelease-train-major=${RELEASE_TRAIN_MAJOR} -Drelease-train-minor=${RELEASE_TRAIN_MINOR} -Dspring-cloud-release.version=${RELEASE_TRAIN} -Dspring-cloud.version=${RELEASE_TRAIN} -Dspring-cloud-for-docs.version=${VERSION_WITH_NO_DOTS} -pl docs -Ddisable.checks=true]"
+./mvnw clean install -Pdocs,build -Drelease-train-major="${RELEASE_TRAIN_MAJOR}" -Drelease-train-minor="${RELEASE_TRAIN_MINOR}" -Dspring-cloud-release.version="${RELEASE_TRAIN}" -Dspring-cloud.version="${RELEASE_TRAIN}" -Dspring-cloud-for-docs.version="${VERSION_WITH_NO_DOTS}" -pl docs -Ddisable.checks=true
 
 if [[ "${GH_PAGES}" == "yes" ]]; then
   echo "[DEPRECATION - please use the new docs] Downloading gh-pages.sh from spring-cloud-build's master"
@@ -433,5 +432,5 @@ if [[ "${GH_PAGES}" == "yes" ]]; then
   ./target/gh-pages.sh --version "${RELEASE_TRAIN}" --releasetrain --clone
 elif [[ "${NEW_DOCS}" == "yes" ]]; then
   echo "Publishing zipped docs to Artifactory"
-  ./mvnw deploy -Pdocs,build -Drelease-train-major="${RELEASE_TRAIN_MAJOR}" -Drelease-train-minor="${RELEASE_TRAIN_MINOR}" -Dspring-cloud-release.version="${RELEASE_TRAIN}" -Dspring-cloud.version="${RELEASE_TRAIN}" -pl docs -Ddisable.checks=true
+  ./mvnw deploy -Pdocs,build -Drelease-train-major="${RELEASE_TRAIN_MAJOR}" -Drelease-train-minor="${RELEASE_TRAIN_MINOR}" -Dspring-cloud-release.version="${RELEASE_TRAIN}" -Dspring-cloud.version="${RELEASE_TRAIN}" -Dspring-cloud-for-docs.version="${VERSION_WITH_NO_DOTS}" -pl docs -Ddisable.checks=true
 fi

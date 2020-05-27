@@ -1,7 +1,7 @@
 = Spring Cloud
 
 include::_attributes.adoc[]
-include::_spring-cloud-2020-0-0-snapshot-attributes.adoc[]
+include::_spring-cloud-2020-0-attributes.adoc[]
 
 :basedir: {project-root}
 :stream_basedir: {basedir}
@@ -91,7 +91,7 @@ include::{basedir}/cloudfoundry/docs/src/main/asciidoc/spring-cloud-cloudfoundry
 
 :project-root: {basedir}/contract
 :project-version: {spring-cloud-contract-version}
-include::{basedir}/contract/docs/src/main/asciidoc/_index_single.adoc[leveloffset=+1]
+include::{basedir}/contract/docs/src/main/asciidoc/_index_pdf.adoc[leveloffset=+1]
 
 :project-root: {basedir}/vault
 :project-version: {spring-cloud-vault-version}
@@ -119,15 +119,15 @@ include::{basedir}/circuitbreaker/docs/src/main/asciidoc/spring-cloud-circuitbre
 
 :project-root: {basedir}/stream-core
 :project-version: {spring-cloud-stream-version}
-include::{basedir}/stream-core/src/main/asciidoc/spring-cloud-stream.adoc[leveloffset=+1]
+include::{basedir}/stream-core/docs/src/main/asciidoc/spring-cloud-stream.adoc[leveloffset=+1]
 
 :project-root: {basedir}/stream-binder-rabbit
 :project-version: {spring-cloud-stream-version}
-include::{basedir}/stream-binder-rabbit/src/main/asciidoc/spring-cloud-stream.adoc[leveloffset=+1]
+include::{basedir}/stream-binder-rabbit/docs/src/main/asciidoc/spring-cloud-stream-binder-rabbit.adoc[leveloffset=+1]
 
 :project-root: {basedir}/stream-binder-kafka
 :project-version: {spring-cloud-stream-version}
-include::{basedir}/stream-binder-kafka/src/main/asciidoc/spring-cloud-stream.adoc[leveloffset=+1]
+include::{basedir}/stream-binder-kafka/docs/src/main/asciidoc/spring-cloud-stream-binder-kafka.adoc[leveloffset=+1]
 
 = Appendix: Compendium of Configuration Properties
 

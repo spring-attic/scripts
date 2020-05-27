@@ -27,9 +27,6 @@
 		</profile>
 		<profile>
 			<id>docs</id>
-			<properties>
-				<upload-docs-zip.phase>deploy</upload-docs-zip.phase>
-			</properties>
 			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>
@@ -50,6 +47,7 @@
 				<module>consul</module>
 				<module>contract</module>
 				<module>cloudfoundry</module>
+				<module>docs</module>
 				<module>function</module>
 				<module>gateway</module>
 				<module>kubernetes</module>

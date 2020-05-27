@@ -1,1 +1,0 @@
-/home/marcin/repo/spring-cloud-scripts/docs/src/main/asciidoc/_spring-cloud-2020.0.adoc
