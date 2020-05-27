@@ -13,7 +13,7 @@ SPRING_CLOUD_RELEASE_REPO=${SPRING_CLOUD_RELEASE_REPO:-git@github.com:spring-clo
 SPRING_CLOUD_RELEASE_REPO_HTTPS=${SPRING_CLOUD_RELEASE_REPO_HTTPS:-https://github.com/spring-cloud/spring-cloud-release.git}
 MAVEN_PATH=${MAVEN_PATH:-}
 # order matters!
-RELEASE_TRAIN_PROJECTS=${RELEASE_TRAIN_PROJECTS:-build commons function stream bus task config netflix cloudfoundry kubernetes openfeign consul gateway security sleuth zookeeper contract vault circuitbreaker cli}
+RELEASE_TRAIN_PROJECTS=${RELEASE_TRAIN_PROJECTS:-build commons function stream-core stream-binder-rabbit stream-binder-kafka bus task config netflix cloudfoundry kubernetes openfeign consul gateway security sleuth zookeeper contract vault circuitbreaker cli}
 INSTALL_TOO=${INSTALL_TOO:-false}
 GIT_BIN="${GIT_BIN:-git}"
 export GITHUB_REPO_USERNAME_ENV="${GITHUB_REPO_USERNAME_ENV:-GITHUB_REPO_USERNAME}"
@@ -120,7 +120,8 @@ You can use the following options:
 -v|--version            - release train version
 -p|--projects           - comma separated list of projects in project:version notation. E.g. ( -p sleuth:1.0.6.RELEASE,cli:1.1.5.RELEASE )
 -a|--auto               - no user prompting will take place. Normally after all the parsing is done, before docs building you can check if versions are correct
--g|--ghpages            - will also publish the docs to gh-pages of spring-cloud-static automatically
+-g|--ghpages            - will also publish the docs to gh-pages of spring-cloud-static automatically (deprecated)
+-d|--newdocs            - will also upload the zip with docs to docs.spring.io
 -r|--retrieveversions   - will clone spring-cloud-release and take properties from there
 -n|--install            - will build project with skipping tests too
 
@@ -173,6 +174,9 @@ case ${key} in
     ;;
     -g|--ghpages)
     GH_PAGES="yes"
+    ;;
+    -d|--newdocs)
+    NEW_DOCS="yes"
     ;;
     -r|--retrieveversions)
     RETRIEVE_VERSIONS="yes"
@@ -241,17 +245,29 @@ elif [[ "${VERSION}" != "" && -z "${RETRIEVE_VERSIONS}" ]] ; then
 else
   RELEASE_TRAIN=${VERSION}
   mkdir -p "${ROOT_FOLDER}/target"
-  clonedStatic="${ROOT_FOLDER}/target/spring-cloud-release"
-  echo "Will attempt to retrieve versions from [${SPRING_CLOUD_RELEASE_REPO}]. The repo will be cloned to [${clonedStatic}]"
-  if [[ ! -e "${clonedStatic}/.git" ]]; then
+  clonedBom="${ROOT_FOLDER}/target/spring-cloud-release"
+  echo "Will attempt to retrieve versions from [${SPRING_CLOUD_RELEASE_REPO}]. The repo will be cloned to [${clonedBom}]"
+  if [[ ! -e "${clonedBom}/.git" ]]; then
       echo "Cloning Spring Cloud Release to target"
-      git clone "${SPRING_CLOUD_RELEASE_REPO}" "${clonedStatic}"
+      git clone "${SPRING_CLOUD_RELEASE_REPO}" "${clonedBom}"
   else
       echo "Spring Cloud Release already cloned - will pull changes"
-      cd "${clonedStatic}" && git fetch
+      cd "${clonedBom}" && git fetch
   fi
-  cd "${clonedStatic}"
-  git checkout v"${VERSION}"
+  cd "${clonedBom}"
+  if [[ "${RELEASE_TRAIN}" != *"SNAPSHOT" ]]; then
+    echo "Checking out tag [v${VERSION}]"
+    git checkout v"${VERSION}"
+  else
+    # 2020.0.0-SNAPSHOT
+    # branch 2020.0.x
+    # 2020.0. -> 7 letters
+    git checkout master && git pull origin master
+    echo "Working with snapshots"
+    potentialBranch="${VERSION%.*}.x"
+    echo "Trying to checkout branch [${potentialBranch}]"
+    git checkout "${potentialBranch}" || echo "Failed to checkout the branch - will assume master"
+  fi
   git status
   ARTIFACTS=( ${RELEASE_TRAIN_PROJECTS} )
   echo -e "\n\nRetrieving versions from Maven for projects [${RELEASE_TRAIN_PROJECTS}]\n\n"
@@ -278,18 +294,22 @@ echo "Release train version:"
 echo "${RELEASE_TRAIN}"
 echo "Release train major:"
 version="$( echo "$RELEASE_TRAIN" | tr '[:upper:]' '[:lower:]')"
-IFS='.' read -r major minor <<< "${version}"
+IFS='.' read -r major minor patch <<< "${version}"
 RELEASE_TRAIN_MAJOR="${major}"
 RELEASE_TRAIN_MINOR="${minor}"
+RELEASE_TRAIN_PATCH="${patch}"
+VERSION_WITH_NO_DOTS="${version//./-}"
 echo "${RELEASE_TRAIN_MAJOR}"
 echo "Release train minor:"
 echo "${RELEASE_TRAIN_MINOR}"
+echo "Release train patch:"
+echo "${RELEASE_TRAIN_PATCH}"
 len=${#PROJECTS_ORDER[@]}
 echo -e "\nProjects size: [${len}]"
 echo -e "Projects in order: [${PROJECTS_ORDER[*]}]"
-pathToAttributesTable="docs/src/main/asciidoc/_spring-cloud-${RELEASE_TRAIN_MAJOR}-attributes.adoc"
-pathToVersionsTable="docs/src/main/asciidoc/_spring-cloud-${RELEASE_TRAIN_MAJOR}-versions.adoc"
-pathToLinks="docs/src/main/asciidoc/_spring-cloud-${RELEASE_TRAIN_MAJOR}-links.adoc"
+pathToAttributesTable="${ROOT_FOLDER}/docs/src/main/asciidoc/_spring-cloud-${VERSION_WITH_NO_DOTS}-attributes.adoc"
+pathToVersionsTable="${ROOT_FOLDER}/docs/src/main/asciidoc/_spring-cloud-${VERSION_WITH_NO_DOTS}-versions.adoc"
+pathToLinks="${ROOT_FOLDER}/docs/src/main/asciidoc/_spring-cloud-${VERSION_WITH_NO_DOTS}-links.adoc"
 rm -rf "${pathToAttributesTable}"
 rm -rf "${pathToVersionsTable}"
 rm -rf "${pathToLinks}"
@@ -310,13 +330,8 @@ do
     docsUrl=""
     if [[ "${fullProjectName}" == *"task"* ]]; then
        docsUrl="https://docs.spring.io/spring-cloud-task/docs/${projectVersion}/reference/"
-    elif [[ "${fullProjectName}" == *"stream"* ]]; then
-      # since spring cloud stream's documentation URL has nothing to do with the version, will try
-      # assume that it has the same version as spring cloud function
-      projectVersion="${PROJECTS['function']}"
-      docsUrl="https://cloud.spring.io/spring-cloud-static/${fullProjectName}/${projectVersion}/reference/html/"
     else
-       docsUrl="https://cloud.spring.io/spring-cloud-static/${fullProjectName}/${projectVersion}/reference/html/"
+       docsUrl="https://docs.spring.io/${fullProjectName}/docs/${projectVersion}/reference/html/"
     fi
     echo "${docsUrl}[${fullProjectName}] :: ${fullProjectName} Reference Documentation, version ${projectVersion}" >> "${pathToLinks}"
   fi
@@ -392,13 +407,16 @@ cd docs
   ../mvnw versions:set -DnewVersion="${RELEASE_TRAIN}" -DgenerateBackupPoms=false -DartifactId=spring-cloud-samples-docs -DprocessDependencies=false -DprocessParent=false -DupdateMatchingVersions=false
 cd ..
 
-echo "Build command [./mvnw clean install -Pdocs,build -Drelease-train-major="${RELEASE_TRAIN_MAJOR}" -Dspring-cloud-release.version="${RELEASE_TRAIN}" -Dspring-cloud.version="${RELEASE_TRAIN}" -pl docs -Ddisable.checks=true]"
-./mvnw clean install -Pdocs,build -Drelease-train-major="${RELEASE_TRAIN_MAJOR}" -Dspring-cloud-release.version="${RELEASE_TRAIN}" -Dspring-cloud.version="${RELEASE_TRAIN}" -pl docs -Ddisable.checks=true
+echo "Build command [./mvnw clean install -Pdocs,build -Drelease-train-major=${RELEASE_TRAIN_MAJOR} -Drelease-train-minor=${RELEASE_TRAIN_MINOR} -Dspring-cloud-release.version=${RELEASE_TRAIN} -Dspring-cloud.version=${RELEASE_TRAIN} -pl docs -Ddisable.checks=true]"
+./mvnw clean install -Pdocs,build -Drelease-train-major="${RELEASE_TRAIN_MAJOR}" -Drelease-train-minor="${RELEASE_TRAIN_MINOR}" -Dspring-cloud-release.version="${RELEASE_TRAIN}" -Dspring-cloud.version="${RELEASE_TRAIN}" -pl docs -Ddisable.checks=true
 
 
 if [[ "${GH_PAGES}" == "yes" ]]; then
-  echo "Downloading gh-pages.sh from spring-cloud-build's master"
+  echo "[DEPRECATION - please use the new docs] Downloading gh-pages.sh from spring-cloud-build's master"
   mkdir -p target
   curl https://raw.githubusercontent.com/spring-cloud/spring-cloud-build/master/docs/src/main/asciidoc/ghpages.sh -o target/gh-pages.sh && chmod +x target/gh-pages.sh
   ./target/gh-pages.sh --version "${RELEASE_TRAIN}" --releasetrain --clone
+elif [[ "${NEW_DOCS}" == "yes" ]]; then
+  echo "Publishing zipped docs to Artifactory"
+  ./mvnw deploy -Pdocs,build -Drelease-train-major="${RELEASE_TRAIN_MAJOR}" -Drelease-train-minor="${RELEASE_TRAIN_MINOR}" -Dspring-cloud-release.version="${RELEASE_TRAIN}" -Dspring-cloud.version="${RELEASE_TRAIN}" -pl docs -Ddisable.checks=true
 fi

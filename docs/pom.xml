@@ -5,22 +5,22 @@
 	<parent>
 		<groupId>org.springframework.cloud</groupId>
 		<artifactId>spring-cloud-build</artifactId>
-		<version>2.2.0.BUILD-SNAPSHOT</version>
+		<version>3.0.0-SNAPSHOT</version>
 		<relativePath/>
 	</parent>
-	<artifactId>spring-cloud-samples-docs</artifactId>
+	<artifactId>spring-cloud-docs</artifactId>
 	<!-- We'll reuse this project to fetch all the jars -->
 	<packaging>jar</packaging>
-	<name>Spring Cloud Samples Docs</name>
-	<description>Spring Samples Docs</description>
-	<version>2020-1.M1</version>
+	<name>Spring Cloud Release Train Docs</name>
+	<description>Spring Cloud Release Train Docs</description>
+	<version>2020.0.0-SNAPSHOT</version>
 	<properties>
 		<!-- Comma separated list of whitelisted branches -->
 		<docs.whitelisted.branches>1.0.x,Dalston,Edgware,Finchley,Greenwich,Hoxton</docs.whitelisted.branches>
 		<main.basedir>${basedir}/..</main.basedir>
 		<docs.main>spring-cloud</docs.main>
-		<spring-cloud-release.version>2020-1.BUILD-SNAPSHOT</spring-cloud-release.version>
-		<release-train-major>2020-1</release-train-major>
+		<spring-cloud-release.version>2020.0.0-SNAPSHOT</spring-cloud-release.version>
+		<release-train-major>2020.0</release-train-major>
 		<spring-cloud-version>${spring-cloud-release.version}</spring-cloud-version>
 		<exec-maven-plugin.version>1.6.0</exec-maven-plugin.version>
 		<configprops.path>${project.basedir}/src/main/asciidoc/_spring-cloud-${release-train-major}-configprops.adoc</configprops.path>
@@ -215,11 +215,6 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-function-compiler</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-function-adapter-aws</artifactId>
 			<scope>compile</scope>
 		</dependency>
@@ -228,105 +223,23 @@
 			<artifactId>spring-cloud-function-adapter-azure</artifactId>
 			<scope>compile</scope>
 		</dependency>
-		<!-- for the post finchley dependencies check the profiles section -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-kubernetes-all</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-circuitbreaker-reactor-resilience4j</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-circuitbreaker-resilience4j</artifactId>
+			<scope>compile</scope>
+		</dependency>
 	</dependencies>
 	<profiles>
-		<profile>
-			<id>finchley</id>
-			<activation>
-				<property>
-					<name>release-train-major</name>
-					<value>finchley</value>
-				</property>
-			</activation>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-dependency-plugin</artifactId>
-					</plugin>
-					<plugin>
-						<groupId>org.asciidoctor</groupId>
-						<artifactId>asciidoctor-maven-plugin</artifactId>
-						<inherited>false</inherited>
-					</plugin>
-					<plugin>
-						<groupId>com.agilejava.docbkx</groupId>
-						<artifactId>docbkx-maven-plugin</artifactId>
-					</plugin>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-antrun-plugin</artifactId>
-						<inherited>false</inherited>
-					</plugin>
-					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>build-helper-maven-plugin</artifactId>
-						<inherited>false</inherited>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-		<profile>
-			<id>post-finchley</id>
-			<activation>
-				<property>
-					<name>release-train-major</name>
-					<value>!finchley</value>
-				</property>
-			</activation>
-			<dependencies>
-				<dependency>
-					<groupId>org.springframework.cloud</groupId>
-					<artifactId>spring-cloud-starter-kubernetes-all</artifactId>
-					<scope>compile</scope>
-				</dependency>
-				<dependency>
-					<groupId>org.springframework.cloud</groupId>
-					<artifactId>spring-cloud-starter-circuitbreaker-reactor-resilience4j</artifactId>
-					<scope>compile</scope>
-				</dependency>
-				<dependency>
-					<groupId>org.springframework.cloud</groupId>
-					<artifactId>spring-cloud-starter-circuitbreaker-resilience4j</artifactId>
-					<scope>compile</scope>
-				</dependency>
-			</dependencies>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-resources-plugin</artifactId>
-						<executions>
-							<execution>
-								<id>copy-asciidoc-for-post-finchley</id>
-								<phase>generate-resources</phase>
-								<goals>
-									<goal>copy-resources</goal>
-								</goals>
-								<configuration>
-									<resources>
-										<resource>
-											<directory>
-												${main.basedir}/kubernetes/src/main/asciidoc
-											</directory>
-											<includes>
-												<include>images/**</include>
-											</includes>
-											<excludes>
-												<exclude>*.sh</exclude>
-											</excludes>
-										</resource>
-									</resources>
-									<outputDirectory>target/generated-docs
-									</outputDirectory>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
 		<profile>
 			<id>docs</id>
 			<build>
@@ -367,17 +280,6 @@
 										</resource>
 										<resource>
 											<directory>
-												${main.basedir}/commons/docs/src/main/asciidoc
-											</directory>
-											<includes>
-												<include>images/**</include>
-											</includes>
-											<excludes>
-												<exclude>*.sh</exclude>
-											</excludes>
-										</resource>
-										<resource>
-											<directory>
 												${main.basedir}/cli/docs/src/main/asciidoc
 											</directory>
 											<includes>
@@ -400,7 +302,7 @@
 										</resource>
 										<resource>
 											<directory>
-												${main.basedir}/cluster/src/main/asciidoc
+												${main.basedir}/commons/docs/src/main/asciidoc
 											</directory>
 											<includes>
 												<include>images/**</include>
@@ -434,6 +336,17 @@
 										<resource>
 											<directory>
 												${main.basedir}/contract/docs/src/main/asciidoc
+											</directory>
+											<includes>
+												<include>images/**</include>
+											</includes>
+											<excludes>
+												<exclude>*.sh</exclude>
+											</excludes>
+										</resource>
+										<resource>
+											<directory>
+												${main.basedir}/kubernetes/src/main/asciidoc
 											</directory>
 											<includes>
 												<include>images/**</include>
@@ -489,6 +402,17 @@
 										<resource>
 											<directory>
 												${main.basedir}/stream/spring-cloud-stream-docs/kafka/spring-cloud-stream-binder-kafka/src/main/asciidoc
+											</directory>
+											<includes>
+												<include>images/**</include>
+											</includes>
+											<excludes>
+												<exclude>*.sh</exclude>
+											</excludes>
+										</resource>
+										<resource>
+											<directory>
+												${main.basedir}/security/docs/src/main/asciidoc
 											</directory>
 											<includes>
 												<include>images/**</include>
@@ -562,7 +486,7 @@
 								<configuration>
 									<executable>${project.basedir}/src/main/asciidoc/symbolic_links.sh</executable>
 									<!-- @formatter:off -->
-									<commandlineArgs>${project.basedir} ${release-train-major}
+									<commandlineArgs>${project.basedir} ${version}
 									</commandlineArgs>
 									<!-- @formatter:on -->
 								</configuration>
@@ -576,6 +500,9 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-antrun-plugin</artifactId>
+					</plugin>
+					<plugin>
+						<artifactId>maven-deploy-plugin</artifactId>
 					</plugin>
 				</plugins>
 			</build>
