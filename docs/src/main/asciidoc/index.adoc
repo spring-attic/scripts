@@ -1,1 +1,1 @@
-_spring-cloud-2020-0.adoc
+/home/marcin/repo/spring-cloud-scripts/docs/src/main/asciidoc/spring-cloud.adoc

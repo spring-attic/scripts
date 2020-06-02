@@ -42,4 +42,4 @@ include::_spring-cloud-2020-0-links.adoc[]
 
 = Appendix: Compendium of Configuration Properties
 
-link:spring-cloud-2020-0-configprops.html[Spring Cloud configuration properties]
+link:configprops.html[Spring Cloud configuration properties]

@@ -3,24 +3,19 @@
 set -e
 
 projectRoot="${1}"
-releaseTrainVersion="${2}"
-releaseTrainVersion="${releaseTrainVersion//./-}"
+releaseTrainMajor="${2}"
 
-rm -f index.adoc
-rm -f index.htmlsingleadoc
-rm -f index.pdfadoc
+echo "Making symbolic link for the main docs"
+ln -fs "${projectRoot}"/src/main/asciidoc/_spring-cloud-"${releaseTrainMajor}".adoc "${projectRoot}"/src/main/asciidoc/spring-cloud.adoc
+ln -fs "${projectRoot}"/src/main/asciidoc/_spring-cloud-"${releaseTrainMajor}"-configprops.adoc "${projectRoot}"/src/main/asciidoc/configprops.adoc
+ln -fs "${projectRoot}"/src/main/asciidoc/spring-cloud.adoc "${projectRoot}"/src/main/asciidoc/index.adoc
 
-cd "${projectRoot}/docs/src/main/asciidoc/"
-  echo "Making symbolic link for the main docs"
-  ln -fs _spring-cloud-"${releaseTrainVersion}".adoc index.adoc
-  
-  if [ -f _spring-cloud-"${releaseTrainVersion}"-single.adoc ]; then
-      echo "Making symbolic link for the single page docs"
-      ln -fs _spring-cloud-"${releaseTrainVersion}"-single.adoc index.htmlsingleadoc
-  fi
-  
-  if [ -f _spring-cloud-"${releaseTrainVersion}"-pdf.adoc ]; then
-      echo "Making symbolic link for the pdf docs"
-      ln -fs _spring-cloud-"${releaseTrainVersion}"-pdf.adoc index.pdfadoc
-  fi
-cd "${projectRoot}"
+if [ -f "${projectRoot}"/src/main/asciidoc/_spring-cloud-"${releaseTrainMajor}"-single.adoc ]; then
+    echo "Making symbolic link for the single page docs"
+    ln -fs "${projectRoot}"/src/main/asciidoc/_spring-cloud-"${releaseTrainMajor}"-single.adoc "${projectRoot}"/src/main/asciidoc/spring-cloud.htmlsingleadoc
+fi
+
+if [ -f "${projectRoot}"/src/main/asciidoc/_spring-cloud-"${releaseTrainMajor}"-pdf.adoc ]; then
+    echo "Making symbolic link for the pdf docs"
+    ln -fs "${projectRoot}"/src/main/asciidoc/_spring-cloud-"${releaseTrainMajor}"-pdf.adoc "${projectRoot}"/src/main/asciidoc/spring-cloud.pdfadoc
+fi

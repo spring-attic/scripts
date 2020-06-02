@@ -131,4 +131,4 @@ include::{basedir}/stream-binder-kafka/docs/src/main/asciidoc/spring-cloud-strea
 
 = Appendix: Compendium of Configuration Properties
 
-include::_spring-cloud-2020-0-configprops.adoc[leveloffset=+1]
+include::configprops.adoc[leveloffset=+1]
